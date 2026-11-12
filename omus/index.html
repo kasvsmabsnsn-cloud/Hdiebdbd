@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جروب الكيلو 21 الرسمي العجمي شاطئ  النخيل</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Scheherazade+New:wght@700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Amiri', 'Scheherazade New', serif;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Background radial glow */
+    .bg-glow {
+      position: absolute;
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(circle at center, rgba(0, 180, 255, 0.15) 0%, transparent 60%);
+      animation: pulseGlow 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+
+    /* Main text */
+    .shahada {
+      position: relative;
+      z-index: 10;
+      font-size: clamp(2.8rem, 9vw, 7.5rem);
+      color: #e0f7ff;
+      text-align: center;
+      letter-spacing: 0.05em;
+      line-height: 1.3;
+      text-shadow:
+        0 0 10px #00e5ff,
+        0 0 20px #00b8ff,
+        0 0 40px #0091ff,
+        0 0 80px #0066ff,
+        0 0 120px rgba(0, 100, 255, 0.5);
+      animation: textPulse 4s ease-in-out infinite;
+      user-select: none;
+    }
+
+    @keyframes textPulse {
+      0%, 100% {
+        text-shadow:
+          0 0 10px #00e5ff,
+          0 0 20px #00b8ff,
+          0 0 40px #0091ff,
+          0 0 80px #0066ff,
+          0 0 120px rgba(0, 100, 255, 0.5);
+        filter: brightness(1);
+      }
+      50% {
+        text-shadow:
+          0 0 15px #80f0ff,
+          0 0 30px #00e5ff,
+          0 0 60px #00b8ff,
+          0 0 100px #0091ff,
+          0 0 150px rgba(0, 150, 255, 0.7);
+        filter: brightness(1.25);
+      }
+    }
+
+    /* Light running through the text */
+    .shahada::before {
+      content: "لا إله إلا الله";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 40%,
+        rgba(255, 255, 255, 0.9) 50%,
+        transparent 60%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: lightRun 3.5s linear infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    @keyframes lightRun {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Particles container */
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #00e5ff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00e5ff, 0 0 16px #0091ff;
+      opacity: 0;
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.3);
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(1.2);
+      }
+    }
+
+    /* Light rays from edges */
+    .ray {
+      position: absolute;
+      background: linear-gradient(to right, transparent, rgba(0, 200, 255, 0.35), transparent);
+      height: 2px;
+      width: 40%;
+      opacity: 0;
+      filter: blur(1px);
+      animation: rayFlash 5s ease-in-out infinite;
+      z-index: 4;
+    }
+
+    .ray.top {
+      top: 8%;
+      left: 30%;
+      transform: rotate(0deg);
+      animation-delay: 0s;
+    }
+
+    .ray.bottom {
+      bottom: 10%;
+      right: 25%;
+      transform: rotate(180deg);
+      animation-delay: 1.2s;
+    }
+
+    .ray.left {
+      left: 5%;
+      top: 40%;
+      width: 25%;
+      transform: rotate(90deg);
+      animation-delay: 2.1s;
+    }
+
+    .ray.right {
+      right: 5%;
+      top: 55%;
+      width: 25%;
+      transform: rotate(-90deg);
+      animation-delay: 3s;
+    }
+
+    @keyframes rayFlash {
+      0%, 100% { opacity: 0; }
+      15%, 35% { opacity: 0.7; }
+      50% { opacity: 0.2; }
+      70% { opacity: 0.5; }
+    }
+
+    /* Soft vignette */
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.75) 100%);
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Small secondary text */
+    .sub {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(180, 230, 255, 0.55);
+      font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+      letter-spacing: 0.15em;
+      z-index: 15;
+      text-shadow: 0 0 10px rgba(0, 180, 255, 0.4);
+      animation: fadeInOut 6s ease-in-out infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .shahada {
+        font-size: clamp(2.2rem, 11vw, 3.8rem);
+        padding: 0 12px;
+      }
+    }
+  </style>
+
+<meta name="description" content="البنت دي شتمت أمي ومش لاقي ليها راجل">
+
+<meta name="theme-color" content="#ffffff">
+
+<meta property="og:type" content="website">
+
+<meta property="og:title" content="جروب الكيلو 21 الرسمي العجمي شاطئ  النخيل">
+
+<meta property="og:description" content="البنت دي شتمت أمي ومش لاقي ليها راجل">
+
+<meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/share.jpg?v=1794488600701">
+
+<meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/share.jpg?v=1794488600701">
+
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="twitter:title" content="جروب الكيلو 21 الرسمي العجمي شاطئ  النخيل">
+
+<meta name="twitter:description" content="البنت دي شتمت أمي ومش لاقي ليها راجل">
+
+<meta property="og:url" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/">
+
+<link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/favicon.png?v=1794488600701">
+
+<link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/apple-touch-icon.png?v=1794488600701">
+</head>
+<body>
+  <div class="container">
+    <div class="bg-glow"></div>
+
+    <!-- Light rays -->
+    <div class="ray top"></div>
+    <div class="ray bottom"></div>
+    <div class="ray left"></div>
+    <div class="ray right"></div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Main text -->
+    <div class="shahada">لا إله إلا الله</div>
+
+    <div class="sub">محمد رسول الله</div>
+
+    <div class="vignette"></div>
+  </div>
+
+  <script>
+    // Generate particles coming from all directions
+    const particlesContainer = document.getElementById('particles');
+    const particleCount = 55;
+
+    function createParticle() {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+
+      // Random starting edge
+      const edge = Math.floor(Math.random() * 4); // 0=top, 1=right, 2=bottom, 3=left
+      let startX, startY, tx, ty;
+
+      const size = Math.random() * 3 + 2;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+
+      if (edge === 0) { // from top
+        startX = Math.random() * 100;
+        startY = -5;
+        tx = (Math.random() - 0.5) * 80 + 'vw';
+        ty = (60 + Math.random() * 50) + 'vh';
+      } else if (edge === 1) { // from right
+        startX = 105;
+        startY = Math.random() * 100;
+        tx = -(50 + Math.random() * 60) + 'vw';
+        ty = (Math.random() - 0.5) * 80 + 'vh';
+      } else if (edge === 2) { // from bottom
+        startX = Math.random() * 100;
+        startY = 105;
+        tx = (Math.random() - 0.5) * 80 + 'vw';
+        ty = -(60 + Math.random() * 50) + 'vh';
+      } else { // from left
+        startX = -5;
+        startY = Math.random() * 100;
+        tx = (50 + Math.random() * 60) + 'vw';
+        ty = (Math.random() - 0.5) * 80 + 'vh';
+      }
+
+      p.style.left = startX + '%';
+      p.style.top = startY + '%';
+      p.style.setProperty('--tx', tx);
+      p.style.setProperty('--ty', ty);
+
+      const duration = 4 + Math.random() * 5;
+      const delay = Math.random() * 6;
+      p.style.animationDuration = duration + 's';
+      p.style.animationDelay = delay + 's';
+
+      // Random color variation (cyan to blue to white)
+      const hue = 180 + Math.random() * 40;
+      p.style.background = `hsl(${hue}, 100%, 70%)`;
+      p.style.boxShadow = `0 0 8px hsl(${hue}, 100%, 60%), 0 0 16px hsl(${hue}, 100%, 50%)`;
+
+      particlesContainer.appendChild(p);
+
+      // Remove and recreate after animation
+      setTimeout(() => {
+        p.remove();
+        createParticle();
+      }, (duration + delay) * 1000);
+    }
+
+    // Create initial particles
+    for (let i = 0; i < particleCount; i++) {
+      setTimeout(() => createParticle(), i * 80);
+    }
+  </script>
+</body>
+</html>
