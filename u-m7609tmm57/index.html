@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<meta name="description" content="">
+<title></title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================
+   1. إعدادات عامة
+========================================================== */
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+html, body {
+  width:100%; min-height:100%;
+  font-family: 'Tajawal', sans-serif;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+/* شاشة التحميل تمنع تمرير الصفحة */
+body.loading { overflow: hidden; }
+
+/* ==========================================================
+   2. شاشة التحميل — منقولة من الميموريال بنفس التصميم
+========================================================== */
+#loadingScreen {
+  position: fixed; inset: 0; width: 100%; height: 100dvh;
+  background: #fff; overflow: hidden; z-index: 99999;
+  transition: opacity .7s ease, visibility .7s ease;
+  cursor: pointer;
+}
+#loadingScreen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.loading-aurora {
+  position: fixed; top: 0; left: 0; width: 100%; height: 60vh;
+  pointer-events: none; z-index: 1; overflow: hidden;
+  isolation: isolate;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+}
+
+/* ← السرعة 3 ثوانٍ بدل 1.5 (طلبك) */
+.loading-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: 0;
+  mix-blend-mode: multiply;
+  will-change: transform, opacity;
+  animation: loadingTravel 3s ease-in-out infinite;
+}
+.loading-blob-1 { background:#5b21b6; width:45vmax; height:45vmax; top:-20vmax; left:50vw; animation-delay:0s; }
+.loading-blob-2 { background:#1d4ed8; width:40vmax; height:40vmax; top:-15vmax; left:60vw; animation-delay:.15s; }
+.loading-blob-3 { background:#ca8a04; width:55vmax; height:55vmax; top:-10vmax; left:40vw; animation-delay:.3s; }
+.loading-blob-4 { background:#15803d; width:50vmax; height:50vmax; top:-30vmax; left:70vw; animation-delay:.45s; }
+.loading-blob-5 { background:#0e7490; width:35vmax; height:35vmax; top:-5vmax; left:30vw; animation-delay:.6s; }
+
+@keyframes loadingTravel {
+  0%   { transform: translate(150vw,0) scale(.9); opacity:0; }
+  6%   { opacity:.95; }
+  94%  { opacity:.95; }
+  100% { transform: translate(-150vw,0) scale(1.15); opacity:0; }
+}
+
+.loading-top-bar {
+  position: fixed; top: 18px; left: 22px; right: 22px;
+  display: flex; justify-content: flex-end; align-items: center;
+  z-index: 100;
+}
+.loading-clip-btn {
+  background: none; border: none; padding: 6px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.loading-clip-btn svg {
+  width: 34px; height: 34px; stroke: #7a7a7a; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.loading-image-container {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 10; padding: 0 16px;
+}
+.loading-image-container img {
+  display: block; max-width: 100%; max-height: 70vh;
+  width: auto; height: auto; object-fit: contain;
+  pointer-events: none; -webkit-user-drag: none;
+}
+
+.loading-quran-description {
+  width: 90%; max-width: 420px; margin-top: 18px;
+  text-align: center; direction: rtl;
+}
+.loading-quran-title { font-size: 19px; font-weight: 700; color: #222; margin-bottom: 6px; }
+.loading-quran-text  { font-size: 14px; font-weight: 400; line-height: 1.9; color: #666; }
+
+.loading-footer {
+  position: fixed; left: 0; right: 0;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px; z-index: 100;
+}
+.loading-progress {
+  width: 60%; max-width: 220px; height: 3px;
+  background: rgba(0,0,0,.08); border-radius: 3px;
+  overflow: hidden; margin-bottom: 4px;
+}
+.loading-progress-fill {
+  height: 100%; width: 0%; background: #111;
+  border-radius: 3px; transition: width .3s ease;
+}
+.loading-text { font-size: 13.5px; font-weight: 500; color: #666; }
+
+/* ==========================================================
+   3. الموقع الرئيسي (الاختبارات) — كحلي + مرجاني
+========================================================== */
+#mainSite { display: none; position: relative; min-height: 100vh;
+  background: linear-gradient(160deg, #eef2f8, #f8f5f0 55%, #eaf0f7);
+  color: #1c2739;
+}
+#mainSite.show { display: block; }
+
+:root {
+  --primary: #1a2942;
+  --primary2: #34507a;
+  --accent: #e08070;
+  --accent2: #c25f4f;
+  --cream: #f8f5f0;
+  --ink: #1c2739;
+  --muted: #6b7a8a;
+  --line: #e4e6ea;
+  --white: #ffffff;
+}
+
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+
+.wrap { width: min(1060px, 100%); margin: auto; padding: 20px; }
+
+header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 12px 0 24px;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo {
+  width: 48px; height: 48px; border-radius: 16px;
+  background: var(--primary); color: var(--accent);
+  display: grid; place-items: center; font-size: 25px;
+  box-shadow: 0 8px 22px rgba(26,41,66,.2);
+}
+.brand h1 { font-size: 20px; margin: 0; font-weight: 900; }
+.brand p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+
+.pill {
+  border: 1px solid #d8e0ea; background: #ffffffa8;
+  padding: 8px 14px; border-radius: 99px;
+  font-size: 12px; font-weight: 700; color: var(--primary); white-space: nowrap;
+}
+
+.hero {
+  position: relative; overflow: hidden;
+  background: linear-gradient(125deg, #121f33, #2a4573);
+  color: #fff; border-radius: 28px;
+  padding: clamp(24px, 5vw, 48px);
+  box-shadow: 0 18px 45px rgba(26,41,66,.18);
+}
+.hero:after {
+  content: "۞"; position: absolute; left: 5%; top: -40px;
+  font-size: 190px; color: #ffffff0b; pointer-events: none;
+}
+.eyebrow { color: #f0c4b8; font-size: 13px; font-weight: 800; letter-spacing: .3px; }
+.hero h2 { font-size: clamp(27px, 5vw, 42px); line-height: 1.35; margin: 10px 0; }
+.hero p  { max-width: 600px; color: #e2e8f0; line-height: 1.9; margin: 0; }
+.hero .mini { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+.mini span {
+  background: #ffffff14; border: 1px solid #ffffff24;
+  border-radius: 12px; padding: 9px 12px; font-size: 13px;
+}
+
+.section-head {
+  display: flex; align-items: end; justify-content: space-between;
+  gap: 10px; margin: 30px 0 15px;
+}
+.section-head h3 { margin: 0; font-size: 22px; }
+.section-head p  { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+
+.quiz-card {
+  background: #fff; border: 1px solid #e4e9ef;
+  border-radius: 22px; padding: 24px;
+  box-shadow: 0 8px 22px rgba(26,41,66,.06);
+  display: flex; flex-direction: column; min-height: 240px;
+  transition: .2s;
+}
+.quiz-card:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(26,41,66,.12); }
+.card-icon {
+  width: 50px; height: 50px; border-radius: 15px;
+  background: #eef3f9; display: grid; place-items: center;
+  font-size: 25px; margin-bottom: 14px;
+}
+.quiz-card h4 { font-size: 19px; margin: 0 0 8px; color: var(--primary); }
+.quiz-card p  { color: var(--muted); font-size: 14px; line-height: 1.8; margin: 0 0 18px; flex: 1; }
+
+.meta { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px; }
+.meta span {
+  font-size: 12px; font-weight: 700;
+  background: #f5f7fa; border-radius: 8px; padding: 6px 10px; color: #4a6078;
+}
+.meta span.level-medium { background: #eef7f0; color: #1f6b45; }
+.meta span.level-hard   { background: #fdf0ec; color: #9a4b3e; }
+
+.btn { border: 0; border-radius: 13px; padding: 12px 18px; font-weight: 800; transition: .15s; }
+.btn:active { transform: scale(.98); }
+.primary   { background: var(--primary); color: #fff; }
+.primary:hover { background: var(--primary2); }
+.secondary { background: #edf1f6; color: var(--primary); }
+.accent    { background: var(--accent); color: #2d1a16; }
+.full      { width: 100%; }
+
+.note {
+  margin: 22px 0; padding: 15px 17px;
+  border: 1px dashed #c8d4e0; background: #ffffff99;
+  border-radius: 16px; color: #5a6b7d; font-size: 13px; line-height: 1.8;
+}
+
+/* لوحات داخلية */
+.panel {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 24px; padding: clamp(18px, 4vw, 32px);
+  box-shadow: 0 12px 32px rgba(26,41,66,.07);
+}
+.hidden { display: none !important; }
+
+.back { border: 0; background: transparent; color: var(--primary); font-weight: 800; padding: 8px 0; margin-bottom: 10px; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field label { font-size: 14px; font-weight: 800; }
+.field small { color: var(--muted); font-size: 12px; line-height: 1.6; }
+.field input, .field select {
+  width: 100%; border: 1px solid #dce3eb; border-radius: 12px;
+  padding: 12px; background: #fbfcfe; outline: none; color: var(--ink);
+}
+.field input:focus, .field select:focus { border-color: #6b8db8; box-shadow: 0 0 0 3px rgba(107,141,184,.18); }
+
+.upload {
+  border: 1px dashed #b8c8d8; border-radius: 16px;
+  padding: 15px; display: flex; align-items: center;
+  gap: 13px; background: #f8fafc;
+}
+.avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: #e6eef4; display: grid; place-items: center;
+  overflow: hidden; font-size: 25px; flex-shrink: 0;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.form-actions { display: flex; gap: 10px; margin-top: 20px; }
+.form-actions > * { flex: 1; }
+
+/* شاشة الأسئلة */
+.quiz-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; }
+.quiz-top h3 { margin: 0; font-size: 21px; color: var(--primary); }
+.counter { font-size: 13px; color: var(--muted); font-weight: 800; background: #f2f5f9; padding: 6px 12px; border-radius: 99px; }
+
+.progress { height: 8px; background: #edf1f6; border-radius: 99px; overflow: hidden; margin: 18px 0 24px; }
+.progress div { height: 100%; background: linear-gradient(90deg, var(--accent), var(--primary2)); width: 0%; transition: width .25s; }
+
+.question { font-size: clamp(19px, 3.8vw, 25px); line-height: 1.75; margin: 0 0 20px; font-weight: 700; }
+
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.answer {
+  border: 1.5px solid #e1e6ed; background: #fbfcfe;
+  border-radius: 15px; padding: 15px; text-align: right;
+  display: flex; gap: 12px; align-items: center; color: var(--ink);
+  min-height: 60px; transition: .15s;
+}
+.answer:hover { border-color: #b5c8d8; background: #f5f8fb; }
+.answer .letter {
+  width: 32px; height: 32px; flex-shrink: 0; border-radius: 10px;
+  background: #edf2f7; display: grid; place-items: center;
+  font-weight: 900; color: #41607d;
+}
+.answer.selected { border-color: var(--primary2); background: #eff4fa; box-shadow: 0 0 0 2px rgba(52,80,122,.12); }
+.answer.selected .letter { background: var(--primary); color: #fff; }
+
+.quiz-actions { display: flex; justify-content: space-between; gap: 10px; margin-top: 24px; }
+.quiz-actions button { min-width: 130px; }
+
+/* النتيجة */
+.result { text-align: center; padding: 10px 0; }
+.score-circle {
+  width: 136px; height: 136px;
+  border: 7px solid #dbe3ec;
+  border-right-color: var(--accent);
+  border-top-color: var(--primary);
+  border-radius: 50%; display: grid; place-items: center;
+  margin: 18px auto; color: var(--primary);
+}
+.score-circle strong { font-size: 34px; }
+.result h2 { font-size: 28px; margin: 8px 0; }
+.result p  { color: var(--muted); line-height: 1.8; }
+.result-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
+
+footer { text-align: center; color: #8090a0; font-size: 12px; padding: 26px 0 8px; }
+
+/* الشهادة */
+.certificate-wrap { margin-top: 24px; }
+.certificate {
+  position: relative; background: #fefdfb;
+  border: 8px double var(--primary2);
+  padding: 28px; text-align: center; color: var(--ink);
+  overflow: hidden; min-height: 520px; border-radius: 12px;
+}
+.certificate:before, .certificate:after {
+  content: "۞"; position: absolute; color: #f0e5e0;
+  font-size: 90px; opacity: .7; pointer-events: none;
+}
+.certificate:before { top: 5px; right: 8px; }
+.certificate:after  { bottom: 5px; left: 8px; }
+.cert-inner { border: 1px solid var(--accent); min-height: 445px; padding: 25px 16px; position: relative; z-index: 1; }
+.cert-mark { font-size: 28px; color: var(--accent); }
+.cert-title { font-size: clamp(25px, 5vw, 39px); font-weight: 900; margin: 8px 0; color: var(--primary); }
+.cert-sub { font-size: 15px; color: var(--muted); }
+.cert-photo { width: 86px; height: 86px; object-fit: cover; border-radius: 50%; border: 4px solid var(--accent); margin: 15px auto 8px; display: block; }
+.cert-name { font-size: clamp(25px, 5vw, 34px); font-weight: 900; color: var(--primary2); margin: 12px 0; }
+.cert-desc { line-height: 2; font-size: 16px; max-width: 600px; margin: 0 auto; }
+.cert-score { display: inline-block; margin: 14px auto; padding: 8px 22px; border-radius: 99px; background: #eaf0f7; border: 1px solid #d0dde9; font-weight: 900; }
+.cert-sign { margin-top: 22px; display: inline-block; border-top: 1px solid var(--accent); padding: 10px 30px 0; font-weight: 900; }
+.cert-sign small { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-top: 3px; }
+.cert-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 15px 0; }
+
+/* تجاوب */
+@media (max-width: 760px) {
+  .wrap { padding: 14px; }
+  .cards { grid-template-columns: 1fr; }
+  .quiz-card { min-height: auto; }
+  .form-grid { grid-template-columns: 1fr; }
+  .answers { grid-template-columns: 1fr; }
+  .hero { border-radius: 22px; }
+  .brand h1 { font-size: 17px; }
+  .pill { font-size: 11px; }
+  .certificate { padding: 12px; border-width: 5px; }
+  .cert-inner { padding: 22px 10px; min-height: 440px; }
+  .quiz-actions button { min-width: 0; flex: 1; }
+}
+
+/* الطباعة */
+@media print {
+  body { background: #fff !important; }
+  #loadingScreen, header, .hero, .section-head, .cards, .note, footer,
+  #registration, #quiz, #result, .cert-actions, .back { display: none !important; }
+  .wrap { width: 100%; padding: 0; margin: 0; }
+  #certificateScreen { display: block !important; }
+  .certificate-wrap { margin: 0 !important; }
+  .certificate { width: 100%; min-height: 96vh; page-break-inside: avoid; box-shadow: none; border-width: 8px; padding: 20px; }
+  .cert-inner { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; }
+  .certificate:before, .certificate:after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  @page { size: A4 portrait; margin: 8mm; }
+}
+</style>
+
+<meta property="og:type" content="website">
+
+<meta property="og:title" content="">
+
+<meta property="og:description" content="">
+
+<meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/share.jpg?v=1794590045193">
+
+<meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/share.jpg?v=1794590045193">
+
+<meta name="twitter:card" content="summary_large_image">
+
+<meta name="twitter:title" content="">
+
+<meta name="twitter:description" content="">
+
+<meta property="og:url" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/">
+
+<link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/favicon.png?v=1794590045193">
+
+<link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/apple-touch-icon.png?v=1794590045193">
+</head>
+<body class="loading">
+
+<!-- ==========================================================
+     شاشة التحميل — تصميم الميموريال بنفسه
+========================================================== -->
+<div id="loadingScreen" role="button" tabindex="0" aria-label="تخطي التحميل">
+  <div class="loading-aurora">
+    <div class="loading-blob loading-blob-1"></div>
+    <div class="loading-blob loading-blob-2"></div>
+    <div class="loading-blob loading-blob-3"></div>
+    <div class="loading-blob loading-blob-4"></div>
+    <div class="loading-blob loading-blob-5"></div>
+  </div>
+
+  <div class="loading-top-bar">
+    <button class="loading-clip-btn" id="loadingReportBtn" aria-label="الإبلاغ عن مشكلة">
+      <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+    </button>
+  </div>
+
+  <div class="loading-image-container">
+    <img id="loadingHeroImg" src="Picsart_26-09-15_23-08-25-965.png" alt="واذكر في ذكرى تنفع المؤمنين">
+    <div class="loading-quran-description">
+      <div class="loading-quran-title">القرآن الكريم</div>
+      <div class="loading-quran-text">اللهم ارحم موتانا وموتى المسلمين<br>في أي وقت ومن أي مكان.</div>
+    </div>
+  </div>
+
+  <div class="loading-footer">
+    <div class="loading-progress"><div class="loading-progress-fill" id="loadingProgressFill"></div></div>
+    <div class="loading-text" id="loadingText">جاري التحميل....</div>
+  </div>
+</div>
+
+<!-- ==========================================================
+     الموقع الرئيسي (الاختبارات)
+========================================================== -->
+<div id="mainSite">
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">۞</div>
+      <div>
+        <h1>سلوى عثمان</h1>
+        <p>نتعلّم، نتدبّر، ونرتقي بالقرآن</p>
+      </div>
+    </div>
+    <div class="pill">🌿 رحلة قرآنية ممتعة</div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="eyebrow">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+      <h2>اختبر حفظك…<br>وافرح بإنجازك!</h2>
+      <p>اختبارات قرآنية متدرجة وممتعة، صُمّمت لتثبيت الحفظ ومراجعة السور والآيات بدقة وإتقان.</p>
+      <div class="mini">
+        <span>📖 أسئلة اختيار من متعدد</span>
+        <span>⭐ نتيجة فورية دقيقة</span>
+        <span>🏅 شهادة إنجاز قابلة للطباعة</span>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <div>
+        <h3>اختر اختبارك</h3>
+        <p>ابدأ بالاختبار المناسب لمقدار حفظك ومراجعتك</p>
+      </div>
+    </div>
+
+    <section class="cards">
+      <article class="quiz-card">
+        <div class="card-icon">🌙</div>
+        <h4>اختبار من سورة الناس إلى سورة المنافقون</h4>
+        <p>مراجعة متقنة للسور من سورة الناس حتى سورة المنافقون، تشمل إكمال الآيات ومعرفة الآية التالية في السور.</p>
+        <div class="meta">
+          <span>20 سؤالاً</span>
+          <span class="level-medium">المستوى: متوسط</span>
+          <span>اختيار من متعدد</span>
+        </div>
+        <button class="btn primary full" onclick="beginRegistration('munafiqun')">ابدأ الاختبار (20 سؤالاً) ←</button>
+      </article>
+
+      <article class="quiz-card">
+        <div class="card-icon">🕌</div>
+        <h4>اختبار من سورة الناس إلى سورة المجادلة</h4>
+        <p>اختبار شامل ودقيق من سورة الناس حتى سورة المجادلة لقياس إتقان الحفظ والتركيز في فواصل الآيات.</p>
+        <div class="meta">
+          <span>30 سؤالاً</span>
+          <span class="level-hard">المستوى: صعب</span>
+          <span>اختيار من متعدد</span>
+        </div>
+        <button class="btn primary full" onclick="beginRegistration('mujadilah')">ابدأ الاختبار (30 سؤالاً) ←</button>
+      </article>
+    </section>
+
+    <div class="note">
+      💙 <strong>تنبيه لطيف:</strong> الاسم والصورة والعمر بيانات اختيارية، لكنها تساعد على تجهيز شهادة أجمل باسمك وصورتك. هذه النسخة تعمل بالكامل داخل متصفحك؛ لا يتم رفع الصورة إلى أي خادم خارجي.
+    </div>
+  </main>
+
+  <section id="registration" class="panel hidden">
+    <button class="back" onclick="goHome()">← الرجوع للاختبارات</button>
+    <h2 style="margin:0 0 7px">خلّينا نتعرّف عليك 🌟</h2>
+    <p style="margin:0 0 22px;color:var(--muted);line-height:1.8">البيانات التالية اختيارية، لكن الاسم والصورة يساعدان في تخصيص شهادة الإنجاز.</p>
+    <form id="studentForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="studentName">اسم الطالب / الطالبة</label>
+          <input id="studentName" maxlength="70" placeholder="اكتب اسمك الثلاثي هنا">
+          <small>سيظهر الاسم على الشهادة إذا أدخلته.</small>
+        </div>
+        <div class="field">
+          <label for="studentAge">العمر</label>
+          <select id="studentAge">
+            <option value="">اختر العمر (اختياري)</option>
+            <option>أقل من 8</option>
+            <option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+            <option>أكبر من 12</option>
+          </select>
+          <small>للمساعدة في توثيق بيانات البطل.</small>
+        </div>
+      </div>
+      <div class="field" style="margin-top:15px">
+        <label>الصورة الشخصية (اختياري)</label>
+        <div class="upload">
+          <div class="avatar" id="avatarPreview">📷</div>
+          <div style="flex:1">
+            <input id="studentPhoto" type="file" accept="image/*" style="padding:8px;background:white">
+            <small>اختر صورة من جهازك لتظهر في أعلى الشهادة.</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn secondary" onclick="goHome()">إلغاء</button>
+        <button type="submit" class="btn primary">يلا نبدأ الاختبار ✨</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="quiz" class="panel hidden">
+    <div class="quiz-top">
+      <h3 id="quizTitle">الاختبار</h3>
+      <div class="counter" id="counter">السؤال 1 من 20</div>
+    </div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <p class="question" id="questionText"></p>
+    <div class="answers" id="answers"></div>
+    <div class="quiz-actions">
+      <button class="btn secondary" id="prevBtn" onclick="previousQuestion()">السابق</button>
+      <button class="btn primary" id="nextBtn" onclick="nextQuestion()">التالي ←</button>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin:15px 0 0">اختَر إجابة واحدة لكل سؤال. يمكنك الرجوع وتغيير إجاباتك قبل إنهاء الاختبار.</p>
+  </section>
+
+  <section id="result" class="panel hidden">
+    <div class="result">
+      <div style="font-size:42px">🎉</div>
+      <h2 id="resultHeading">أحسنت!</h2>
+      <p id="resultMessage"></p>
+      <div class="score-circle">
+        <div>
+          <strong id="scoreNum">0</strong>
+          <div id="scoreTotalText" style="font-size:12px;color:var(--muted)">من 20</div>
+        </div>
+      </div>
+      <p id="resultDetails"></p>
+      <div class="result-actions">
+        <button class="btn primary" onclick="showCertificate()">🎓 جهّز شهادتي</button>
+        <button class="btn secondary" onclick="retryQuiz()">إعادة الاختبار</button>
+        <button class="btn secondary" onclick="goHome()">اختبار آخر</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="certificateScreen" class="hidden">
+    <button class="back" onclick="showResult()">← الرجوع للنتيجة</button>
+    <div class="certificate-wrap">
+      <div class="certificate" id="certificate">
+        <div class="cert-inner">
+          <div class="cert-mark">۞ ✦ ۞</div>
+          <div class="cert-title">شهادة إنجاز قرآني</div>
+          <div class="cert-sub">براعم القرآن • تكريمًا للمثابرة وحبّ التعلّم</div>
+          <img id="certPhoto" class="cert-photo hidden" alt="صورة الطالب">
+          <div style="margin-top:20px">تُمنح هذه الشهادة إلى</div>
+          <div class="cert-name" id="certName">بطل القرآن</div>
+          <p class="cert-desc">تقديرًا لمشاركته في <strong id="certQuizName"></strong><br>وإتمامه الاختبار بكل اجتهاد ومثابرة.</p>
+          <div class="cert-score" id="certScore">النتيجة: 20 من 20</div>
+          <p class="cert-desc" id="certPraise">نسأل الله أن يجعل القرآن نورًا لقلبك وطريقًا للخير.</p>
+          <div class="cert-sign">
+            المعلمة سلوى عثمان
+            <small>مع خالص الدعاء بالتوفيق والتميّز</small>
+          </div>
+          <div style="margin-top:18px;font-size:12px;color:var(--muted)" id="certDate"></div>
+        </div>
+      </div>
+      <div class="cert-actions">
+        <button class="btn primary" onclick="window.print()">⬇️ تنزيل PDF / طباعة الشهادة</button>
+        <button class="btn accent" onclick="shareCertificate()">↗ مشاركة الشهادة</button>
+        <button class="btn secondary" onclick="showResult()">عرض النتيجة</button>
+      </div>
+      <p style="text-align:center;color:var(--muted);font-size:12px;line-height:1.8">
+        للحفظ كملف PDF: اضغط «تنزيل PDF / طباعة الشهادة»، ثم اختر «حفظ بتنسيق PDF» من نافذة الطباعة.
+      </p>
+    </div>
+  </section>
+
+  <footer>صُنع بمحبة لأبطال القرآن • المعلمة سلوى عثمان © <span id="year"></span></footer>
+</div>
+</div>
+
+<script>
+'use strict';
+
+/* ==========================================================
+   شاشة التحميل — 3 ثوانٍ
+========================================================== */
+const loadingScreen     = document.getElementById("loadingScreen");
+const loadingProgressFill = document.getElementById("loadingProgressFill");
+const loadingText       = document.getElementById("loadingText");
+const mainSite          = document.getElementById("mainSite");
+
+const LOADING_DURATION = 3000; // 3 ثوانٍ
+let loadingStart = Date.now();
+let loadingDone  = false;
+
+function hideLoadingScreen(){
+  if (loadingDone) return;
+  loadingDone = true;
+  loadingProgressFill.style.width = "100%";
+  loadingText.textContent = "جاهز!";
+  setTimeout(() => {
+    loadingScreen.classList.add("hide");
+    mainSite.classList.add("show");
+    document.body.classList.remove("loading");
+  }, 200);
+}
+
+loadingScreen.addEventListener("click", e => {
+  if (e.target.closest('#loadingReportBtn')) return;
+  hideLoadingScreen();
+});
+loadingScreen.addEventListener("keydown", e => {
+  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); hideLoadingScreen(); }
+});
+
+document.getElementById("loadingReportBtn").addEventListener("click", e => {
+  e.stopPropagation();
+  alert("شكرًا لك، تم استلام ملاحظتك إن شاء الله.");
+});
+
+// شريط التقدم
+setInterval(() => {
+  if (loadingDone) return;
+  const elapsed = Date.now() - loadingStart;
+  const pct = Math.min(95, (elapsed / LOADING_DURATION) * 95);
+  loadingProgressFill.style.width = pct + "%";
+}, 50);
+
+// إخفاء بعد 3 ثوانٍ
+setTimeout(() => {
+  loadingProgressFill.style.width = "100%";
+  hideLoadingScreen();
+}, LOADING_DURATION);
+
+/* ==========================================================
+   قاعدة بيانات الاختبارين
+========================================================== */
+const quizzes = {
+
+  munafiqun: {
+    title: 'اختبار من سورة الناس إلى سورة المنافقون (المستوى المتوسط)',
+    questions: [
+      { q: 'ما الآية التي تأتي بعد قوله تعالى في سورة الناس: ﴿مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ﴾؟', a: ['﴿مَلِكِ النَّاسِ﴾', '﴿الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ﴾', '﴿إِلَٰهِ النَّاسِ﴾', '﴿مِنَ الْجِنَّةِ وَالنَّاسِ﴾'], c: 1 },
+      { q: 'أكمل قوله تعالى في سورة الفلق: ﴿قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ * ...﴾', a: ['﴿مِن شَرِّ مَا خَلَقَ﴾', '﴿وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ﴾', '﴿وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ﴾', '﴿وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ﴾'], c: 0 },
+      { q: 'أكمل قوله تعالى في سورة الإخلاص: ﴿قُلْ هُوَ اللَّهُ أَحَدٌ * ...﴾', a: ['﴿لَمْ يَلِدْ وَلَمْ يُولَدْ﴾', '﴿اللَّهُ الصَّمَدُ﴾', '﴿وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ﴾', '﴿اللَّهُ أَحَدٌ﴾'], c: 1 },
+      { q: 'أكمل قوله تعالى في سورة المسد: ﴿تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ * ...﴾', a: ['﴿سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ﴾', '﴿مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ﴾', '﴿وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ﴾', '﴿فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ﴾'], c: 1 },
+      { q: 'أكمل قوله تعالى في سورة النصر: ﴿إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ * ...﴾', a: ['﴿فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ﴾', '﴿وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا﴾', '﴿إِنَّهُ كَانَ تَوَّابًا﴾', '﴿وَاللَّهُ عَزِيزٌ حَكِيمٌ﴾'], c: 1 },
+      { q: 'أكمل قوله تعالى في سورة الكافرون: ﴿قُلْ يَا أَيُّهَا الْكَافِرُونَ * ...﴾', a: ['﴿وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ﴾', '﴿لَا أَعْبُدُ مَا تَعْبُدُونَ﴾', '﴿وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ﴾', '﴿لَكُمْ دِينُكُمْ وَلِيَ دِينِ﴾'], c: 1 },
+      { q: 'أكمل قوله تعالى في سورة الكوثر: ﴿إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ * ...﴾', a: ['﴿إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ﴾', '﴿فَصَلِّ لِرَبِّكَ وَانْحَرْ﴾', '﴿إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ﴾', '﴿فَاعْبُدْ رَبَّكَ﴾'], c: 1 },
+      { q: 'أكمل قوله تعالى في سورة الماعون: ﴿أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ * ...﴾', a: ['﴿فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ﴾', '﴿وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ﴾', '﴿فَوَيْلٌ لِّلْمُصَلِّينَ﴾', '﴿الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ﴾'], c: 0 },
+      { q: 'أكمل قوله تعالى في سورة قريش: ﴿لِإِيلَافِ قُرَيْشٍ * ...﴾', a: ['﴿فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ﴾', '﴿إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ﴾', '﴿الَّذِي أَطْعَمَهُم مِّن جُوعٍ﴾', '﴿وَآمَنَهُم مِّنْ خَوْفٍ﴾'], c: 1 },
+      { q: 'أكمل قوله تعالى في سورة الفيل: ﴿أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ * ...﴾', a: ['﴿أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ﴾', '﴿وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ﴾', '﴿تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ﴾', '﴿فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ﴾'], c: 0 },
+      { q: 'أكمل قوله تعالى في سورة الهمزة: ﴿وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ * ...﴾', a: ['﴿الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ﴾', '﴿يَحْسَبُ أَنَّ مَالَهُ أَخْلَدَهُ﴾', '﴿كَلَّا ۖ لَيُنبَذَنَّ فِي الْحُطَمَةِ﴾', '﴿نَارُ اللَّهِ الْمُوقَدَةُ﴾'], c: 0 },
+      { q: 'أكمل قوله تعالى في سورة العصر: ﴿وَالْعَصْرِ * ...﴾', a: ['﴿إِنَّ الْإِنسَانَ لَفِي خُسْرٍ﴾', '﴿إِلَّا الَّذِينَ آمَنُوا﴾', '﴿وَعَمِلُوا الصَّالِحَاتِ﴾', '﴿وَتَوَاصَوْا بِالْحَقِّ﴾'], c: 0 },
+      { q: 'أكمل قوله تعالى في سورة التكاثر: ﴿أَلْهَاكُمُ التَّكَاثُرُ * ...﴾', a: ['﴿كَلَّا سَوْفَ تَعْلَمُونَ﴾', '﴿حَتَّىٰ زُرْتُمُ الْمَقَابِرَ﴾', '﴿ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ﴾', '﴿كَلَّا لَوْ تَعْلَمُونَ عِلْمَ الْيَقِينِ﴾'], c: 1 },
+      { q: 'أكمل قوله تعالى في سورة القارعة: ﴿الْقَارِعَةُ * ...﴾', a: ['﴿مَا الْقَارِعَةُ﴾', '﴿يَوْمَ يَكُونُ النَّاسُ كَالْفَرَاشِ الْمَبْثُوثِ﴾', '﴿وَتَكُونُ الْجِبَالُ كَالْعِهْنِ الْمَنفُوشِ﴾', '﴿فَأَمَّا مَن ثَقُلَتْ مَوَازِينُهُ﴾'], c: 0 },
+      { q: 'أكمل قوله تعالى في سورة العاديات: ﴿وَالْعَادِيَاتِ ضَبْحًا * ...﴾', a: ['﴿فَالْمُورِيَاتِ قَدْحًا﴾', '﴿فَالْمُغِيرَاتِ صُبْحًا﴾', '﴿فَأَثَرْنَ بِهِ نَقْعًا﴾', '﴿فَوَسَطْنَ بِهِ جَمْعًا﴾'], c: 0 },
+      { q: 'أكمل قوله تعالى في سورة الزلزلة: ﴿إِذَا زُلْزِلَتِ الْأَرْضُ زِلْزَالَهَا * ...﴾', a: ['﴿وَأَخْرَجَتِ الْأَرْضُ أَثْقَالَهَا﴾', '﴿وَقَالَ الْإِنسَانُ مَا لَهَا﴾', '﴿يَوْمَئِذٍ تُحَدِّثُ أَخْبَارَهَا﴾', '﴿بِأَنَّ رَبَّكَ أَوْحَىٰ لَهَا﴾'], c: 0 },
+      { q: 'أكمل قوله تعالى في سورة البينة: ﴿لَمْ يَكُنِ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ وَالْمُشْرِكِينَ مُنفَكِّينَ﴾... ما التكملة؟', a: ['﴿حَتَّىٰ تَأْتِيَهُمُ الْبَيِّنَةُ﴾', '﴿رَسُولٌ مِّنَ اللَّهِ يَتْلُو صُحُفًا مُّطَهَّرَةً﴾', '﴿فِيهَا كُتُبٌ قَيِّمَةٌ﴾', '﴿وَمَا تَفَرَّقَ الَّذِينَ أُوتُوا الْكِتَابَ﴾'], c: 0 },
+      { q: 'أكمل قوله تعالى في سورة القدر: ﴿إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ * ...﴾', a: ['﴿لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾', '﴿وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ﴾', '﴿تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا﴾', '﴿سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ﴾'], c: 1 },
+      { q: 'أكمل قوله تعالى في سورة العلق: ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ * ...﴾', a: ['﴿خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ﴾', '﴿اقْرَأْ وَرَبُّكَ الْأَكْرَمُ﴾', '﴿الَّذِي عَلَّمَ بِالْقَلَمِ﴾', '﴿عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ﴾'], c: 0 },
+      { q: 'ما الآية التي تأتي بعد الآية الأولى في سورة المنافقون: ﴿إِذَا جَاءَكَ الْمُنَافِقُونَ قَالُوا نَشْهَدُ إِنَّكَ لَرَسُولُ اللَّهِ...﴾؟', a: ['﴿اتَّخَذُوا أَيْمَانَهُمْ جُنَّةً فَصَدُّوا عَن سَبِيلِ اللَّهِ﴾', '﴿إِنَّهُمْ سَاءَ مَا كَانُوا يَعْمَلُونَ﴾', '﴿ذَٰلِكَ بِأَنَّهُمْ آمَنُوا ثُمَّ كَفَرُوا﴾', '﴿وَإِذَا رَأَيْتَهُمْ تُعْجِبُكَ أَجْسَامُهُمْ﴾'], c: 0 }
+    ]
+  },
+
+  mujadilah: {
+    title: 'اختبار من سورة الناس إلى سورة المجادلة (المستوى الصعب)',
+    questions: [
+      { q: 'ما الآية الخامسة في سورة الناس؟', a: ['﴿مَلِكِ النَّاسِ﴾', '﴿إِلَٰهِ النَّاسِ﴾', '﴿الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ﴾', '﴿مِنَ الْجِنَّةِ وَالنَّاسِ﴾'], c: 2 },
+      { q: 'أكمل: ﴿وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ * ...﴾', a: ['﴿وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ﴾', '﴿وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ﴾', '﴿مِن شَرِّ مَا خَلَقَ﴾', '﴿وَمِن شَرِّ الْوَسْوَاسِ﴾'], c: 0 },
+      { q: 'أكمل: ﴿اللَّهُ الصَّمَدُ * ...﴾', a: ['﴿لَمْ يَلِدْ وَلَمْ يُولَدْ﴾', '﴿وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ﴾', '﴿قُلْ هُوَ اللَّهُ أَحَدٌ﴾', '﴿اللَّهُ أَحَدٌ﴾'], c: 0 },
+      { q: 'أكمل: ﴿سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ * ...﴾', a: ['﴿وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ﴾', '﴿فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ﴾', '﴿مَا أَغْنَىٰ عَنْهُ مَالُهُ﴾', '﴿وَتَبَّ﴾'], c: 0 },
+      { q: 'أكمل: ﴿وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا * ...﴾', a: ['﴿فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا﴾', '﴿إِنَّهُ كَانَ تَوَّابًا﴾', '﴿وَاللَّهُ عَزِيزٌ حَكِيمٌ﴾', '﴿إِذَا جَاءَ نَصْرُ اللَّهِ﴾'], c: 0 },
+      { q: 'أكمل: ﴿وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ * ...﴾', a: ['﴿وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ﴾', '﴿لَكُمْ دِينُكُمْ وَلِيَ دِينِ﴾', '﴿لَا أَعْبُدُ مَا تَعْبُدُونَ﴾', '﴿وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ﴾'], c: 0 },
+      { q: 'أكمل: ﴿إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ * ...﴾', a: ['﴿فَصَلِّ لِرَبِّكَ وَانْحَرْ﴾', '﴿إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ﴾', '﴿فَاعْبُدْ رَبَّكَ﴾', '﴿إِنَّا أَعْطَيْنَاكَ﴾'], c: 0 },
+      { q: 'أكمل: ﴿الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ * ...﴾', a: ['﴿الَّذِينَ هُمْ يُرَاءُونَ﴾', '﴿وَيَمْنَعُونَ الْمَاعُونَ﴾', '﴿فَوَيْلٌ لِّلْمُصَلِّينَ﴾', '﴿الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ﴾'], c: 0 },
+      { q: 'أكمل: ﴿فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ * ...﴾', a: ['﴿الَّذِي أَطْعَمَهُم مِّن جُوعٍ وَآمَنَهُم مِّنْ خَوْفٍ﴾', '﴿إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ﴾', '﴿الَّذِي أَطْعَمَهُم مِّن جُوعٍ﴾', '﴿وَآمَنَهُم مِّنْ خَوْفٍ﴾'], c: 0 },
+      { q: 'أكمل: ﴿تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ * ...﴾', a: ['﴿فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ﴾', '﴿وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ﴾', '﴿أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ﴾', '﴿أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ﴾'], c: 0 },
+      { q: 'أكمل: ﴿كَلَّا ۖ لَيُنبَذَنَّ فِي الْحُطَمَةِ * ...﴾', a: ['﴿وَمَا أَدْرَاكَ مَا الْحُطَمَةُ﴾', '﴿نَارُ اللَّهِ الْمُوقَدَةُ﴾', '﴿الَّتِي تَطَّلِعُ عَلَى الْأَفْئِدَةِ﴾', '﴿إِنَّهَا عَلَيْهِم مُّؤْصَدَةٌ﴾'], c: 0 },
+      { q: 'أكمل: ﴿إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ﴾... ما التكملة؟', a: ['﴿وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ﴾', '﴿وَتَوَاصَوْا بِالصَّبْرِ﴾', '﴿وَتَوَاصَوْا بِالْحَقِّ﴾', '﴿إِنَّ الْإِنسَانَ لَفِي خُسْرٍ﴾'], c: 0 },
+      { q: 'أكمل: ﴿كَلَّا سَوْفَ تَعْلَمُونَ * ...﴾', a: ['﴿ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ﴾', '﴿كَلَّا لَوْ تَعْلَمُونَ عِلْمَ الْيَقِينِ﴾', '﴿لَتَرَوُنَّ الْجَحِيمَ﴾', '﴿ثُمَّ لَتَرَوُنَّهَا عَيْنَ الْيَقِينِ﴾'], c: 0 },
+      { q: 'أكمل: ﴿فَأَمَّا مَن ثَقُلَتْ مَوَازِينُهُ * ...﴾', a: ['﴿فَهُوَ فِي عِيشَةٍ رَّاضِيَةٍ﴾', '﴿فَأُمُّهُ هَاوِيَةٌ﴾', '﴿نَارٌ حَامِيَةٌ﴾', '﴿وَأَمَّا مَنْ خَفَّتْ مَوَازِينُهُ﴾'], c: 0 },
+      { q: 'أكمل: ﴿إِنَّ الْإِنسَانَ لِرَبِّهِ لَكَنُودٌ * ...﴾', a: ['﴿وَإِنَّهُ عَلَىٰ ذَٰلِكَ لَشَهِيدٌ﴾', '﴿وَإِنَّهُ لِحُبِّ الْخَيْرِ لَشَدِيدٌ﴾', '﴿أَفَلَا يَعْلَمُ إِذَا بُعْثِرَ مَا فِي الْقُبُورِ﴾', '﴿إِنَّ رَبَّهُم بِهِمْ يَوْمَئِذٍ لَّخَبِيرٌ﴾'], c: 0 },
+      { q: 'أكمل: ﴿فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ * ...﴾', a: ['﴿وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ﴾', '﴿وَمَن يَعْمَلْ سُوءًا يُجْزَ بِهِ﴾', '﴿إِنَّ اللَّهَ لَا يَظْلِمُ مِثْقَالَ ذَرَّةٍ﴾', '﴿فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ﴾'], c: 0 },
+      { q: 'أكمل: ﴿رَسُولٌ مِّنَ اللَّهِ يَتْلُو صُحُفًا مُّطَهَّرَةً * ...﴾', a: ['﴿فِيهَا كُتُبٌ قَيِّمَةٌ﴾', '﴿حَتَّىٰ تَأْتِيَهُمُ الْبَيِّنَةُ﴾', '﴿وَمَا تَفَرَّقَ الَّذِينَ أُوتُوا الْكِتَابَ﴾', '﴿وَمَا أُمِرُوا إِلَّا لِيَعْبُدُوا اللَّهَ﴾'], c: 0 },
+      { q: 'أكمل: ﴿تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍ * ...﴾', a: ['﴿سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ﴾', '﴿لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾', '﴿وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ﴾', '﴿إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ﴾'], c: 0 },
+      { q: 'أكمل: ﴿عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ * ...﴾', a: ['﴿كَلَّا إِنَّ الْإِنسَانَ لَيَطْغَىٰ﴾', '﴿أَن رَّآهُ اسْتَغْنَىٰ﴾', '﴿إِنَّ إِلَىٰ رَبِّكَ الرُّجْعَىٰ﴾', '﴿اقْرَأْ وَرَبُّكَ الْأَكْرَمُ﴾'], c: 0 },
+      { q: 'أكمل: ﴿وَإِذَا قِيلَ لَهُمْ تَعَالَوْا يَسْتَغْفِرْ لَكُمْ رَسُولُ اللَّهِ﴾... ما التكملة؟', a: ['﴿لَوَّوْا رُءُوسَهُمْ وَرَأَيْتَهُمْ يَصُدُّونَ وَهُم مُّسْتَكْبِرُونَ﴾', '﴿قَالُوا نَشْهَدُ إِنَّكَ لَرَسُولُ اللَّهِ﴾', '﴿اتَّخَذُوا أَيْمَانَهُمْ جُنَّةً﴾', '﴿سَوَاءٌ عَلَيْهِمْ أَسْتَغْفَرْتَ لَهُمْ﴾'], c: 0 },
+      { q: 'أكمل: ﴿قَدْ سَمِعَ اللَّهُ قَوْلَ الَّتِي تُجَادِلُكَ فِي زَوْجِهَا وَتَشْتَكِي إِلَى اللَّهِ﴾... ما التكملة؟', a: ['﴿وَاللَّهُ يَسْمَعُ تَحَاوُرَكُمَا ۚ إِنَّ اللَّهَ سَمِيعٌ بَصِيرٌ﴾', '﴿إِنَّ اللَّهَ سَمِيعٌ بَصِيرٌ﴾', '﴿وَاللَّهُ يَسْمَعُ تَحَاوُرَكُمَا﴾', '﴿إِنَّ اللَّهَ سَمِيعٌ عَلِيمٌ﴾'], c: 0 },
+      { q: 'أكمل: ﴿هُوَ الَّذِي أَخْرَجَ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ مِن دِيَارِهِمْ لِأَوَّلِ الْحَشْرِ﴾... ما التكملة؟', a: ['﴿مَا ظَنَنتُمْ أَن يَخْرُجُوا ۖ وَظَنُّوا أَنَّهُم مَّانِعَتُهُمْ حُصُونُهُم مِّنَ اللَّهِ﴾', '﴿فَأَتَاهُمُ اللَّهُ مِنْ حَيْثُ لَمْ يَحْتَسِبُوا﴾', '﴿وَقَذَفَ فِي قُلُوبِهِمُ الرُّعْبَ﴾', '﴿يُخْرِبُونَ بُيُوتَهُم بِأَيْدِيهِمْ﴾'], c: 0 },
+      { q: 'أكمل: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَتَّخِذُوا عَدُوِّي وَعَدُوَّكُمْ أَوْلِيَاءَ﴾... ما التكملة؟', a: ['﴿تُلْقُونَ إِلَيْهِم بِالْمَوَدَّةِ وَقَدْ كَفَرُوا بِمَا جَاءَكُم مِّنَ الْحَقِّ﴾', '﴿إِن يَثْقَفُوكُمْ يَكُونُوا لَكُمْ أَعْدَاءً﴾', '﴿وَيَبْسُطُوا إِلَيْكُمْ أَيْدِيَهُمْ وَأَلْسِنَتَهُم بِالسُّوءِ﴾', '﴿وَوَدُّوا لَوْ تَكْفُرُونَ﴾'], c: 0 },
+      { q: 'ما الآية الأولى في سورة الصف؟', a: ['﴿سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ﴾', '﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لِمَ تَقُولُونَ مَا لَا تَفْعَلُونَ﴾', '﴿إِنَّ اللَّهَ يُحِبُّ الَّذِينَ يُقَاتِلُونَ فِي سَبِيلِهِ صَفًّا﴾', '﴿وَإِذْ قَالَ مُوسَىٰ لِقَوْمِهِ﴾'], c: 0 },
+      { q: 'ما الآية الأولى في سورة الجمعة؟', a: ['﴿يُسَبِّحُ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ الْمَلِكِ الْقُدُّوسِ الْعَزِيزِ الْحَكِيمِ﴾', '﴿هُوَ الَّذِي بَعَثَ فِي الْأُمِّيِّينَ رَسُولًا مِّنْهُمْ﴾', '﴿يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ﴾', '﴿قُلْ يَا أَيُّهَا الَّذِينَ هَادُوا﴾'], c: 0 },
+      { q: 'ما الآية الأولى في سورة التحريم؟', a: ['﴿يَا أَيُّهَا النَّبِيُّ لِمَ تُحَرِّمُ مَا أَحَلَّ اللَّهُ لَكَ تَبْتَغِي مَرْضَاتَ أَزْوَاجِكَ ۚ وَاللَّهُ غَفُورٌ رَّحِيمٌ﴾', '﴿قَدْ فَرَضَ اللَّهُ لَكُمْ تَحِلَّةَ أَيْمَانِكُمْ﴾', '﴿وَإِذْ أَسَرَّ النَّبِيُّ إِلَىٰ بَعْضِ أَزْوَاجِهِ حَدِيثًا﴾', '﴿عَسَىٰ رَبُّهُ إِن طَلَّقَكُنَّ أَن يُبْدِلَهُ أَزْوَاجًا خَيْرًا مِّنكُنَّ﴾'], c: 0 },
+      { q: 'أكمل: ﴿يَا أَيُّهَا النَّبِيُّ إِذَا طَلَّقْتُمُ النِّسَاءَ فَطَلِّقُوهُنَّ لِعِدَّتِهِنَّ﴾... ما التكملة؟', a: ['﴿وَأَحْصُوا الْعِدَّةَ ۖ وَاتَّقُوا اللَّهَ رَبَّكُمْ﴾', '﴿وَاتَّقُوا اللَّهَ رَبَّكُمْ﴾', '﴿لَا تُخْرِجُوهُنَّ مِن بُيُوتِهِنَّ﴾', '﴿وَتِلْكَ حُدُودُ اللَّهِ﴾'], c: 0 },
+      { q: 'ما الآية الأولى في سورة التغابن؟', a: ['﴿يُسَبِّحُ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۖ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ ۖ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ﴾', '﴿هُوَ الَّذِي خَلَقَكُمْ فَمِنكُمْ كَافِرٌ وَمِنكُم مُّؤْمِنٌ﴾', '﴿خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ بِالْحَقِّ﴾', '﴿يَعْلَمُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ﴾'], c: 0 },
+      { q: 'أكمل: ﴿لَوْ أَنزَلْنَا هَٰذَا الْقُرْآنَ عَلَىٰ جَبَلٍ لَّرَأَيْتَهُ خَاشِعًا مُّتَصَدِّعًا مِّنْ خَشْيَةِ اللَّهِ﴾... ما التكملة؟', a: ['﴿وَتِلْكَ الْأَمْثَالُ نَضْرِبُهَا لِلنَّاسِ لَعَلَّهُمْ يَتَفَكَّرُونَ﴾', '﴿لَعَلَّهُمْ يَتَفَكَّرُونَ﴾', '﴿هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ﴾', '﴿لَوْ أَنزَلْنَا هَٰذَا الْقُرْآنَ﴾'], c: 0 },
+      { q: 'أكمل: ﴿أَلَمْ تَرَ إِلَى الَّذِينَ تَوَلَّوْا قَوْمًا غَضِبَ اللَّهُ عَلَيْهِم﴾... ما التكملة؟', a: ['﴿مَّا هُمْ مِّنكُمْ وَلَا مِنْهُمْ وَيَحْلِفُونَ عَلَى الْكَذِبِ وَهُمْ يَعْلَمُونَ﴾', '﴿وَيَحْلِفُونَ عَلَى الْكَذِبِ وَهُمْ يَعْلَمُونَ﴾', '﴿مَّا هُمْ مِّنكُمْ وَلَا مِنْهُمْ﴾', '﴿أَعَدَّ اللَّهُ لَهُمْ عَذَابًا شَدِيدًا﴾'], c: 0 }
+    ]
+  }
+};
+
+/* ==========================================================
+   منطق الاختبار
+========================================================== */
+let currentKey = 'munafiqun';
+let currentIndex = 0;
+let answers = [];
+let student = { name:'', age:'', photo:'' };
+let score = 0;
+
+const $ = id => document.getElementById(id);
+
+function hideScreens(){
+  ['home','registration','quiz','result','certificateScreen'].forEach(id => $(id).classList.add('hidden'));
+}
+
+function goHome(){
+  hideScreens();
+  $('home').classList.remove('hidden');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function beginRegistration(key){
+  currentKey = key;
+  student = { name:'', age:'', photo:'' };
+  $('studentName').value = '';
+  $('studentAge').value = '';
+  $('studentPhoto').value = '';
+  $('avatarPreview').innerHTML = '📷';
+  hideScreens();
+  $('registration').classList.remove('hidden');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+$('studentPhoto').addEventListener('change', e => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { alert('من فضلك اختر ملف صورة.'); e.target.value=''; return; }
+  if (file.size > 5*1024*1024) { alert('حجم الصورة كبير. اختر صورة أقل من 5 ميجابايت.'); e.target.value=''; return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    student.photo = reader.result;
+    $('avatarPreview').innerHTML = '';
+    const img = document.createElement('img');
+    img.src = reader.result;
+    $('avatarPreview').appendChild(img);
+  };
+  reader.readAsDataURL(file);
+});
+
+$('studentForm').addEventListener('submit', e => {
+  e.preventDefault();
+  student.name = $('studentName').value.trim();
+  student.age = $('studentAge').value;
+  currentIndex = 0;
+  answers = Array(quizzes[currentKey].questions.length).fill(null);
+  hideScreens();
+  $('quiz').classList.remove('hidden');
+  renderQuestion();
+  window.scrollTo({ top:0, behavior:'smooth' });
+});
+
+function renderQuestion(){
+  const quiz = quizzes[currentKey];
+  const item = quiz.questions[currentIndex];
+
+  $('quizTitle').textContent = quiz.title;
+  $('counter').textContent = `السؤال ${currentIndex+1} من ${quiz.questions.length}`;
+  $('questionText').textContent = item.q;
+  $('answers').innerHTML = '';
+
+  const letters = ['أ','ب','ج','د'];
+  item.a.forEach((text, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'answer' + (answers[currentIndex] === i ? ' selected' : '');
+
+    const letter = document.createElement('span');
+    letter.className = 'letter';
+    letter.textContent = letters[i];
+
+    const span = document.createElement('span');
+    span.textContent = text;
+
+    btn.append(letter, span);
+    btn.onclick = () => { answers[currentIndex] = i; renderQuestion(); };
+    $('answers').appendChild(btn);
+  });
+
+  $('prevBtn').disabled = currentIndex === 0;
+  $('prevBtn').style.opacity = currentIndex === 0 ? '.45' : '1';
+  $('nextBtn').textContent = currentIndex === quiz.questions.length - 1 ? 'إنهاء الاختبار ✓' : 'التالي ←';
+
+  const answered = answers[currentIndex] !== null ? 1 : 0;
+  $('progressBar').style.width = `${((currentIndex + answered) / quiz.questions.length) * 100}%`;
+}
+
+function previousQuestion(){ if (currentIndex > 0) { currentIndex--; renderQuestion(); } }
+
+function nextQuestion(){
+  if (answers[currentIndex] === null) { alert('اختَر إجابة قبل الانتقال للسؤال التالي 🌟'); return; }
+  if (currentIndex < quizzes[currentKey].questions.length - 1) { currentIndex++; renderQuestion(); }
+  else finishQuiz();
+}
+
+function finishQuiz(){
+  const qs = quizzes[currentKey].questions;
+  score = qs.reduce((sum, q, i) => sum + (answers[i] === q.c ? 1 : 0), 0);
+
+  hideScreens();
+  $('result').classList.remove('hidden');
+  $('scoreNum').textContent = score;
+  $('scoreTotalText').textContent = `من ${qs.length}`;
+
+  const pct = score / qs.length;
+  if (pct >= 0.8) {
+    $('resultHeading').textContent = 'ما شاء الله! أحسنت 🌟';
+    $('resultMessage').textContent = (student.name ? `يا ${student.name}، ` : 'يا بطل القرآن، ') + 'أداؤك رائع! استمر في حفظ كتاب الله.';
+  } else if (pct >= 0.5) {
+    $('resultHeading').textContent = 'أحسنت، واصل المراجعة 💚';
+    $('resultMessage').textContent = (student.name ? `يا ${student.name}، ` : 'يا بطل القرآن، ') + 'شكرًا لمحاولتك الجميلة. راجع السور ثم جرّب مرة أخرى.';
+  } else {
+    $('resultHeading').textContent = 'لا تيأس، بالمراجعة ستتقدم 📖';
+    $('resultMessage').textContent = (student.name ? `يا ${student.name}، ` : 'يا بطل القرآن، ') + 'شكرًا لمحاولتك. راجع السور جيدًا ثم أعد المحاولة.';
+  }
+
+  $('resultDetails').textContent = `أجبت إجابة صحيحة عن ${score} أسئلة من أصل ${qs.length}.`;
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function retryQuiz(){
+  currentIndex = 0;
+  answers = Array(quizzes[currentKey].questions.length).fill(null);
+  hideScreens();
+  $('quiz').classList.remove('hidden');
+  renderQuestion();
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function showCertificate(){
+  const qs = quizzes[currentKey].questions;
+  hideScreens();
+  $('certificateScreen').classList.remove('hidden');
+
+  $('certName').textContent = student.name || 'بطل القرآن';
+  $('certQuizName').textContent = quizzes[currentKey].title;
+  $('certScore').textContent = `النتيجة: ${score} من ${qs.length}`;
+
+  const pct = score / qs.length;
+  $('certPraise').textContent = pct >= 0.8
+    ? 'أبدعت في رحلتك القرآنية، فاستمر في المراجعة والعمل بالقرآن.'
+    : 'نقدّر اجتهادك ومشاركتك، ونتمنى لك تقدمًا جميلًا مع المراجعة.';
+
+  $('certDate').textContent = 'تاريخ الإنجاز: ' + new Intl.DateTimeFormat('ar-EG', { year:'numeric', month:'long', day:'numeric' }).format(new Date());
+
+  if (student.photo) { $('certPhoto').src = student.photo; $('certPhoto').classList.remove('hidden'); }
+  else { $('certPhoto').classList.add('hidden'); }
+
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+function showResult(){
+  hideScreens();
+  $('result').classList.remove('hidden');
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+async function shareCertificate(){
+  const total = quizzes[currentKey].questions.length;
+  const title = 'شهادة إنجاز قرآني';
+  const text = `${title}\nالطالب: ${student.name || 'بطل القرآن'}\nالاختبار: ${quizzes[currentKey].title}\nالنتيجة: ${score} من ${total}\nتوقيع المعلمة: سلوى عثمان`;
+  if (navigator.share) {
+    try { await navigator.share({ title, text }); } catch(e) {}
+  } else {
+    try { await navigator.clipboard.writeText(text); alert('تم نسخ تفاصيل الشهادة. يمكنك لصقها ومشاركتها.'); }
+    catch(e) { prompt('انسخ تفاصيل الشهادة لمشاركتها:', text); }
+  }
+}
+
+$('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
