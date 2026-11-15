@@ -1,373 +1,473 @@
-<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#111827">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>اختبارات القرآن الكريم | المعلمة سلوي عثمان</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#111827">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f1f5f9 0%, #e6edf4 100%);
+            color: #0a192f;
+            padding-bottom: 100px;
+            position: relative;
+        }
+
+        /* خلفية الصفحة الرئيسية بالذكر العظيم */
+body::before {
+    content: "لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير";
+    position: fixed;
+    top: 69%; /* النزول تحت شوية */
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%) translateX(-5%); /* غير قيمة translateX(-10%) or translateX(10%) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-align: center;
+    pointer-events: none;
+    z-index: 0;
+    white-space: pre-wrap;
+    padding: 20px;
+    line-height: 1.5;
+    
+    background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 40%, #3b82f6 70%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+        /* ضمان أن كل المحتوى فوق الخلفية */
+        header, .container, .fab, .stats-bar, .daily-log-section {
+            position: relative;
+            z-index: 2;
+        }
+
+        :root {
+            --primary-navy: #0a192f;
+            --secondary-orange: #ff6b00;
+            --accent-blue: #1e3a8a;
+            --text-light: #f8fafc;
+            --success-green: #10b981;
+            --glass-white: rgba(255, 255, 255, 0.92);
+        }
+
+        header {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(135deg, #0a192f 0%, #0f2b4f 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            border-bottom: 5px solid #ff6b00;
+        }
+
+        header h1 {
+            font-size: 2.3rem;
+            letter-spacing: -0.5px;
+            font-weight: 900;
+        }
+
+        .dhikr {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            font-weight: bold;
+            color: #cbd5e1;
+            margin-top: 6px;
+        }
+
+        /* شريط إحصائيات معدل - فقط عدد الأصناف */
+        .stats-bar {
+            position: relative;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            background: white;
+            padding: 16px 12px;
+            margin: -40px 20px 20px 20px;
+            border-radius: 28px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 107, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .stats-bar:hover {
+            transform: translateY(-4px);
+            background: #ffffff;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-item {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #1e293b;
+            text-align: center;
+        }
+
+        .stat-item span {
+            display: block;
+            font-weight: 900;
+            color: #ff6b00;
+            font-size: 1.6rem;
+            margin-top: 5px;
+        }
+
+        .container {
+            padding: 0 20px;
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        /* حاوية فارغة بدل البطاقات (لأننا أزلنا البطاقات الرئيسية) */
+        .invisible-grid-placeholder {
+            display: none;
+        }
+
+        /* قسم سجل اليومي وبطاقات الفواتير التي تظهر فقط عند البيع */
+        .daily-log-section {
+            margin-top: 20px;
+        }
+
+        .section-title {
+            font-weight: 900;
+            color: #0a192f;
+            margin-bottom: 18px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* بطاقة المبيعات التي تظهر تلقائياً عند البيع */
+        .sale-card {
+            background: white;
+            border-radius: 28px;
+            padding: 18px 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+            border-right: 6px solid #ff6b00;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .sale-card:hover {
+            transform: translateX(-4px);
+            box-shadow: 0 12px 22px rgba(0,0,0,0.1);
+        }
+        .sale-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .sale-product-name {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #0a192f;
+        }
+        .sale-price {
+            background: #fff1e5;
+            padding: 5px 12px;
+            border-radius: 40px;
+            color: #ff6b00;
+            font-weight: bold;
+        }
+        .sale-date-badge {
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+        @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 62px;
+            height: 62px;
+            background: linear-gradient(145deg, #1e3a8a, #0f2b4f);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 100;
+            border: 1px solid rgba(255, 107, 0, 0.4);
+        }
+
+        .fab:hover {
+            transform: scale(1.05);
+            background: #0f2b4f;
+        }
+
+        .fab:nth-of-type(2) {
+            bottom: 100px;
+            background: linear-gradient(145deg, #ff6b00, #cc5500);
+        }
+
+        /* زر التقرير الجديد دائرة بسهم (على اليمين) */
+        .report-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 62px;
+            height: 62px;
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 100;
+            border: 2px solid #ff6b00;
+        }
+        .report-fab i {
+            font-size: 1.9rem;
+        }
+        .report-fab:hover {
+            transform: scale(1.08);
+            background: #ff6b00;
+            color: #0f172a;
+        }
+
+        #modal, #details-modal, #report-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(12px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-glass {
+            background: #0f172a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            padding: 30px;
+            width: 90%;
+            max-width: 440px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-glass h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            color: #94a3b8;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .input-group input {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid #334155;
+            color: white;
+            padding: 14px;
+            border-radius: 20px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #3b82f6;
+        }
+
+        .magic-button {
+            background: linear-gradient(45deg, #1e3a8a, #3b82f6);
+            background-size: 200% 200%;
+            color: white;
+            padding: 16px;
+            width: 100%;
+            border: none;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .details-card {
+            background: white;
+            max-width: 520px;
+            width: 100%;
+            border-radius: 40px;
+            padding: 28px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scroll-items {
+            overflow-y: auto;
+            flex: 1;
+            margin: 15px 0;
+        }
+
+        .sale-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 1px solid #eef2ff;
+        }
+
+        button.close-modal {
+            background: #0a192f;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* invoice modal */
+        #invoice-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(15px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+        
+        
+        .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.invoice-box {
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+}
+
+.invoice-table {
+    width: 100%;
+    margin: 15px 0;
+    border-collapse: collapse;
+}
+
+.invoice-table th, .invoice-table td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.total-section {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #00ffcc;
+}
+
+.invoice-footer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.btn-confirm { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+.btn-cancel { background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+
+        
+
+        @media (max-width: 650px) {
+            .stats-bar {
+                margin: -20px 10px 15px;
+            }
+            .fab {
+                left: 20px;
+                bottom: 20px;
+                width: 55px;
+                height: 55px;
+            }
+            .fab:nth-of-type(2) {
+                bottom: 90px;
+            }
+            .report-fab {
+                right: 20px;
+                bottom: 20px;
+                width: 55px;
+                height: 55px;
+            }
+            body::before {
+                font-size: 1.2rem;
+            }
+        }
+        /* تنسيق حاوية المنتجات لتسمح بالتمرير */
+#product-selector {
+    max-height: 400px; /* يمكنك زيادة أو تقليل الارتفاع حسب رغبتك */
+    overflow-y: auto;  /* تفعيل السكرول الرأسي */
+    padding-right: 5px; /* مسافة بسيطة عشان السكرول ميبقاش لزق في الكلام */
+}
+
+/* تحسين شكل شريط التمرير (Scrollbar) ليكون متناسق مع التصميم */
+#product-selector::-webkit-scrollbar {
+    width: 5px;
+}
+
+#product-selector::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+#product-selector::-webkit-scrollbar-thumb {
+    background: #ff6b00; /* لون برتقالي مثل لوجو المحل */
+    border-radius: 10px;
+}
+
+    </style>
+
 <meta name="description" content="🥰🥰🥰🥰 بارك الله فيكم ونفع بكم">
-<title>اختبارات القرآن الكريم | المعلمة سلوي عثمان</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-
-<style>
-/* ==========================================================
-   1. إعدادات عامة
-========================================================== */
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-
-html, body {
-  width:100%; min-height:100%;
-  font-family: 'Tajawal', sans-serif;
-  user-select: none;
-  overflow-x: hidden;
-}
-
-/* شاشة التحميل تمنع تمرير الصفحة */
-body.loading { overflow: hidden; }
-
-/* ==========================================================
-   2. شاشة التحميل — منقولة من الميموريال بنفس التصميم
-========================================================== */
-#loadingScreen {
-  position: fixed; inset: 0; width: 100%; height: 100dvh;
-  background: #fff; overflow: hidden; z-index: 99999;
-  transition: opacity .7s ease, visibility .7s ease;
-  cursor: pointer;
-}
-#loadingScreen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-
-.loading-aurora {
-  position: fixed; top: 0; left: 0; width: 100%; height: 60vh;
-  pointer-events: none; z-index: 1; overflow: hidden;
-  isolation: isolate;
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
-}
-
-/* ← السرعة 3 ثوانٍ بدل 1.5 (طلبك) */
-.loading-blob {
-  position: absolute; border-radius: 50%;
-  filter: blur(80px); opacity: 0;
-  mix-blend-mode: multiply;
-  will-change: transform, opacity;
-  animation: loadingTravel 3s ease-in-out infinite;
-}
-.loading-blob-1 { background:#5b21b6; width:45vmax; height:45vmax; top:-20vmax; left:50vw; animation-delay:0s; }
-.loading-blob-2 { background:#1d4ed8; width:40vmax; height:40vmax; top:-15vmax; left:60vw; animation-delay:.15s; }
-.loading-blob-3 { background:#ca8a04; width:55vmax; height:55vmax; top:-10vmax; left:40vw; animation-delay:.3s; }
-.loading-blob-4 { background:#15803d; width:50vmax; height:50vmax; top:-30vmax; left:70vw; animation-delay:.45s; }
-.loading-blob-5 { background:#0e7490; width:35vmax; height:35vmax; top:-5vmax; left:30vw; animation-delay:.6s; }
-
-@keyframes loadingTravel {
-  0%   { transform: translate(150vw,0) scale(.9); opacity:0; }
-  6%   { opacity:.95; }
-  94%  { opacity:.95; }
-  100% { transform: translate(-150vw,0) scale(1.15); opacity:0; }
-}
-
-.loading-top-bar {
-  position: fixed; top: 18px; left: 22px; right: 22px;
-  display: flex; justify-content: flex-end; align-items: center;
-  z-index: 100;
-}
-.loading-clip-btn {
-  background: none; border: none; padding: 6px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-}
-.loading-clip-btn svg {
-  width: 34px; height: 34px; stroke: #7a7a7a; fill: none;
-  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-}
-
-.loading-image-container {
-  position: fixed; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  z-index: 10; padding: 0 16px;
-}
-.loading-image-container img {
-  display: block; max-width: 100%; max-height: 70vh;
-  width: auto; height: auto; object-fit: contain;
-  pointer-events: none; -webkit-user-drag: none;
-}
-
-.loading-quran-description {
-  width: 90%; max-width: 420px; margin-top: 18px;
-  text-align: center; direction: rtl;
-}
-.loading-quran-title { font-size: 19px; font-weight: 700; color: #222; margin-bottom: 6px; }
-.loading-quran-text  { font-size: 14px; font-weight: 400; line-height: 1.9; color: #666; }
-
-.loading-footer {
-  position: fixed; left: 0; right: 0;
-  bottom: max(12px, env(safe-area-inset-bottom));
-  display: flex; flex-direction: column;
-  align-items: center; gap: 10px; z-index: 100;
-}
-.loading-progress {
-  width: 60%; max-width: 220px; height: 3px;
-  background: rgba(0,0,0,.08); border-radius: 3px;
-  overflow: hidden; margin-bottom: 4px;
-}
-.loading-progress-fill {
-  height: 100%; width: 0%; background: #111;
-  border-radius: 3px; transition: width .3s ease;
-}
-.loading-text { font-size: 13.5px; font-weight: 500; color: #666; }
-
-/* ==========================================================
-   3. الموقع الرئيسي (الاختبارات) — كحلي + مرجاني
-========================================================== */
-#mainSite { display: none; position: relative; min-height: 100vh;
-  background: linear-gradient(160deg, #eef2f8, #f8f5f0 55%, #eaf0f7);
-  color: #1c2739;
-}
-#mainSite.show { display: block; }
-
-:root {
-  --primary: #1a2942;
-  --primary2: #34507a;
-  --accent: #e08070;
-  --accent2: #c25f4f;
-  --cream: #f8f5f0;
-  --ink: #1c2739;
-  --muted: #6b7a8a;
-  --line: #e4e6ea;
-  --white: #ffffff;
-}
-
-button, input, select { font: inherit; }
-button { cursor: pointer; }
-
-.wrap { width: min(1060px, 100%); margin: auto; padding: 20px; }
-
-header {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 12px 0 24px;
-}
-.brand { display: flex; align-items: center; gap: 12px; }
-.logo {
-  width: 48px; height: 48px; border-radius: 16px;
-  background: var(--primary); color: var(--accent);
-  display: grid; place-items: center; font-size: 25px;
-  box-shadow: 0 8px 22px rgba(26,41,66,.2);
-}
-.brand h1 { font-size: 20px; margin: 0; font-weight: 900; }
-.brand p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
-
-.pill {
-  border: 1px solid #d8e0ea; background: #ffffffa8;
-  padding: 8px 14px; border-radius: 99px;
-  font-size: 12px; font-weight: 700; color: var(--primary); white-space: nowrap;
-}
-
-.hero {
-  position: relative; overflow: hidden;
-  background: linear-gradient(125deg, #121f33, #2a4573);
-  color: #fff; border-radius: 28px;
-  padding: clamp(24px, 5vw, 48px);
-  box-shadow: 0 18px 45px rgba(26,41,66,.18);
-}
-.hero:after {
-  content: "۞"; position: absolute; left: 5%; top: -40px;
-  font-size: 190px; color: #ffffff0b; pointer-events: none;
-}
-.eyebrow { color: #f0c4b8; font-size: 13px; font-weight: 800; letter-spacing: .3px; }
-.hero h2 { font-size: clamp(27px, 5vw, 42px); line-height: 1.35; margin: 10px 0; }
-.hero p  { max-width: 600px; color: #e2e8f0; line-height: 1.9; margin: 0; }
-.hero .mini { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
-.mini span {
-  background: #ffffff14; border: 1px solid #ffffff24;
-  border-radius: 12px; padding: 9px 12px; font-size: 13px;
-}
-
-.section-head {
-  display: flex; align-items: end; justify-content: space-between;
-  gap: 10px; margin: 30px 0 15px;
-}
-.section-head h3 { margin: 0; font-size: 22px; }
-.section-head p  { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
-
-.cards { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
-
-.quiz-card {
-  background: #fff; border: 1px solid #e4e9ef;
-  border-radius: 22px; padding: 24px;
-  box-shadow: 0 8px 22px rgba(26,41,66,.06);
-  display: flex; flex-direction: column; min-height: 240px;
-  transition: .2s;
-}
-.quiz-card:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(26,41,66,.12); }
-.card-icon {
-  width: 50px; height: 50px; border-radius: 15px;
-  background: #eef3f9; display: grid; place-items: center;
-  font-size: 25px; margin-bottom: 14px;
-}
-.quiz-card h4 { font-size: 19px; margin: 0 0 8px; color: var(--primary); }
-.quiz-card p  { color: var(--muted); font-size: 14px; line-height: 1.8; margin: 0 0 18px; flex: 1; }
-
-.meta { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px; }
-.meta span {
-  font-size: 12px; font-weight: 700;
-  background: #f5f7fa; border-radius: 8px; padding: 6px 10px; color: #4a6078;
-}
-.meta span.level-medium { background: #eef7f0; color: #1f6b45; }
-.meta span.level-hard   { background: #fdf0ec; color: #9a4b3e; }
-
-.btn { border: 0; border-radius: 13px; padding: 12px 18px; font-weight: 800; transition: .15s; }
-.btn:active { transform: scale(.98); }
-.primary   { background: var(--primary); color: #fff; }
-.primary:hover { background: var(--primary2); }
-.secondary { background: #edf1f6; color: var(--primary); }
-.accent    { background: var(--accent); color: #2d1a16; }
-.full      { width: 100%; }
-
-.note {
-  margin: 22px 0; padding: 15px 17px;
-  border: 1px dashed #c8d4e0; background: #ffffff99;
-  border-radius: 16px; color: #5a6b7d; font-size: 13px; line-height: 1.8;
-}
-
-/* لوحات داخلية */
-.panel {
-  background: #fff; border: 1px solid var(--line);
-  border-radius: 24px; padding: clamp(18px, 4vw, 32px);
-  box-shadow: 0 12px 32px rgba(26,41,66,.07);
-}
-.hidden { display: none !important; }
-
-.back { border: 0; background: transparent; color: var(--primary); font-weight: 800; padding: 8px 0; margin-bottom: 10px; }
-
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.field { display: flex; flex-direction: column; gap: 7px; }
-.field label { font-size: 14px; font-weight: 800; }
-.field small { color: var(--muted); font-size: 12px; line-height: 1.6; }
-.field input, .field select {
-  width: 100%; border: 1px solid #dce3eb; border-radius: 12px;
-  padding: 12px; background: #fbfcfe; outline: none; color: var(--ink);
-}
-.field input:focus, .field select:focus { border-color: #6b8db8; box-shadow: 0 0 0 3px rgba(107,141,184,.18); }
-
-.upload {
-  border: 1px dashed #b8c8d8; border-radius: 16px;
-  padding: 15px; display: flex; align-items: center;
-  gap: 13px; background: #f8fafc;
-}
-.avatar {
-  width: 64px; height: 64px; border-radius: 50%;
-  background: #e6eef4; display: grid; place-items: center;
-  overflow: hidden; font-size: 25px; flex-shrink: 0;
-}
-.avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-.form-actions { display: flex; gap: 10px; margin-top: 20px; }
-.form-actions > * { flex: 1; }
-
-/* شاشة الأسئلة */
-.quiz-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; }
-.quiz-top h3 { margin: 0; font-size: 21px; color: var(--primary); }
-.counter { font-size: 13px; color: var(--muted); font-weight: 800; background: #f2f5f9; padding: 6px 12px; border-radius: 99px; }
-
-.progress { height: 8px; background: #edf1f6; border-radius: 99px; overflow: hidden; margin: 18px 0 24px; }
-.progress div { height: 100%; background: linear-gradient(90deg, var(--accent), var(--primary2)); width: 0%; transition: width .25s; }
-
-.question { font-size: clamp(19px, 3.8vw, 25px); line-height: 1.75; margin: 0 0 20px; font-weight: 700; }
-
-.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.answer {
-  border: 1.5px solid #e1e6ed; background: #fbfcfe;
-  border-radius: 15px; padding: 15px; text-align: right;
-  display: flex; gap: 12px; align-items: center; color: var(--ink);
-  min-height: 60px; transition: .15s;
-}
-.answer:hover { border-color: #b5c8d8; background: #f5f8fb; }
-.answer .letter {
-  width: 32px; height: 32px; flex-shrink: 0; border-radius: 10px;
-  background: #edf2f7; display: grid; place-items: center;
-  font-weight: 900; color: #41607d;
-}
-.answer.selected { border-color: var(--primary2); background: #eff4fa; box-shadow: 0 0 0 2px rgba(52,80,122,.12); }
-.answer.selected .letter { background: var(--primary); color: #fff; }
-
-.quiz-actions { display: flex; justify-content: space-between; gap: 10px; margin-top: 24px; }
-.quiz-actions button { min-width: 130px; }
-
-/* النتيجة */
-.result { text-align: center; padding: 10px 0; }
-.score-circle {
-  width: 136px; height: 136px;
-  border: 7px solid #dbe3ec;
-  border-right-color: var(--accent);
-  border-top-color: var(--primary);
-  border-radius: 50%; display: grid; place-items: center;
-  margin: 18px auto; color: var(--primary);
-}
-.score-circle strong { font-size: 34px; }
-.result h2 { font-size: 28px; margin: 8px 0; }
-.result p  { color: var(--muted); line-height: 1.8; }
-.result-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
-
-footer { text-align: center; color: #8090a0; font-size: 12px; padding: 26px 0 8px; }
-
-/* الشهادة */
-.certificate-wrap { margin-top: 24px; }
-.certificate {
-  position: relative; background: #fefdfb;
-  border: 8px double var(--primary2);
-  padding: 28px; text-align: center; color: var(--ink);
-  overflow: hidden; min-height: 520px; border-radius: 12px;
-}
-.certificate:before, .certificate:after {
-  content: "۞"; position: absolute; color: #f0e5e0;
-  font-size: 90px; opacity: .7; pointer-events: none;
-}
-.certificate:before { top: 5px; right: 8px; }
-.certificate:after  { bottom: 5px; left: 8px; }
-.cert-inner { border: 1px solid var(--accent); min-height: 445px; padding: 25px 16px; position: relative; z-index: 1; }
-.cert-mark { font-size: 28px; color: var(--accent); }
-.cert-title { font-size: clamp(25px, 5vw, 39px); font-weight: 900; margin: 8px 0; color: var(--primary); }
-.cert-sub { font-size: 15px; color: var(--muted); }
-.cert-photo { width: 86px; height: 86px; object-fit: cover; border-radius: 50%; border: 4px solid var(--accent); margin: 15px auto 8px; display: block; }
-.cert-name { font-size: clamp(25px, 5vw, 34px); font-weight: 900; color: var(--primary2); margin: 12px 0; }
-.cert-desc { line-height: 2; font-size: 16px; max-width: 600px; margin: 0 auto; }
-.cert-score { display: inline-block; margin: 14px auto; padding: 8px 22px; border-radius: 99px; background: #eaf0f7; border: 1px solid #d0dde9; font-weight: 900; }
-.cert-sign { margin-top: 22px; display: inline-block; border-top: 1px solid var(--accent); padding: 10px 30px 0; font-weight: 900; }
-.cert-sign small { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-top: 3px; }
-.cert-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 15px 0; }
-
-/* تجاوب */
-@media (max-width: 760px) {
-  .wrap { padding: 14px; }
-  .cards { grid-template-columns: 1fr; }
-  .quiz-card { min-height: auto; }
-  .form-grid { grid-template-columns: 1fr; }
-  .answers { grid-template-columns: 1fr; }
-  .hero { border-radius: 22px; }
-  .brand h1 { font-size: 17px; }
-  .pill { font-size: 11px; }
-  .certificate { padding: 12px; border-width: 5px; }
-  .cert-inner { padding: 22px 10px; min-height: 440px; }
-  .quiz-actions button { min-width: 0; flex: 1; }
-}
-
-/* الطباعة */
-@media print {
-  body { background: #fff !important; }
-  #loadingScreen, header, .hero, .section-head, .cards, .note, footer,
-  #registration, #quiz, #result, .cert-actions, .back { display: none !important; }
-  .wrap { width: 100%; padding: 0; margin: 0; }
-  #certificateScreen { display: block !important; }
-  .certificate-wrap { margin: 0 !important; }
-  .certificate { width: 100%; min-height: 96vh; page-break-inside: avoid; box-shadow: none; border-width: 8px; padding: 20px; }
-  .cert-inner { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; }
-  .certificate:before, .certificate:after { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-  @page { size: A4 portrait; margin: 8mm; }
-}
-</style>
 
 <meta property="og:type" content="website">
 
@@ -375,9 +475,9 @@ footer { text-align: center; color: #8090a0; font-size: 12px; padding: 26px 0 8p
 
 <meta property="og:description" content="🥰🥰🥰🥰 بارك الله فيكم ونفع بكم">
 
-<meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/share.jpg?v=1794596110834">
+<meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/share.jpg?v=1794776397605">
 
-<meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/share.jpg?v=1794596110834">
+<meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/share.jpg?v=1794776397605">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -387,526 +487,590 @@ footer { text-align: center; color: #8090a0; font-size: 12px; padding: 26px 0 8p
 
 <meta property="og:url" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/">
 
-<link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/favicon.png?v=1794596110834">
+<link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/favicon.png?v=1794776397605">
 
-<link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/apple-touch-icon.png?v=1794596110834">
+<link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-m7609tmm57/apple-touch-icon.png?v=1794776397605">
 </head>
-<body class="loading">
+<body>
 
-<!-- ==========================================================
-     شاشة التحميل — تصميم الميموريال بنفسه
-========================================================== -->
-<div id="loadingScreen" role="button" tabindex="0" aria-label="تخطي التحميل">
-  <div class="loading-aurora">
-    <div class="loading-blob loading-blob-1"></div>
-    <div class="loading-blob loading-blob-2"></div>
-    <div class="loading-blob loading-blob-3"></div>
-    <div class="loading-blob loading-blob-4"></div>
-    <div class="loading-blob loading-blob-5"></div>
-  </div>
+<header>
+    <h1>⚡ كابيتانو ⚡</h1>
+    <p class="dhikr">" سبحان الله العظيم سبحان الله وبحمده "</p>
+</header>
 
-  <div class="loading-top-bar">
-    <button class="loading-clip-btn" id="loadingReportBtn" aria-label="الإبلاغ عن مشكلة">
-      <svg viewBox="0 0 24 24"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-    </button>
-  </div>
-
-  <div class="loading-image-container">
-    <img id="loadingHeroImg" src="Picsart_26-09-15_23-08-25-965.png" alt="واذكر في ذكرى تنفع المؤمنين">
-    <div class="loading-quran-description">
-      <div class="loading-quran-title">القرآن الكريم</div>
-      <div class="loading-quran-text">اللهم ارحم موتانا وموتى المسلمين<br>في أي وقت ومن أي مكان.</div>
-    </div>
-  </div>
-
-  <div class="loading-footer">
-    <div class="loading-progress"><div class="loading-progress-fill" id="loadingProgressFill"></div></div>
-    <div class="loading-text" id="loadingText">جاري التحميل....</div>
-  </div>
+<div class="stats-bar" onclick="showItemCountOnly()">
+    <div class="stat-item">📦 عدد الأصناف <span id="total-items">0</span></div>
 </div>
 
-<!-- ==========================================================
-     الموقع الرئيسي (الاختبارات)
-========================================================== -->
-<div id="mainSite">
-<div class="wrap">
-  <header>
-    <div class="brand">
-      <div class="logo">۞</div>
-      <div>
-        <h1>سلوى عثمان</h1>
-        <p>نتعلّم، نتدبّر، ونرتقي بالقرآن</p>
-      </div>
-    </div>
-    <div class="pill">🌿 رحلة قرآنية ممتعة</div>
-  </header>
-
-  <main id="home">
-    <section class="hero">
-      <div class="eyebrow">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-      <h2>اختبر حفظك…<br>وافرح بإنجازك!</h2>
-      <p>اختبارات قرآنية متدرجة وممتعة، صُمّمت لتثبيت الحفظ ومراجعة السور والآيات بدقة وإتقان.</p>
-      <div class="mini">
-        <span>📖 أسئلة اختيار من متعدد</span>
-        <span>⭐ نتيجة فورية دقيقة</span>
-        <span>🏅 شهادة إنجاز قابلة للطباعة</span>
-      </div>
-    </section>
-
-    <div class="section-head">
-      <div>
-        <h3>اختر اختبارك</h3>
-        <p>ابدأ بالاختبار المناسب لمقدار حفظك ومراجعتك</p>
-      </div>
-    </div>
-
-    <section class="cards">
-      <article class="quiz-card">
-        <div class="card-icon">🌙</div>
-        <h4>اختبار من سورة الناس إلى سورة المنافقون</h4>
-        <p>مراجعة متقنة للسور من سورة الناس حتى سورة المنافقون، تشمل إكمال الآيات ومعرفة الآية التالية في السور.</p>
-        <div class="meta">
-          <span>20 سؤالاً</span>
-          <span class="level-medium">المستوى: متوسط</span>
-          <span>اختيار من متعدد</span>
-        </div>
-        <button class="btn primary full" onclick="beginRegistration('munafiqun')">ابدأ الاختبار (20 سؤالاً) ←</button>
-      </article>
-
-      <article class="quiz-card">
-        <div class="card-icon">🕌</div>
-        <h4>اختبار من سورة الناس إلى سورة المجادلة</h4>
-        <p>اختبار شامل ودقيق من سورة الناس حتى سورة المجادلة لقياس إتقان الحفظ والتركيز في فواصل الآيات.</p>
-        <div class="meta">
-          <span>30 سؤالاً</span>
-          <span class="level-hard">المستوى: صعب</span>
-          <span>اختيار من متعدد</span>
-        </div>
-        <button class="btn primary full" onclick="beginRegistration('mujadilah')">ابدأ الاختبار (30 سؤالاً) ←</button>
-      </article>
-    </section>
-
-    <div class="note">
-      💙 <strong>تنبيه لطيف:</strong> الاسم والصورة والعمر بيانات اختيارية، لكنها تساعد على تجهيز شهادة أجمل باسمك وصورتك. هذه النسخة تعمل بالكامل داخل متصفحك؛ لا يتم رفع الصورة إلى أي خادم خارجي.
-    </div>
-  </main>
-
-  <section id="registration" class="panel hidden">
-    <button class="back" onclick="goHome()">← الرجوع للاختبارات</button>
-    <h2 style="margin:0 0 7px">خلّينا نتعرّف عليك 🌟</h2>
-    <p style="margin:0 0 22px;color:var(--muted);line-height:1.8">البيانات التالية اختيارية، لكن الاسم والصورة يساعدان في تخصيص شهادة الإنجاز.</p>
-    <form id="studentForm">
-      <div class="form-grid">
-        <div class="field">
-          <label for="studentName">اسم الطالب / الطالبة</label>
-          <input id="studentName" maxlength="70" placeholder="اكتب اسمك الثلاثي هنا">
-          <small>سيظهر الاسم على الشهادة إذا أدخلته.</small>
-        </div>
-        <div class="field">
-          <label for="studentAge">العمر</label>
-          <select id="studentAge">
-            <option value="">اختر العمر (اختياري)</option>
-            <option>أقل من 8</option>
-            <option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
-            <option>أكبر من 12</option>
-          </select>
-          <small>للمساعدة في توثيق بيانات البطل.</small>
-        </div>
-      </div>
-      <div class="field" style="margin-top:15px">
-        <label>الصورة الشخصية (اختياري)</label>
-        <div class="upload">
-          <div class="avatar" id="avatarPreview">📷</div>
-          <div style="flex:1">
-            <input id="studentPhoto" type="file" accept="image/*" style="padding:8px;background:white">
-            <small>اختر صورة من جهازك لتظهر في أعلى الشهادة.</small>
-          </div>
-        </div>
-      </div>
-      <div class="form-actions">
-        <button type="button" class="btn secondary" onclick="goHome()">إلغاء</button>
-        <button type="submit" class="btn primary">يلا نبدأ الاختبار ✨</button>
-      </div>
-    </form>
-  </section>
-
-  <section id="quiz" class="panel hidden">
-    <div class="quiz-top">
-      <h3 id="quizTitle">الاختبار</h3>
-      <div class="counter" id="counter">السؤال 1 من 20</div>
-    </div>
-    <div class="progress"><div id="progressBar"></div></div>
-    <p class="question" id="questionText"></p>
-    <div class="answers" id="answers"></div>
-    <div class="quiz-actions">
-      <button class="btn secondary" id="prevBtn" onclick="previousQuestion()">السابق</button>
-      <button class="btn primary" id="nextBtn" onclick="nextQuestion()">التالي ←</button>
-    </div>
-    <p style="font-size:12px;color:var(--muted);margin:15px 0 0">اختَر إجابة واحدة لكل سؤال. يمكنك الرجوع وتغيير إجاباتك قبل إنهاء الاختبار.</p>
-  </section>
-
-  <section id="result" class="panel hidden">
-    <div class="result">
-      <div style="font-size:42px">🎉</div>
-      <h2 id="resultHeading">أحسنت!</h2>
-      <p id="resultMessage"></p>
-      <div class="score-circle">
-        <div>
-          <strong id="scoreNum">0</strong>
-          <div id="scoreTotalText" style="font-size:12px;color:var(--muted)">من 20</div>
-        </div>
-      </div>
-      <p id="resultDetails"></p>
-      <div class="result-actions">
-        <button class="btn primary" onclick="showCertificate()">🎓 جهّز شهادتي</button>
-        <button class="btn secondary" onclick="retryQuiz()">إعادة الاختبار</button>
-        <button class="btn secondary" onclick="goHome()">اختبار آخر</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="certificateScreen" class="hidden">
-    <button class="back" onclick="showResult()">← الرجوع للنتيجة</button>
-    <div class="certificate-wrap">
-      <div class="certificate" id="certificate">
-        <div class="cert-inner">
-          <div class="cert-mark">۞ ✦ ۞</div>
-          <div class="cert-title">شهادة إنجاز قرآني</div>
-          <div class="cert-sub">براعم القرآن • تكريمًا للمثابرة وحبّ التعلّم</div>
-          <img id="certPhoto" class="cert-photo hidden" alt="صورة الطالب">
-          <div style="margin-top:20px">تُمنح هذه الشهادة إلى</div>
-          <div class="cert-name" id="certName">بطل القرآن</div>
-          <p class="cert-desc">تقديرًا لمشاركته في <strong id="certQuizName"></strong><br>وإتمامه الاختبار بكل اجتهاد ومثابرة.</p>
-          <div class="cert-score" id="certScore">النتيجة: 20 من 20</div>
-          <p class="cert-desc" id="certPraise">نسأل الله أن يجعل القرآن نورًا لقلبك وطريقًا للخير.</p>
-          <div class="cert-sign">
-            المعلمة سلوى عثمان
-            <small>مع خالص الدعاء بالتوفيق والتميّز</small>
-          </div>
-          <div style="margin-top:18px;font-size:12px;color:var(--muted)" id="certDate"></div>
-        </div>
-      </div>
-      <div class="cert-actions">
-        <button class="btn primary" onclick="window.print()">⬇️ تنزيل PDF / طباعة الشهادة</button>
-        <button class="btn accent" onclick="shareCertificate()">↗ مشاركة الشهادة</button>
-        <button class="btn secondary" onclick="showResult()">عرض النتيجة</button>
-      </div>
-      <p style="text-align:center;color:var(--muted);font-size:12px;line-height:1.8">
-        للحفظ كملف PDF: اضغط «تنزيل PDF / طباعة الشهادة»، ثم اختر «حفظ بتنسيق PDF» من نافذة الطباعة.
-      </p>
-    </div>
-  </section>
-
-  <footer>صُنع بمحبة لأبطال القرآن • المعلمة سلوى عثمان © <span id="year"></span></footer>
+<div class="container">
+    <div class="daily-log-section" id="daily-archive-container"></div>
 </div>
+
+<!-- نماذج الإضافة والتقارير -->
+<div id="modal">
+    <div class="modal-glass">
+        <h2><i class="fas fa-boxes"></i> إضافة صنف جديد</h2>
+        <div class="input-group">
+            <label><i class="fas fa-tag"></i> اسم المنتج</label>
+            <input type="text" id="itemName" placeholder="مثال: قميص قطني">
+        </div>
+        <div class="input-group">
+            <label><i class="fas fa-money-bill-wave"></i> السعر (ج.م)</label>
+            <input type="number" id="itemPrice" placeholder="0.00">
+        </div>
+        <div class="input-group">
+            <label><i class="fas fa-cubes"></i> الكمية المتوفرة</label>
+            <input type="number" id="itemQty" placeholder="0">
+        </div>
+        <button onclick="addItem()" class="magic-button"><i class="fas fa-check-circle"></i> تأكيد الإضافة للمخزن</button>
+        <button onclick="toggleModal()" style="background:transparent; color:#94a3b8; margin-top:12px; width:100%; border:none; padding:10px; cursor:pointer;">إلغاء</button>
+    </div>
 </div>
+
+<div id="details-modal">
+    <div class="details-card">
+        <h2 id="details-title" style="color:#0a192f; border-right: 5px solid #ff6b00; padding-right: 16px; margin-bottom: 8px;">تفاصيل المبيعات</h2>
+        <div id="details-content" class="scroll-items"></div>
+        <button onclick="closeDetails()" class="close-modal">إغلاق النافذة</button>
+    </div>
+</div>
+
+<!-- زر التقرير مع كلمة المرور -->
+<button class="report-fab" onclick="promptReportPassword()"><i class="fas fa-chart-line"></i></button>
+<button class="fab" onclick="toggleModal()"><i class="fas fa-plus"></i></button>
+<button class="fab" onclick="toggleInvoiceModal()"><i class="fas fa-file-invoice-dollar"></i></button>
+
+<!-- نافذة الفاتورة السريعة -->
+<div id="invoice-modal">
+    <div class="modal-glass" style="max-width: 550px; width: 100%; max-height: 90vh; display: flex; flex-direction: column;">
+        <h2 style="color: #ff6b00; margin-bottom: 15px; border-bottom: 2px solid rgba(255,107,0,0.2); padding-bottom: 10px;">
+            <i class="fas fa-file-invoice-dollar"></i> فاتورة بيع سريعة
+        </h2>
+        <div class="input-group">
+            <label><i class="fas fa-search"></i> ابحث عن الصنف في المخزن</label>
+            <input type="text" id="modalSearchInput" onkeyup="updateInvoiceUI()" placeholder="اكتب اسم المنتج للبحث...">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; flex: 1; min-height: 300px; margin-bottom: 15px;">
+            <div style="display: flex; flex-direction: column;">
+                <label style="color: #94a3b8; font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 5px;">📦 نتائج البحث</label>
+                <div id="product-selector" style="flex: 1; overflow-y: auto; background: rgba(255,255,255,0.05); border-radius: 15px; padding: 5px; border: 1px solid #334155;"></div>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <label style="color: #10b981; font-size: 0.8rem; font-weight: bold; display: block; margin-bottom: 5px;">🛒 السلة الحالية</label>
+                <div id="selected-list" style="flex: 1; overflow-y: auto; background: rgba(16, 185, 129, 0.05); border-radius: 15px; padding: 5px; border: 1px solid rgba(16, 185, 129, 0.3);"></div>
+            </div>
+        </div>
+        <div style="background: #1e293b; padding: 15px; border-radius: 20px; margin-top: 15px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: white; font-weight: bold;">الإجمالي:</span>
+            <span id="invoice-total-price" style="color: #ff6b00; font-size: 1.5rem; font-weight: 900;">0 ج.م</span>
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button onclick="generateInvoice()" class="magic-button" style="flex: 2; background: linear-gradient(45deg, #10b981, #059669);"><i class="fas fa-check-double"></i> إتمام البيع</button>
+            <button onclick="toggleInvoiceModal()" style="flex: 1; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 40px; border: 1px solid #ef4444; cursor: pointer;">إلغاء</button>
+        </div>
+    </div>
+</div>
+<!-- نافذة الباسورد الاحترافية -->
+<div id="password-modal" style="display: none; position: fixed; inset: 0; background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(15px); justify-content: center; align-items: center; z-index: 2000; padding: 20px;">
+    <div class="modal-glass" style="max-width: 380px; text-align: center;">
+        <i class="fas fa-lock" style="font-size: 3rem; color: #ff6b00; margin-bottom: 15px; display: block;"></i>
+        <h2 style="color: white; font-size: 1.5rem;">🔐 تقرير الإدارة</h2>
+        <p style="color: #94a3b8; margin-bottom: 20px; font-size: 0.85rem;">أدخل كلمة المرور للوصول إلى التقارير المتقدمة</p>
+        <div class="input-group" style="margin-bottom: 25px;">
+            <input type="password" id="report-password-input" placeholder="••••••" style="text-align: center; font-size: 1.2rem; letter-spacing: 5px;" autocomplete="off">
+        </div>
+        <button onclick="checkReportPassword()" class="magic-button" style="margin-bottom: 10px;"><i class="fas fa-unlock-alt"></i> تأكيد</button>
+        <button onclick="closePasswordModal()" style="background: transparent; color: #94a3b8; border: 1px solid #334155; width: 100%; padding: 12px; border-radius: 40px; cursor: pointer;">إلغاء</button>
+        <div id="password-error" style="color: #ef4444; font-size: 0.75rem; margin-top: 12px; min-height: 25px;"></div>
+    </div>
+</div>
+
+<!-- نافذة التقرير باسورد 142005 -->
+<div id="report-modal">
+    <div class="details-card" style="max-width: 700px;">
+        <h2 style="color:#0a192f; border-right: 5px solid #ff6b00; padding-right: 16px;"><i class="fas fa-chart-pie"></i> تقرير الفواتير والإحصائيات المتقدمة</h2>
+        <div id="report-content" class="scroll-items" style="max-height: 60vh;"></div>
+        <button onclick="closeReportModal()" class="close-modal">إغلاق</button>
+    </div>
+</div>
+<!-- نافذة تعديل صنف محدد يدوياً -->
+<div id="edit-item-modal" style="display: none; position: fixed; inset: 0; background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 3000; padding: 20px;">
+    <div class="modal-glass" style="max-width: 400px; width: 100%;">
+        <h2 style="color: #ff6b00; text-align: center; margin-bottom: 20px;"><i class="fas fa-tools"></i> تعديل بيانات المنتج</h2>
+        <div class="input-group">
+            <label>اسم المنتج</label>
+            <input type="text" id="edit-name">
+        </div>
+        <div class="input-group">
+            <label>السعر (ج.م)</label>
+            <input type="number" id="edit-price">
+        </div>
+        <div class="input-group">
+            <label>الكمية المتوفرة حالياً</label>
+            <input type="number" id="edit-qty">
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+            <button onclick="saveEditManual()" class="magic-button" style="background: linear-gradient(45deg, #10b981, #059669); padding: 12px;">حفظ التغييرات</button>
+            <button onclick="deleteItemPermanently()" class="magic-button" style="background: linear-gradient(45deg, #ef4444, #dc2626); padding: 12px;">حذف نهائي</button>
+        </div>
+        <button onclick="closeEditModal()" style="background:transparent; color:#94a3b8; margin-top:15px; width:100%; border:none; cursor:pointer; font-weight: bold;">إلغاء والرجوع</button>
+    </div>
+</div>
+<!-- نافذة مراجعة الفاتورة النهائية -->
+<div id="review-invoice-modal" style="display: none; position: fixed; inset: 0; background: rgba(2, 6, 23, 0.9); backdrop-filter: blur(15px); justify-content: center; align-items: center; z-index: 4000; padding: 20px;">
+    <div class="modal-glass" style="max-width: 500px; width: 100%; border: 1px solid rgba(16, 185, 129, 0.3);">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2); color: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 1.5rem;">
+                <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <h2 style="color: white; margin: 0;">مراجعة الفاتورة</h2>
+            <p style="color: #94a3b8; font-size: 0.9rem;">يرجى التأكد من المنتجات قبل الإتمام</p>
+        </div>
+
+        <!-- جدول المنتجات المنسق -->
+        <div style="max-height: 300px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 10px; margin-bottom: 20px;">
+            <table style="width: 100%; color: white; border-collapse: collapse; font-size: 0.9rem;">
+                <thead>
+                    <tr style="border-bottom: 1px solid #334155; color: #ff6b00;">
+                        <th style="padding: 10px; text-align: right;">المنتج</th>
+                        <th style="padding: 10px; text-align: center;">العدد</th>
+                        <th style="padding: 10px; text-align: left;">السعر</th>
+                    </tr>
+                </thead>
+                <tbody id="review-items-body">
+                    <!-- سيتم تعبئتها بواسطة JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ملخص الحساب -->
+        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #94a3b8;">إجمالي الأصناف:</span>
+                <span id="review-total-count" style="color: white; font-weight: bold;">0</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 1.2rem; border-top: 1px solid #334155; pt-10; margin-top: 10px; padding-top: 10px;">
+                <span style="color: #ff6b00; font-weight: bold;">المبلغ الإجمالي:</span>
+                <span id="review-total-price" style="color: #10b981; font-weight: bold;">0 ج.م</span>
+            </div>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <button onclick="confirmAndPrintInvoice()" class="magic-button" style="background: linear-gradient(45deg, #10b981, #059669); padding: 15px;">تأكيد وطباعة <i class="fas fa-print"></i></button>
+            <button onclick="closeReviewModal()" class="magic-button" style="background: #334155; padding: 15px;">تعديل الفاتورة</button>
+        </div>
+    </div>
+</div>
+<!-- نافذة مراجعة الفاتورة الاحترافية -->
+<div id="invoiceModal" class="modal-overlay" style="display:none;">
+    <div class="invoice-box glass-effect">
+        <h3>🧾 تفاصيل الفاتورة</h3>
+        <div id="invoiceContent">
+            <!-- سيتم توليد الجدول هنا بواسطة JS -->
+        </div>
+        <hr>
+        <div class="invoice-footer">
+            <button class="btn-cancel" onclick="closeInvoiceModal()">إلغاء</button>
+            <button class="btn-confirm" onclick="finalProcess()">تأكيد وطباعة</button>
+        </div>
+    </div>
+</div>
+
 
 <script>
-'use strict';
+    let inventory = JSON.parse(localStorage.getItem('capitano_inv')) || [];
+    let sales = JSON.parse(localStorage.getItem('capitano_sales')) || [];
+    let currentInvoiceItems = [];
 
-/* ==========================================================
-   شاشة التحميل — 3 ثوانٍ
-========================================================== */
-const loadingScreen     = document.getElementById("loadingScreen");
-const loadingProgressFill = document.getElementById("loadingProgressFill");
-const loadingText       = document.getElementById("loadingText");
-const mainSite          = document.getElementById("mainSite");
+    function toggleModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        if (modal.style.display === 'flex') clearInputs();
+    }
 
-const LOADING_DURATION = 3000; // 3 ثوانٍ
-let loadingStart = Date.now();
-let loadingDone  = false;
+    function toggleInvoiceModal() {
+        const modal = document.getElementById('invoice-modal');
+        const isOpening = modal.style.display !== 'flex';
+        modal.style.display = isOpening ? 'flex' : 'none';
+        if (isOpening) {
+            currentInvoiceItems = [];
+            document.getElementById('modalSearchInput').value = '';
+            updateInvoiceUI();
+            setTimeout(() => document.getElementById('modalSearchInput').focus(), 100);
+        }
+    }
 
-function hideLoadingScreen(){
-  if (loadingDone) return;
-  loadingDone = true;
-  loadingProgressFill.style.width = "100%";
-  loadingText.textContent = "جاهز!";
-  setTimeout(() => {
-    loadingScreen.classList.add("hide");
-    mainSite.classList.add("show");
-    document.body.classList.remove("loading");
-  }, 200);
+function updateInvoiceUI() {
+    const selector = document.getElementById('product-selector');
+    const selectedList = document.getElementById('selected-list');
+    const totalPriceEl = document.getElementById('invoice-total-price');
+    const searchTerm = document.getElementById('modalSearchInput').value.toLowerCase();
+
+    selector.innerHTML = '';
+    const filteredInventory = inventory.filter(item => item.name.toLowerCase().includes(searchTerm));
+
+    filteredInventory.forEach(item => {
+        const inInvoiceCount = currentInvoiceItems.filter(i => i.id === item.id).length;
+        const available = item.qty - inInvoiceCount;
+        
+        selector.innerHTML += `
+            <div style="display: flex; align-items: stretch; gap: 8px; margin-bottom: 10px;">
+                <!-- الجزء الكبير: للبيع والإضافة للسلة -->
+                <div onclick="addItemToInvoice(${item.id})" style="flex: 1; cursor:pointer; padding:12px; background:rgba(255,255,255,0.05); border-radius:15px; border:1px solid #334155; transition: 0.2s;" onactive="this.style.transform='scale(0.98)'">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong style="color:white; font-size:0.95rem;">${escapeHtml(item.name)}</strong>
+                        <span style="color:#ff6b00; font-weight:bold;">${item.price} ج.م</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:0.75rem;">
+                        <span style="color:#94a3b8;">المتاح: ${available}</span>
+                        <span style="color:#10b981;"><i class="fas fa-cart-plus"></i> بيع سريع</span>
+                    </div>
+                </div>
+
+                <!-- الزر الصغير: للتعديل اليدوي -->
+                <div onclick="openEditItemModal(${item.id})" style="width: 50px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 15px; display: flex; justify-content: center; align-items: center; cursor: pointer; color: #3b82f6;">
+                    <i class="fas fa-pen-to-square"></i>
+                </div>
+            </div>
+        `;
+    });
+
+    if (filteredInventory.length === 0) selector.innerHTML = '<div style="color:#64748b; text-align:center; padding:20px;">لا توجد نتائج</div>';
+
+    // تحديث قائمة السلة كما هي
+    selectedList.innerHTML = '';
+    let total = 0;
+    currentInvoiceItems.forEach((item, index) => {
+        total += item.price;
+        selectedList.innerHTML += `
+            <div style="padding:8px; background:rgba(16,185,129,0.1); border-radius:10px; margin-bottom:5px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="color:white; font-size:0.85rem;">${escapeHtml(item.name)}</span>
+                <i class="fas fa-times-circle" onclick="removeItemFromInvoice(${index})" style="color:#ef4444; cursor:pointer;"></i>
+            </div>
+        `;
+    });
+    totalPriceEl.innerText = `${total.toLocaleString()} ج.م`;
 }
 
-loadingScreen.addEventListener("click", e => {
-  if (e.target.closest('#loadingReportBtn')) return;
-  hideLoadingScreen();
-});
-loadingScreen.addEventListener("keydown", e => {
-  if (e.key === "Enter" || e.key === " ") { e.preventDefault(); hideLoadingScreen(); }
-});
 
-document.getElementById("loadingReportBtn").addEventListener("click", e => {
-  e.stopPropagation();
-  alert("شكرًا لك، تم استلام ملاحظتك إن شاء الله.");
-});
+    function addItemToInvoice(id) {
+        const item = inventory.find(i => i.id === id);
+        if (item) {
+            const inCartCount = currentInvoiceItems.filter(i => i.id === id).length;
+            if (inCartCount < item.qty) {
+                currentInvoiceItems.push({...item});
+                updateInvoiceUI();
+            } else alert("⚠️ الكمية غير كافية!");
+        }
+    }
 
-// شريط التقدم
-setInterval(() => {
-  if (loadingDone) return;
-  const elapsed = Date.now() - loadingStart;
-  const pct = Math.min(95, (elapsed / LOADING_DURATION) * 95);
-  loadingProgressFill.style.width = pct + "%";
-}, 50);
+    function removeItemFromInvoice(index) {
+        currentInvoiceItems.splice(index, 1);
+        updateInvoiceUI();
+    }
 
-// إخفاء بعد 3 ثوانٍ
-setTimeout(() => {
-  loadingProgressFill.style.width = "100%";
-  hideLoadingScreen();
-}, LOADING_DURATION);
+    function confirmAndPrintInvoice() {
+    if (cart.length === 0) {
+        alert("السلة فارغة يا هندسة!");
+        return;
+    }
 
-/* ==========================================================
-   قاعدة بيانات الاختبارين
-========================================================== */
-const quizzes = {
+    let modal = document.getElementById('invoiceModal');
+    let content = document.getElementById('invoiceContent');
+    
+    // بناء جدول المنتجات
+    let tableHTML = `
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>المنتج</th>
+                    <th>الكمية</th>
+                    <th>السعر</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
 
-  /* ==========================================================
-     المستوى المتوسط — 20 سؤال (الترتيب متلخبط)
-  ========================================================== */
-  munafiqun: {
-    title: 'اختبار من سورة الناس إلى سورة المنافقون (المستوى المتوسط)',
-    questions: [
-      { q: 'أكمل قوله تعالى في سورة النصر: ﴿إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ * ...﴾', a: ['﴿فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ﴾', '﴿وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا﴾', '﴿إِنَّهُ كَانَ تَوَّابًا﴾', '﴿وَاللَّهُ عَزِيزٌ حَكِيمٌ﴾'], c: 1 },
-      { q: 'ما الآية الثالثة في سورة القارعة؟', a: ['﴿الْقَارِعَةُ﴾', '﴿مَا الْقَارِعَةُ﴾', '﴿وَمَا أَدْرَاكَ مَا الْقَارِعَةُ﴾', '﴿يَوْمَ يَكُونُ النَّاسُ كَالْفَرَاشِ الْمَبْثُوثِ﴾'], c: 2 },
-      { q: 'أكمل قوله تعالى في سورة المسد: ﴿سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ * ...﴾', a: ['﴿وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ﴾', '﴿فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ﴾', '﴿مَا أَغْنَىٰ عَنْهُ مَالُهُ﴾', '﴿وَتَبَّ﴾'], c: 0 },
-      { q: 'ما الآية الأولى في سورة البينة؟', a: ['﴿رَسُولٌ مِّنَ اللَّهِ يَتْلُو صُحُفًا مُّطَهَّرَةً﴾', '﴿لَمْ يَكُنِ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ وَالْمُشْرِكِينَ مُنفَكِّينَ حَتَّىٰ تَأْتِيَهُمُ الْبَيِّنَةُ﴾', '﴿فِيهَا كُتُبٌ قَيِّمَةٌ﴾', '﴿وَمَا تَفَرَّقَ الَّذِينَ أُوتُوا الْكِتَابَ﴾'], c: 1 },
-      { q: 'أكمل قوله تعالى في سورة الإخلاص: ﴿لَمْ يَلِدْ وَلَمْ يُولَدْ * ...﴾', a: ['﴿اللَّهُ الصَّمَدُ﴾', '﴿قُلْ هُوَ اللَّهُ أَحَدٌ﴾', '﴿وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ﴾', '﴿اللَّهُ أَحَدٌ﴾'], c: 2 },
-      { q: 'أكمل قوله تعالى في سورة الهمزة: ﴿كَلَّا ۖ لَيُنبَذَنَّ فِي الْحُطَمَةِ * ...﴾', a: ['﴿وَمَا أَدْرَاكَ مَا الْحُطَمَةُ﴾', '﴿نَارُ اللَّهِ الْمُوقَدَةُ﴾', '﴿الَّتِي تَطَّلِعُ عَلَى الْأَفْئِدَةِ﴾', '﴿إِنَّهَا عَلَيْهِم مُّؤْصَدَةٌ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة قريش: ﴿فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ * ...﴾', a: ['﴿الَّذِي أَطْعَمَهُم مِّن جُوعٍ وَآمَنَهُم مِّنْ خَوْفٍ﴾', '﴿إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ﴾', '﴿الَّذِي أَطْعَمَهُم مِّن جُوعٍ﴾', '﴿وَآمَنَهُم مِّنْ خَوْفٍ﴾'], c: 0 },
-      { q: 'ما الآية الأخيرة في سورة الناس؟', a: ['﴿مَلِكِ النَّاسِ﴾', '﴿إِلَٰهِ النَّاسِ﴾', '﴿الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ﴾', '﴿مِنَ الْجِنَّةِ وَالنَّاسِ﴾'], c: 3 },
-      { q: 'ما الآية التي تأتي بعد قوله تعالى في سورة الكوثر: ﴿فَصَلِّ لِرَبِّكَ وَانْحَرْ﴾؟', a: ['﴿إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ﴾', '﴿إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ﴾', '﴿فَاعْبُدْ رَبَّكَ﴾', '﴿إِنَّا أَعْطَيْنَاكَ﴾'], c: 1 },
-      { q: 'ما الآية التي تأتي بعد قوله تعالى في سورة المنافقون: ﴿اتَّخَذُوا أَيْمَانَهُمْ جُنَّةً فَصَدُّوا عَن سَبِيلِ اللَّهِ﴾؟', a: ['﴿ذَٰلِكَ بِأَنَّهُمْ آمَنُوا ثُمَّ كَفَرُوا﴾', '﴿إِنَّهُمْ سَاءَ مَا كَانُوا يَعْمَلُونَ﴾', '﴿وَإِذَا رَأَيْتَهُمْ تُعْجِبُكَ أَجْسَامُهُمْ﴾', '﴿هُمُ الْعَدُوُّ فَاحْذَرْهُمْ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة العصر: ﴿إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ﴾... ما التكملة؟', a: ['﴿وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ﴾', '﴿وَتَوَاصَوْا بِالصَّبْرِ﴾', '﴿وَتَوَاصَوْا بِالْحَقِّ﴾', '﴿إِنَّ الْإِنسَانَ لَفِي خُسْرٍ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة العلق: ﴿الَّذِي عَلَّمَ بِالْقَلَمِ * ...﴾', a: ['﴿عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ﴾', '﴿اقْرَأْ وَرَبُّكَ الْأَكْرَمُ﴾', '﴿خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ﴾', '﴿كَلَّا إِنَّ الْإِنسَانَ لَيَطْغَىٰ﴾'], c: 0 },
-      { q: 'ما الآية الأخيرة في سورة الفلق؟', a: ['﴿مِن شَرِّ مَا خَلَقَ﴾', '﴿وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ﴾', '﴿وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ﴾', '﴿وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ﴾'], c: 3 },
-      { q: 'ما الآية التي تأتي بعد قوله تعالى في سورة التكاثر: ﴿كَلَّا سَوْفَ تَعْلَمُونَ﴾؟', a: ['﴿ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ﴾', '﴿كَلَّا لَوْ تَعْلَمُونَ عِلْمَ الْيَقِينِ﴾', '﴿لَتَرَوُنَّ الْجَحِيمَ﴾', '﴿حَتَّىٰ زُرْتُمُ الْمَقَابِرَ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة العاديات: ﴿فَالْمُورِيَاتِ قَدْحًا * ...﴾', a: ['﴿فَالْمُغِيرَاتِ صُبْحًا﴾', '﴿فَأَثَرْنَ بِهِ نَقْعًا﴾', '﴿فَوَسَطْنَ بِهِ جَمْعًا﴾', '﴿وَالْعَادِيَاتِ ضَبْحًا﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة الكافرون: ﴿وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ * ...﴾', a: ['﴿وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ﴾', '﴿لَكُمْ دِينُكُمْ وَلِيَ دِينِ﴾', '﴿لَا أَعْبُدُ مَا تَعْبُدُونَ﴾﴾', '﴿وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ۖ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة الزلزلة: ﴿فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ * ...﴾', a: ['﴿وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ﴾', '﴿وَمَن يَعْمَلْ سُوءًا يُجْزَ بِهِ﴾', '﴿إِنَّ اللَّهَ لَا يَظْلِمُ مِثْقَالَ ذَرَّةٍ﴾', '﴿فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة الفيل: ﴿وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ * ...﴾', a: ['﴿تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ﴾', '﴿فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ﴾', '﴿أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ﴾', '﴿أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ﴾'], c: 0 },
-      { q: 'ما الآية التي تأتي بعد قوله تعالى في سورة الماعون: ﴿فَوَيْلٌ لِّلْمُصَلِّينَ﴾؟', a: ['﴿الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ﴾', '﴿الَّذِينَ هُمْ يُرَاءُونَ﴾', '﴿وَيَمْنَعُونَ الْمَاعُونَ﴾', '﴿وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة القدر: ﴿تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍ * ...﴾', a: ['﴿سَلَامٌ هِيَ حَتَّىٰ مَطْلَعِ الْفَجْرِ﴾', '﴿لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ﴾', '﴿وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ﴾', '﴿إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ﴾'], c: 0 }
-    ]
-  },
+    let total = 0;
+    cart.forEach(item => {
+        tableHTML += `
+            <tr>
+                <td>${item.name}</td>
+                <td>${item.quantity}</td>
+                <td>${(item.price * item.quantity).toFixed(2)} ج.م</td>
+            </tr>
+        `;
+        total += item.price * item.quantity;
+    });
 
-  /* ==========================================================
-     المستوى الصعب — 30 سؤال (الترتيب متلخبط + صعوبة أعلى)
-  ========================================================== */
-  mujadilah: {
-    title: 'اختبار من سورة الناس إلى سورة المجادلة (المستوى الصعب)',
-    questions: [
-      { q: 'ما الآية الأولى في سورة المجادلة؟', a: ['﴿الَّذِينَ يُظَاهِرُونَ مِنكُم مِّن نِّسَائِهِم﴾', '﴿قَدْ سَمِعَ اللَّهُ قَوْلَ الَّتِي تُجَادِلُكَ فِي زَوْجِهَا وَتَشْتَكِي إِلَى اللَّهِ﴾', '﴿إِنَّ الَّذِينَ يُحَادُّونَ اللَّهَ وَرَسُولَهُ﴾', '﴿يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نَاجَيْتُمُ الرَّسُولَ﴾'], c: 1 },
-      { q: 'أكمل قوله تعالى في سورة التحريم: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا قُوا أَنفُسَكُمْ وَأَهْلِيكُمْ نَارًا﴾... ما التكملة؟', a: ['﴿وَقُودُهَا النَّاسُ وَالْحِجَارَةُ عَلَيْهَا مَلَائِكَةٌ غِلَاظٌ شِدَادٌ﴾', '﴿وَقُودُهَا النَّاسُ وَالْحِجَارَةُ﴾', '﴿عَلَيْهَا مَلَائِكَةٌ غِلَاظٌ شِدَادٌ﴾', '﴿لَا يَعْصُونَ اللَّهَ مَا أَمَرَهُمْ﴾'], c: 0 },
-      { q: 'ما السورة التي تبدأ بـ ﴿يُسَبِّحُ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ الْمَلِكِ الْقُدُّوسِ الْعَزِيزِ الْحَكِيمِ﴾؟', a: ['الحشر', 'الصف', 'الجمعة', 'التغابن'], c: 2 },
-      { q: 'أكمل قوله تعالى في سورة الحشر: ﴿هُوَ الَّذِي أَخْرَجَ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ مِن دِيَارِهِمْ لِأَوَّلِ الْحَشْرِ﴾... ما التكملة؟', a: ['﴿مَا ظَنَنتُمْ أَن يَخْرُجُوا ۖ وَظَنُّوا أَنَّهُم مَّانِعَتُهُمْ حُصُونُهُم مِّنَ اللَّهِ﴾', '﴿فَأَتَاهُمُ اللَّهُ مِنْ حَيْثُ لَمْ يَحْتَسِبُوا﴾', '﴿وَقَذَفَ فِي قُلُوبِهِمُ الرُّعْبَ﴾', '﴿يُخْرِبُونَ بُيُوتَهُم بِأَيْدِيهِمْ﴾'], c: 0 },
-      { q: 'الآية ﴿إِنَّ اللَّهَ يُحِبُّ الَّذِينَ يُقَاتِلُونَ فِي سَبِيلِهِ صَفًّا كَأَنَّهُم بُنْيَانٌ مَّرْصُوصٌ﴾ في أي سورة؟', a: ['الممتحنة', 'الصف', 'الجمعة', 'الحشر'], c: 1 },
-      { q: 'أكمل قوله تعالى في سورة التغابن: ﴿فَاتَّقُوا اللَّهَ مَا اسْتَطَعْتُمْ وَاسْمَعُوا وَأَطِيعُوا وَأَنفِقُوا خَيْرًا لِّأَنفُسِكُمْ﴾... ما التكملة؟', a: ['﴿وَمَن يُوقَ شُحَّ نَفْسِهِ فَأُولَٰئِكَ هُمُ الْمُفْلِحُونَ﴾', '﴿وَمَن يُوقَ شُحَّ نَفْسِهِ﴾', '﴿فَأُولَٰئِكَ هُمُ الْمُفْلِحُونَ﴾', '﴿إِنَّمَا أَمْوَالُكُمْ وَأَوْلَادُكُمْ فِتْنَةٌ﴾'], c: 0 },
-      { q: 'ما الآية الأولى في سورة الحديد؟', a: ['﴿سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ﴾', '﴿يُسَبِّحُ لِلَّهِ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ﴾', '﴿لَهُ مُلْكُ السَّمَاوَاتِ وَالْأَرْضِ﴾', '﴿هُوَ الْأَوَّلُ وَالْآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة المجادلة: ﴿الَّذِينَ يُظَاهِرُونَ مِنكُم مِّن نِّسَائِهِم مَّا هُنَّ أُمَّهَاتِهِمْ﴾... ما التكملة؟', a: ['﴿إِنْ أُمَّهَاتُهُمْ إِلَّا اللَّائِي وَلَدْنَهُمْ﴾', '﴿إِنْ أُمَّهَاتُهُمْ إِلَّا اللَّائِي وَلَدْنَهُمْ ۚ وَإِنَّهُمْ لَيَقُولُونَ مُنكَرًا مِّنَ الْقَوْلِ وَزُورًا﴾', '﴿وَإِنَّهُمْ لَيَقُولُونَ مُنكَرًا مِّنَ الْقَوْلِ وَزُورًا﴾', '﴿وَإِنَّ اللَّهَ لَعَفُوٌّ غَفُورٌ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة الممتحنة: ﴿لَقَدْ كَانَ لَكُمْ فِيهِمْ أُسْوَةٌ حَسَنَةٌ لِّمَن كَانَ يَرْجُو اللَّهَ وَالْيَوْمَ الْآخِرَ﴾... ما التكملة؟', a: ['﴿وَمَن يَتَوَلَّ فَإِنَّ اللَّهَ هُوَ الْغَنِيُّ الْحَمِيدُ﴾', '﴿وَمَن يَتَوَلَّ فَإِنَّ اللَّهَ هُوَ الْغَنِيُّ﴾', '﴿فَإِنَّ اللَّهَ هُوَ الْغَنِيُّ الْحَمِيدُ﴾', '﴿وَاللَّهُ الْغَنِيُّ الْحَمِيدُ﴾'], c: 0 },
-      { q: 'ما الآية الأولى في سورة التحريم؟', a: ['﴿قَدْ فَرَضَ اللَّهُ لَكُمْ تَحِلَّةَ أَيْمَانِكُمْ﴾', '﴿يَا أَيُّهَا النَّبِيُّ لِمَ تُحَرِّمُ مَا أَحَلَّ اللَّهُ لَكَ تَبْتَغِي مَرْضَاتَ أَزْوَاجِكَ ۚ وَاللَّهُ غَفُورٌ رَّحِيمٌ﴾', '﴿وَإِذْ أَسَرَّ النَّبِيُّ إِلَىٰ بَعْضِ أَزْوَاجِهِ حَدِيثًا﴾', '﴿عَسَىٰ رَبُّهُ إِن طَلَّقَكُنَّ أَن يُبْدِلَهُ أَزْوَاجًا خَيْرًا مِّنكُنَّ﴾'], c: 1 },
-      { q: 'ما السورة التي تبدأ بـ ﴿يُسَبِّحُ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۖ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ ۖ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ﴾؟', a: ['الجمعة', 'التغابن', 'الحشر', 'الصف'], c: 1 },
-      { q: 'ما الآية التي تأتي بعد قوله تعالى في سورة الصف: ﴿إِنَّ اللَّهَ يُحِبُّ الَّذِينَ يُقَاتِلُونَ فِي سَبِيلِهِ صَفًّا كَأَنَّهُم بُنْيَانٌ مَّرْصُوصٌ﴾؟', a: ['﴿وَإِذْ قَالَ مُوسَىٰ لِقَوْمِهِ يَا قَوْمِ لِمَ تُؤْذُونَنِي وَقَد تَّعْلَمُونَ أَنِّي رَسُولُ اللَّهِ إِلَيْكُمْ﴾', '﴿وَإِذْ قَالَ عِيسَى ابْنُ مَرْيَمَ يَا بَنِي إِسْرَائِيلَ﴾', '﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لِمَ تَقُولُونَ مَا لَا تَفْعَلُونَ﴾', '﴿كَبُرَ مَقْتًا عِندَ اللَّهِ أَن تَقُولُوا مَا لَا تَفْعَلُونَ﴾'], c: 0 },
-      { q: 'الآية ﴿وَمَا آتَاكُمُ الرَّسُولُ فَخُذُوهُ وَمَا نَهَاكُمْ عَنْهُ فَانتَهُوا﴾ في أي سورة؟', a: ['الممتحنة', 'الحشر', 'الصف', 'التغابن'], c: 1 },
-      { q: 'أكمل قوله تعالى في سورة الجمعة: ﴿مَثَلُ الَّذِينَ حُمِّلُوا التَّوْرَاةَ ثُمَّ لَمْ يَحْمِلُوهَا كَمَثَلِ الْحِمَارِ يَحْمِلُ أَسْفَارًا﴾... ما التكملة؟', a: ['﴿بِئْسَ مَثَلُ الْقَوْمِ الَّذِينَ كَذَّبُوا بِآيَاتِ اللَّهِ ۚ وَاللَّهُ لَا يَهْدِي الْقَوْمَ الظَّالِمِينَ﴾', '﴿بِئْسَ مَثَلُ الْقَوْمِ الَّذِينَ كَذَّبُوا بِآيَاتِ اللَّهِ﴾', '﴿وَاللَّهُ لَا يَهْدِي الْقَوْمَ الظَّالِمِينَ﴾', '﴿قُلْ يَا أَيُّهَا الَّذِينَ هَادُوا إِن زَعَمْتُمْ﴾'], c: 0 },
-      { q: 'الآية ﴿إِنَّ الَّذِينَ يُحَادُّونَ اللَّهَ وَرَسُولَهُ كُبِتُوا كَمَا كُبِتَ الَّذِينَ مِن قَبْلِهِمْ﴾ في أي سورة؟', a: ['الممتحنة', 'المجادلة', 'الحشر', 'الصف'], c: 1 },
-      { q: 'ما الآية الأولى في سورة الممتحنة؟', a: ['﴿لَقَدْ كَانَ لَكُمْ فِيهِمْ أُسْوَةٌ حَسَنَةٌ﴾', '﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَتَّخِذُوا عَدُوِّي وَعَدُوَّكُمْ أَوْلِيَاءَ تُلْقُونَ إِلَيْهِم بِالْمَوَدَّةِ وَقَدْ كَفَرُوا بِمَا جَاءَكُم مِّنَ الْحَقِّ﴾', '﴿إِن يَثْقَفُوكُمْ يَكُونُوا لَكُمْ أَعْدَاءً﴾', '﴿عَسَى اللَّهُ أَن يَجْعَلَ بَيْنَكُمْ وَبَيْنَ الَّذِينَ عَادَيْتُم مِّنْهُم مَّوَدَّةً﴾'], c: 1 },
-      { q: 'ما السورة التي تبدأ بـ ﴿سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ﴾ وتأتي قبل سورة الجمعة مباشرة؟', a: ['الحشر', 'الممتحنة', 'الصف', 'التغابن'], c: 2 },
-      { q: 'أكمل قوله تعالى في سورة التغابن: ﴿يَعْلَمُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ وَيَعْلَمُ مَا تُسِرُّونَ وَمَا تُعْلِنُونَ﴾... ما التكملة؟', a: ['﴿وَاللَّهُ عَلِيمٌ بِذَاتِ الصُّدُورِ﴾', '﴿وَاللَّهُ عَلِيمٌ حَلِيمٌ﴾', '﴿وَاللَّهُ بِكُلِّ شَيْءٍ عَلِيمٌ﴾', '﴿إِنَّ اللَّهَ عَلِيمٌ خَبِيرٌ﴾'], c: 0 },
-      { q: 'ما الآية الأخيرة في سورة الحشر؟', a: ['﴿هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ لَهُ الْأَسْمَاءُ الْحُسْنَىٰ ۚ يُسَبِّحُ لَهُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ﴾', '﴿هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ﴾', '﴿هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ﴾', '﴿يُسَبِّحُ لَهُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة الطلاق: ﴿وَاللَّائِي يَئِسْنَ مِنَ الْمَحِيضِ مِن نِّسَائِكُمْ إِنِ ارْتَبْتُمْ فَعِدَّتُهُنَّ ثَلَاثَةُ أَشْهُرٍ﴾... ما التكملة؟', a: ['﴿وَاللَّائِي لَمْ يَحِضْنَ ۚ وَأُولَاتُ الْأَحْمَالِ أَجَلُهُنَّ أَن يَضَعْنَ حَمْلَهُنَّ﴾', '﴿وَاللَّائِي لَمْ يَحِضْنَ﴾', '﴿وَأُولَاتُ الْأَحْمَالِ أَجَلُهُنَّ أَن يَضَعْنَ حَمْلَهُنَّ﴾', '﴿وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مِنْ أَمْرِهِ يُسْرًا﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة التحريم: ﴿ضَرَبَ اللَّهُ مَثَلًا لِّلَّذِينَ كَفَرُوا امْرَأَتَ نُوحٍ وَامْرَأَتَ لُوطٍ﴾... ما التكملة؟', a: ['﴿كَانَتَا تَحْتَ عَبْدَيْنِ مِنْ عِبَادِنَا صَالِحَيْنِ فَخَانَتَاهُمَا﴾', '﴿كَانَتَا تَحْتَ عَبْدَيْنِ مِنْ عِبَادِنَا﴾', '﴿فَخَانَتَاهُمَا فَلَمْ يُغْنِيَا عَنْهُمَا مِنَ اللَّهِ شَيْئًا﴾', '﴿وَقِيلَ ادْخُلَا النَّارَ مَعَ الدَّاخِلِينَ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة الجمعة: ﴿هُوَ الَّذِي بَعَثَ فِي الْأُمِّيِّينَ رَسُولًا مِّنْهُمْ يَتْلُو عَلَيْهِمْ آيَاتِهِ وَيُزَكِّيهِمْ وَيُعَلِّمُهُمُ الْكِتَابَ وَالْحِكْمَةَ﴾... ما التكملة؟', a: ['﴿وَإِن كَانُوا مِن قَبْلُ لَفِي ضَلَالٍ مُّبِينٍ﴾', '﴿وَإِن كَانُوا مِن قَبْلُ لَفِي ضَلَالٍ﴾', '﴿لَفِي ضَلَالٍ مُّبِينٍ﴾', '﴿وَآخَرِينَ مِنْهُمْ لَمَّا يَلْحَقُوا بِهِمْ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة المجادلة: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نَاجَيْتُمُ الرَّسُولَ فَقَدِّمُوا بَيْنَ يَدَيْ نَجْوَاكُمْ صَدَقَةً﴾... ما التكملة؟', a: ['﴿ذَٰلِكَ خَيْرٌ لَّكُمْ وَأَطْهَرُ﴾', '﴿ذَٰلِكَ خَيْرٌ لَّكُمْ﴾', '﴿وَأَطْهَرُ﴾', '﴿فَإِن لَّمْ تَجِدُوا فَإِنَّ اللَّهَ غَفُورٌ رَّحِيمٌ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة الصف: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا كُونُوا أَنصَارَ اللَّهِ كَمَا قَالَ عِيسَى ابْنُ مَرْيَمَ لِلْحَوَارِيِّينَ مَنْ أَنصَارِي إِلَى اللَّهِ﴾... ما التكملة؟', a: ['﴿قَالَ الْحَوَارِيُّونَ نَحْنُ أَنصَارُ اللَّهِ﴾', '﴿قَالَ الْحَوَارِيُّونَ نَحْنُ أَنصَارُ اللَّهِ ۖ فَآمَنَت طَّائِفَةٌ مِّن بَنِي إِسْرَائِيلَ وَكَفَرَت طَّائِفَةٌ﴾', '﴿فَآمَنَت طَّائِفَةٌ مِّن بَنِي إِسْرَائِيلَ وَكَفَرَت طَّائِفَةٌ﴾', '﴿فَأَيَّدْنَا الَّذِينَ آمَنُوا عَلَىٰ عَدُوِّهِمْ فَأَصْبَحُوا ظَاهِرِينَ﴾'], c: 0 },
-      { q: 'أكمل قوله تعالى في سورة الحديد: ﴿أَلَمْ يَأْنِ لِلَّذِينَ آمَنُوا أَن تَخْشَعَ قُلُوبُهُمْ لِذِكْرِ اللَّهِ﴾... ما التكملة؟', a: ['﴿وَمَا نَزَلَ مِنَ الْحَقِّ﴾', '﴿وَمَا نَزَلَ مِنَ الْحَقِّ ۚ وَلَا يَكُونُوا كَالَّذِينَ أُوتُوا الْكِتَابَ مِن قَبْلُ﴾', '﴿وَلَا يَكُونُوا كَالَّذِينَ أُوتُوا الْكِتَابَ مِن قَبْلُ﴾', '﴿فَطَالَ عَلَيْهِمُ الْأَمَدُ فَقَسَتْ قُلُوبُهُمْ﴾'], c: 0 },
-      { q: 'ما الآية الأولى في سورة الطلاق؟', a: ['﴿يَا أَيُّهَا النَّبِيُّ إِذَا طَلَّقْتُمُ النِّسَاءَ فَطَلِّقُوهُنَّ لِعِدَّتِهِنَّ وَأَحْصُوا الْعِدَّةَ ۖ وَاتَّقُوا اللَّهَ رَبَّكُمْ﴾', '﴿فَإِذَا بَلَغْنَ أَجَلَهُنَّ فَأَمْسِكُوهُنَّ بِمَعْرُوفٍ﴾', '﴿وَاللَّائِي يَئِسْنَ مِنَ الْمَحِيضِ مِن نِّسَائِكُمْ﴾', '﴿أَسْكِنُوهُنَّ مِنْ حَيْثُ سَكَنتُم مِّن وُجْدِكُمْ﴾'], c: 0 },
-      { q: 'الآية ﴿كَبُرَ مَقْتًا عِندَ اللَّهِ أَن تَقُولُوا مَا لَا تَفْعَلُونَ﴾ في أي سورة؟', a: ['الحشر', 'الصف', 'الممتحنة', 'الجمعة'], c: 1 },
-      { q: 'أكمل قوله تعالى في سورة المجادلة: ﴿وَالَّذِينَ يُظَاهِرُونَ مِن نِّسَائِهِمْ ثُمَّ يَعُودُونَ لِمَا قَالُوا فَتَحْرِيرُ رَقَبَةٍ مِّن قَبْلِ أَن يَتَمَاسَّا﴾... ما التكملة؟', a: ['﴿ذَٰلِكُمْ تُوعَظُونَ بِهِ ۚ وَاللَّهُ بِمَا تَعْمَلُونَ خَبِيرٌ﴾', '﴿ذَٰلِكُمْ تُوعَظُونَ بِهِ﴾', '﴿وَاللَّهُ بِمَا تَعْمَلُونَ خَبِيرٌ﴾', '﴿فَمَن لَّمْ يَجِدْ فَصِيَامُ شَهْرَيْنِ مُتَتَابِعَيْنِ﴾'], c: 0 },
-      { q: 'ما الآية التي تأتي بعد قوله تعالى في سورة التحريم: ﴿يَا أَيُّهَا النَّبِيُّ لِمَ تُحَرِّمُ مَا أَحَلَّ اللَّهُ لَكَ تَبْتَغِي مَرْضَاتَ أَزْوَاجِكَ ۚ وَاللَّهُ غَفُورٌ رَّحِيمٌ﴾؟', a: ['﴿قَدْ فَرَضَ اللَّهُ لَكُمْ تَحِلَّةَ أَيْمَانِكُمْ ۚ وَاللَّهُ مَوْلَاكُمْ ۖ وَهُوَ الْعَلِيمُ الْحَكِيمُ﴾', '﴿وَإِذْ أَسَرَّ النَّبِيُّ إِلَىٰ بَعْضِ أَزْوَاجِهِ حَدِيثًا﴾', '﴿عَسَىٰ رَبُّهُ إِن طَلَّقَكُنَّ أَن يُبْدِلَهُ أَزْوَاجًا خَيْرًا مِّنكُنَّ﴾', '﴿يَا أَيُّهَا الَّذِينَ آمَنُوا قُوا أَنفُسَكُمْ وَأَهْلِيكُمْ نَارًا﴾'], c: 0 },
-      { q: 'ما الآية الأولى في سورة الحشر؟', a: ['﴿سَبَّحَ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ﴾', '﴿يُسَبِّحُ لِلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ﴾', '﴿هُوَ الَّذِي أَخْرَجَ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ﴾', '﴿مَا ظَنَنتُمْ أَن يَخْرُجُوا﴾'], c: 0 }
-    ]
-  }
-};
-/* ==========================================================
-   منطق الاختبار
-========================================================== */
-let currentKey = 'munafiqun';
-let currentIndex = 0;
-let answers = [];
-let student = { name:'', age:'', photo:'' };
-let score = 0;
+    tableHTML += `</tbody></table>`;
+    tableHTML += `<div class="total-section">إجمالي الفاتورة: ${total.toFixed(2)} ج.م</div>`;
+    tableHTML += `<p>عدد الأصناف: ${cart.length}</p>`;
 
-const $ = id => document.getElementById(id);
-
-function hideScreens(){
-  ['home','registration','quiz','result','certificateScreen'].forEach(id => $(id).classList.add('hidden'));
+    content.innerHTML = tableHTML;
+    modal.style.display = 'flex';
 }
 
-function goHome(){
-  hideScreens();
-  $('home').classList.remove('hidden');
-  window.scrollTo({ top:0, behavior:'smooth' });
+function closeInvoiceModal() {
+    document.getElementById('invoiceModal').style.display = 'none';
 }
 
-function beginRegistration(key){
-  currentKey = key;
-  student = { name:'', age:'', photo:'' };
-  $('studentName').value = '';
-  $('studentAge').value = '';
-  $('studentPhoto').value = '';
-  $('avatarPreview').innerHTML = '📷';
-  hideScreens();
-  $('registration').classList.remove('hidden');
-  window.scrollTo({ top:0, behavior:'smooth' });
+function finalProcess() {
+    // هنا نضع كود الطباعة وخصم المخزن النهائي
+    alert("تم التأكيد وجاري الطباعة...");
+    
+    // بعد الطباعة نصفر السلة ونقفل النافذة
+    cart = []; 
+    updateCartUI(); 
+    closeInvoiceModal();
 }
 
-$('studentPhoto').addEventListener('change', e => {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
-  if (!file.type.startsWith('image/')) { alert('من فضلك اختر ملف صورة.'); e.target.value=''; return; }
-  if (file.size > 5*1024*1024) { alert('حجم الصورة كبير. اختر صورة أقل من 5 ميجابايت.'); e.target.value=''; return; }
-  const reader = new FileReader();
-  reader.onload = () => {
-    student.photo = reader.result;
-    $('avatarPreview').innerHTML = '';
-    const img = document.createElement('img');
-    img.src = reader.result;
-    $('avatarPreview').appendChild(img);
-  };
-  reader.readAsDataURL(file);
-});
 
-$('studentForm').addEventListener('submit', e => {
-  e.preventDefault();
-  student.name = $('studentName').value.trim();
-  student.age = $('studentAge').value;
-  currentIndex = 0;
-  answers = Array(quizzes[currentKey].questions.length).fill(null);
-  hideScreens();
-  $('quiz').classList.remove('hidden');
-  renderQuestion();
-  window.scrollTo({ top:0, behavior:'smooth' });
-});
+    function clearInputs() {
+        document.getElementById('itemName').value = '';
+        document.getElementById('itemPrice').value = '';
+        document.getElementById('itemQty').value = '';
+    }
 
-function renderQuestion(){
-  const quiz = quizzes[currentKey];
-  const item = quiz.questions[currentIndex];
+    function addItem() {
+        const name = document.getElementById('itemName').value.trim();
+        const price = document.getElementById('itemPrice').value;
+        const qty = document.getElementById('itemQty').value;
+        if (!name || !price || !qty) { alert("❌ برجاء ملء البيانات"); return; }
+        if (parseFloat(price) <= 0 || parseInt(qty) < 0) { alert("⚠️ سعر أكبر من 0 وكمية غير سالبة"); return; }
+        inventory.push({ id: Date.now(), name, price: parseFloat(price), qty: parseInt(qty) });
+        saveAndRefresh();
+        toggleModal();
+        clearInputs();
+    }
 
-  $('quizTitle').textContent = quiz.title;
-  $('counter').textContent = `السؤال ${currentIndex+1} من ${quiz.questions.length}`;
-  $('questionText').textContent = item.q;
-  $('answers').innerHTML = '';
+    function deleteItem(id) { /* لا حذف من الواجهة الرئيسية لأن البطاقات أزيلت، لكن نحتفظ بالدالة للإدارة الداخلية */ }
 
-  const letters = ['أ','ب','ج','د'];
-  item.a.forEach((text, i) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'answer' + (answers[currentIndex] === i ? ' selected' : '');
+    function showItemCountOnly() { /* مجرد إظهار عدد الأصناف بدون باسورد */ alert(`📦 عدد الأصناف في المخزن: ${inventory.length}`); }
 
-    const letter = document.createElement('span');
-    letter.className = 'letter';
-    letter.textContent = letters[i];
-
-    const span = document.createElement('span');
-    span.textContent = text;
-
-    btn.append(letter, span);
-    btn.onclick = () => { answers[currentIndex] = i; renderQuestion(); };
-    $('answers').appendChild(btn);
-  });
-
-  $('prevBtn').disabled = currentIndex === 0;
-  $('prevBtn').style.opacity = currentIndex === 0 ? '.45' : '1';
-  $('nextBtn').textContent = currentIndex === quiz.questions.length - 1 ? 'إنهاء الاختبار ✓' : 'التالي ←';
-
-  const answered = answers[currentIndex] !== null ? 1 : 0;
-  $('progressBar').style.width = `${((currentIndex + answered) / quiz.questions.length) * 100}%`;
+    // زر التقرير بكلمة مرور 142005
+  // نافذة الباسورد الاحترافية (بدل الـ prompt القديم)
+function promptReportPassword() {
+    const modal = document.getElementById('password-modal');
+    modal.style.display = 'flex';
+    document.getElementById('report-password-input').value = '';
+    document.getElementById('password-error').innerHTML = '';
+    setTimeout(() => document.getElementById('report-password-input').focus(), 100);
 }
 
-function previousQuestion(){ if (currentIndex > 0) { currentIndex--; renderQuestion(); } }
-
-function nextQuestion(){
-  if (answers[currentIndex] === null) { alert('اختَر إجابة قبل الانتقال للسؤال التالي 🌟'); return; }
-  if (currentIndex < quizzes[currentKey].questions.length - 1) { currentIndex++; renderQuestion(); }
-  else finishQuiz();
+function closePasswordModal() {
+    document.getElementById('password-modal').style.display = 'none';
 }
 
-function finishQuiz(){
-  const qs = quizzes[currentKey].questions;
-  score = qs.reduce((sum, q, i) => sum + (answers[i] === q.c ? 1 : 0), 0);
-
-  hideScreens();
-  $('result').classList.remove('hidden');
-  $('scoreNum').textContent = score;
-  $('scoreTotalText').textContent = `من ${qs.length}`;
-
-  const pct = score / qs.length;
-  if (pct >= 0.8) {
-    $('resultHeading').textContent = 'ما شاء الله! أحسنت 🌟';
-    $('resultMessage').textContent = (student.name ? `يا ${student.name}، ` : 'يا بطل القرآن، ') + 'أداؤك رائع! استمر في حفظ كتاب الله.';
-  } else if (pct >= 0.5) {
-    $('resultHeading').textContent = 'أحسنت، واصل المراجعة 💚';
-    $('resultMessage').textContent = (student.name ? `يا ${student.name}، ` : 'يا بطل القرآن، ') + 'شكرًا لمحاولتك الجميلة. راجع السور ثم جرّب مرة أخرى.';
-  } else {
-    $('resultHeading').textContent = 'لا تيأس، بالمراجعة ستتقدم 📖';
-    $('resultMessage').textContent = (student.name ? `يا ${student.name}، ` : 'يا بطل القرآن، ') + 'شكرًا لمحاولتك. راجع السور جيدًا ثم أعد المحاولة.';
-  }
-
-  $('resultDetails').textContent = `أجبت إجابة صحيحة عن ${score} أسئلة من أصل ${qs.length}.`;
-  window.scrollTo({ top:0, behavior:'smooth' });
+function checkReportPassword() {
+    const pwd = document.getElementById('report-password-input').value;
+    const errorDiv = document.getElementById('password-error');
+    
+    if (pwd === "142005") {
+        closePasswordModal();
+        generateFullReport();
+    } else {
+        errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> كلمة المرور غير صحيحة!';
+        document.getElementById('report-password-input').value = '';
+        document.getElementById('report-password-input').focus();
+        // هز بسيط للعنوان
+        const modalTitle = document.querySelector('#password-modal h2');
+        modalTitle.style.transform = 'shake 0.3s ease';
+        setTimeout(() => { modalTitle.style.transform = ''; }, 300);
+    }
 }
 
-function retryQuiz(){
-  currentIndex = 0;
-  answers = Array(quizzes[currentKey].questions.length).fill(null);
-  hideScreens();
-  $('quiz').classList.remove('hidden');
-  renderQuestion();
-  window.scrollTo({ top:0, behavior:'smooth' });
+// إضافة تأثير الـ shake في CSS (حطه في الـ style)
+   function generateFullReport() {
+    const totalValueInventory = inventory.reduce((acc, curr) => acc + (curr.price * curr.qty), 0);
+    const totalSalesAmount = sales.reduce((acc, s) => acc + s.price, 0);
+    const groupedSales = {};
+    sales.forEach(s => { let d = s.date; if(!groupedSales[d]) groupedSales[d] = []; groupedSales[d].push(s); });
+    
+    let reportHtml = `<div style="padding:5px;">
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:20px;">
+            <div style="background:#f8fafc; padding:15px; border-radius:20px; flex:1; text-align:center;">
+                <i class="fas fa-boxes" style="color:#1e3a8a; font-size:1.8rem;"></i>
+                <p style="font-weight:bold; margin:5px 0;">قيمة المخزن</p>
+                <p style="color:#ff6b00; font-size:1.5rem; font-weight:900;">${totalValueInventory.toLocaleString()} ج.م</p>
+            </div>
+            <div style="background:#f8fafc; padding:15px; border-radius:20px; flex:1; text-align:center;">
+                <i class="fas fa-chart-line" style="color:#10b981; font-size:1.8rem;"></i>
+                <p style="font-weight:bold; margin:5px 0;">إجمالي المبيعات</p>
+                <p style="color:#ff6b00; font-size:1.5rem; font-weight:900;">${totalSalesAmount.toLocaleString()} ج.م</p>
+            </div>
+            <div style="background:#f8fafc; padding:15px; border-radius:20px; flex:1; text-align:center;">
+                <i class="fas fa-receipt" style="color:#ff6b00; font-size:1.8rem;"></i>
+                <p style="font-weight:bold; margin:5px 0;">عدد الفواتير</p>
+                <p style="color:#ff6b00; font-size:1.5rem; font-weight:900;">${sales.length}</p>
+            </div>
+        </div>
+        <hr><h3 style="margin:15px 0;"><i class="fas fa-calendar-alt"></i> 📅 تفاصيل الفواتير حسب اليوم</h3>`;
+    
+    if(sales.length === 0) {
+        reportHtml += `<p style="color:#64748b;">لا توجد فواتير مسجلة بعد.</p>`;
+    } else {
+        for (let [date, items] of Object.entries(groupedSales)) {
+            const dayTotal = items.reduce((s,i)=> s+i.price,0);
+            reportHtml += `<div style="background:#f1f5f9; border-radius:20px; padding:15px; margin-top:12px;">
+                <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+                    <span><i class="fas fa-calendar"></i> <strong>${date}</strong></span>
+                    <span style="background:#fff1e5; padding:4px 12px; border-radius:30px; color:#ff6b00; font-weight:bold;">${dayTotal.toLocaleString()} ج.م</span>
+                    <span style="color:#475569;">📄 ${items.length} فاتورة</span>
+                </div>
+                <ul style="margin-right:20px; margin-top:12px; max-height:150px; overflow-y:auto;">`;
+            items.forEach(sale => {
+                reportHtml += `<li style="margin-bottom:5px;">${escapeHtml(sale.name)} - <span style="color:#ff6b00;">${sale.price} ج.م</span></li>`;
+            });
+            reportHtml += `</ul></div>`;
+        }
+    }
+    reportHtml += `</div>`;
+    document.getElementById('report-content').innerHTML = reportHtml;
+    document.getElementById('report-modal').style.display = 'flex';
+}
+    function closeReportModal() {
+        document.getElementById('report-modal').style.display = 'none';
+    }
+
+    function saveAndRefresh() {
+        localStorage.setItem('capitano_inv', JSON.stringify(inventory));
+        localStorage.setItem('capitano_sales', JSON.stringify(sales));
+        updateUI();
+    }
+
+    function openDayDetails(date) {
+        const daySales = sales.filter(s => s.date === date);
+        const titleEl = document.getElementById('details-title');
+        const contentDiv = document.getElementById('details-content');
+        titleEl.innerText = `📋 مبيعات يوم: ${date}`;
+        contentDiv.innerHTML = '';
+        if (daySales.length === 0) contentDiv.innerHTML = '<div style="text-align:center; color:gray;">لا توجد مبيعات</div>';
+        else {
+            daySales.forEach(s => {
+                contentDiv.innerHTML += `
+                    <div class="sale-row">
+                        <div><strong>${escapeHtml(s.name)}</strong><br><span style="color:#ff6b00;">${s.price} ج.م</span></div>
+                        <button onclick="returnSale(${s.id}, '${date}')" style="background:#f1f5f9; border:1px solid #ccc; border-radius:12px; padding:6px 12px; cursor:pointer;"><i class="fas fa-undo"></i> مرتجع</button>
+                    </div>
+                `;
+            });
+        }
+        document.getElementById('details-modal').style.display = 'flex';
+    }
+
+    function returnSale(saleId, date) {
+        if (confirm("هل تريد حذف هذه العملية وإعادة المنتج للمخزن؟")) {
+            const saleIndex = sales.findIndex(s => s.id === saleId);
+            if (saleIndex !== -1) {
+                const soldItemName = sales[saleIndex].name;
+                const itemInInv = inventory.find(i => i.name === soldItemName);
+                if (itemInInv) itemInInv.qty++;
+                sales.splice(saleIndex, 1);
+                saveAndRefresh();
+                openDayDetails(date);
+            }
+        }
+    }
+    
+    
+    let currentEditingId = null;
+
+// فتح نافذة التعديل وتعبئة البيانات يدوياً
+function openEditItemModal(id) {
+    const item = inventory.find(i => i.id === id);
+    if (item) {
+        currentEditingId = id;
+        document.getElementById('edit-name').value = item.name;
+        document.getElementById('edit-price').value = item.price;
+        document.getElementById('edit-qty').value = item.qty;
+        document.getElementById('edit-item-modal').style.display = 'flex';
+    }
 }
 
-function showCertificate(){
-  const qs = quizzes[currentKey].questions;
-  hideScreens();
-  $('certificateScreen').classList.remove('hidden');
-
-  $('certName').textContent = student.name || 'بطل القرآن';
-  $('certQuizName').textContent = quizzes[currentKey].title;
-  $('certScore').textContent = `النتيجة: ${score} من ${qs.length}`;
-
-  const pct = score / qs.length;
-  $('certPraise').textContent = pct >= 0.8
-    ? 'أبدعت في رحلتك القرآنية، فاستمر في المراجعة والعمل بالقرآن.'
-    : 'نقدّر اجتهادك ومشاركتك، ونتمنى لك تقدمًا جميلًا مع المراجعة.';
-
-  $('certDate').textContent = 'تاريخ الإنجاز: ' + new Intl.DateTimeFormat('ar-EG', { year:'numeric', month:'long', day:'numeric' }).format(new Date());
-
-  if (student.photo) { $('certPhoto').src = student.photo; $('certPhoto').classList.remove('hidden'); }
-  else { $('certPhoto').classList.add('hidden'); }
-
-  window.scrollTo({ top:0, behavior:'smooth' });
+function closeEditModal() {
+    document.getElementById('edit-item-modal').style.display = 'none';
 }
 
-function showResult(){
-  hideScreens();
-  $('result').classList.remove('hidden');
-  window.scrollTo({ top:0, behavior:'smooth' });
+// حفظ التعديلات اليدوية للمخزن
+function saveEditManual() {
+    const itemIndex = inventory.findIndex(i => i.id === currentEditingId);
+    if (itemIndex !== -1) {
+        const newName = document.getElementById('edit-name').value.trim();
+        const newPrice = parseFloat(document.getElementById('edit-price').value);
+        const newQty = parseInt(document.getElementById('edit-qty').value);
+
+        if (!newName || isNaN(newPrice) || isNaN(newQty)) {
+            alert("⚠️ برجاء إدخال بيانات صحيحة");
+            return;
+        }
+
+        inventory[itemIndex].name = newName;
+        inventory[itemIndex].price = newPrice;
+        inventory[itemIndex].qty = newQty;
+
+        saveAndRefresh();
+        updateInvoiceUI(); // تحديث القائمة في نافذة الفاتورة
+        closeEditModal();
+        alert("✅ تم حفظ التعديلات في المخزن");
+    }
 }
 
-async function shareCertificate(){
-  const total = quizzes[currentKey].questions.length;
-  const title = 'شهادة إنجاز قرآني';
-  const text = `${title}\nالطالب: ${student.name || 'بطل القرآن'}\nالاختبار: ${quizzes[currentKey].title}\nالنتيجة: ${score} من ${total}\nتوقيع المعلمة: سلوى عثمان`;
-  if (navigator.share) {
-    try { await navigator.share({ title, text }); } catch(e) {}
-  } else {
-    try { await navigator.clipboard.writeText(text); alert('تم نسخ تفاصيل الشهادة. يمكنك لصقها ومشاركتها.'); }
-    catch(e) { prompt('انسخ تفاصيل الشهادة لمشاركتها:', text); }
-  }
+// حذف المنتج نهائياً من السيستم
+function deleteItemPermanently() {
+    if (confirm("🚨 هل أنت متأكد من حذف هذا المنتج نهائياً من المخزن؟")) {
+        inventory = inventory.filter(i => i.id !== currentEditingId);
+        saveAndRefresh();
+        updateInvoiceUI();
+        closeEditModal();
+        alert("🗑️ تم حذف المنتج بنجاح");
+    }
 }
 
-$('year').textContent = new Date().getFullYear();
+    
+    
+    
+    
+
+    function closeDetails() { document.getElementById('details-modal').style.display = 'none'; }
+
+ function updateUI() {
+    // تحديث عدد الأصناف فقط
+    document.getElementById('total-items').innerText = inventory.length;
+    
+    // إخفاء أي بطاقات تماماً من الصفحة الرئيسية
+    const archiveContainer = document.getElementById('daily-archive-container');
+    archiveContainer.innerHTML = ''; // مسح أي محتوى قديم
+    
+    // عرض رسالة ثابتة إن مفيش بطاقات (عشان الواجهة متبقاش فاضية خالص)
+    archiveContainer.innerHTML = `
+        <div style="text-align: center; padding: 40px 20px; background: rgba(255,255,255,0.6); border-radius: 28px; margin-top: 20px;">
+            <i class="fas fa-box-open" style="font-size: 3rem; color: #0a192f; opacity: 0.3; margin-bottom: 15px; display: block;"></i>
+            <p style="color: #475569; font-size: 1rem;">لا توجد بطاقات معروضة في الصفحة الرئيسية</p>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-top: 8px;">يمكنك إدارة المخزن من خلال الأزرار الجانبية</p>
+        </div>
+    `;
+}
+    function escapeHtml(str) {
+        if(!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    window.onclick = function(e) {
+        if (e.target === document.getElementById('modal')) document.getElementById('modal').style.display = 'none';
+        if (e.target === document.getElementById('details-modal')) document.getElementById('details-modal').style.display = 'none';
+        if (e.target === document.getElementById('invoice-modal')) document.getElementById('invoice-modal').style.display = 'none';
+        if (e.target === document.getElementById('report-modal')) document.getElementById('report-modal').style.display = 'none';
+    };
+
+    updateUI();
 </script>
 </body>
 </html>
