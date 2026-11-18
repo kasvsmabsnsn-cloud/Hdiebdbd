@@ -9,611 +9,98 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
-    <!-- مكتبات Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent; }
+        :root { --primary-navy: #0a192f; --secondary-orange: #ff6b00; --accent-blue: #1e3a8a; --text-light: #f8fafc; --success-green: #10b981; --danger-red: #ef4444; --warning-orange: #f59e0b; }
+        body { background: linear-gradient(145deg, #f1f5f9 0%, #e6edf4 100%); color: #0a192f; padding-bottom: 90px; min-height: 100vh; position: relative; overflow-x: hidden; }
+body::before {
+    content: "لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير";
+    position: fixed;
+    inset: 0; 
+    /* يغطي الشاشة كلها بدل top/left/width */
+    display: flex;
+    align-items: center;         /* توسيط رأسي */
+    justify-content: center;  
+      transform: translateY(120px);  /* 👈 زوّد أو قلل الرقم ده */
 
-        :root {
-            --primary-navy: #0a192f;
-            --secondary-orange: #ff6b00;
-            --accent-blue: #1e3a8a;
-            --text-light: #f8fafc;
-            --success-green: #10b981;
-            --danger-red: #ef4444;
-        }
-
-        body {
-            background: linear-gradient(145deg, #f1f5f9 0%, #e6edf4 100%);
-            color: #0a192f;
-            padding-bottom: 90px;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* خلفية الصفحة الرئيسية بالذكر العظيم */
-        body::before {
-            content: "لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير";
-            position: fixed;
-            top: 66%;
-            left: 0;
-            width: 100%;
-            transform: translateY(-50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 900;
-            text-align: center;
-            pointer-events: none;
-            z-index: 0;
-            white-space: pre-wrap;
-            padding: 20px;
-            line-height: 1.5;
-            opacity: 0.85;
-            background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 40%, #3b82f6 70%, #60a5fa 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        header, .container, .stats-bar, .daily-log-section {
-            position: relative;
-            z-index: 2;
-        }
-
-        header {
-            background: linear-gradient(135deg, #0a192f 0%, #0f2b4f 100%);
-            color: white;
-            padding: 1.2rem 1rem 2.4rem 1rem;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border-bottom: 4px solid #ff6b00;
-        }
-
-        header h1 {
-            font-size: 1.85rem;
-            font-weight: 900;
-        }
-
-        .dhikr {
-            font-size: 0.78rem;
-            opacity: 0.85;
-            font-weight: bold;
-            color: #cbd5e1;
-            margin-top: 4px;
-        }
-
-        /* شارة المخزن النشط */
-        .active-wh-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 107, 0, 0.18);
-            border: 1px solid rgba(255, 107, 0, 0.5);
-            color: #ffedd5;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            margin-top: 8px;
-            cursor: pointer;
-        }
-
-        .sync-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #10b981;
-            box-shadow: 0 0 8px #10b981;
-            display: inline-block;
-        }
-
-        /* شريط إحصائيات الصفحة الرئيسية */
-        .stats-bar {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background: white;
-            padding: 12px 10px;
-            margin: -26px 16px 16px 16px;
-            border-radius: 22px;
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
-            border: 1px solid rgba(255, 107, 0, 0.2);
-            cursor: pointer;
-        }
-
-        .stat-item {
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: #1e293b;
-            text-align: center;
-        }
-
-        .stat-item span {
-            display: block;
-            font-weight: 900;
-            color: #ff6b00;
-            font-size: 1.35rem;
-            margin-top: 2px;
-        }
-
-        .container {
-            padding: 0 16px;
-            max-width: 1100px;
-            margin: auto;
-        }
-
-        /* ==================== الشريط السفلي ذو الـ 5 أزرار ==================== */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 68px;
-            background: rgba(10, 25, 47, 0.96);
-            backdrop-filter: blur(14px);
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            align-items: center;
-            border-top: 2px solid rgba(255, 107, 0, 0.35);
-            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.25);
-            z-index: 900;
-            padding: 0 4px;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-            height: 100%;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.68rem;
-            font-weight: 700;
-        }
-
-        .nav-btn i {
-            font-size: 1.2rem;
-            transition: 0.2s;
-        }
-
-        .nav-btn.active, .nav-btn:hover {
-            color: #ff6b00;
-        }
-
-        .nav-btn.add-center-btn .plus-circle {
-            width: 46px;
-            height: 46px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #ff6b00, #e05e00);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            box-shadow: 0 6px 16px rgba(255, 107, 0, 0.45);
-            margin-top: -16px;
-            border: 2px solid #0a192f;
-        }
-
-        /* ==================== النوافذ المنبثقة العامة ==================== */
-        .modal-backdrop {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(2, 6, 23, 0.88);
-            backdrop-filter: blur(12px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1100;
-            padding: 12px;
-        }
-
-        .modal-glass {
-            background: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 28px;
-            padding: 20px;
-            width: 100%;
-            max-width: 450px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .modal-glass h2 {
-            color: white;
-            text-align: center;
-            margin-bottom: 14px;
-            font-size: 1.15rem;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            margin-bottom: 12px;
-        }
-
-        .input-group label {
-            color: #94a3b8;
-            font-weight: bold;
-            font-size: 0.76rem;
-        }
-
-        .input-group input {
-            background: rgba(15, 23, 42, 0.9);
-            border: 1.5px solid #334155;
-            color: white;
-            padding: 10px 12px;
-            border-radius: 14px;
-            outline: none;
-            font-size: 0.88rem;
-        }
-
-        .input-group input:focus {
-            border-color: #ff6b00;
-        }
-
-        .magic-button {
-            background: linear-gradient(45deg, #1e3a8a, #3b82f6);
-            color: white;
-            padding: 11px;
-            width: 100%;
-            border: none;
-            border-radius: 16px;
-            font-weight: bold;
-            font-size: 0.88rem;
-            cursor: pointer;
-        }
-
-        /* ==================== واجهة الفاتورة السريعة المطابقة للصورة بنصوص صغيرة ==================== */
-        #invoice-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(2, 6, 23, 0.92);
-            backdrop-filter: blur(15px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1200;
-            padding: 8px;
-        }
-
-        .invoice-card-container {
-            background: #0f172a;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-            width: 100%;
-            max-width: 520px;
-            height: 95vh;
-            display: flex;
-            flex-direction: column;
-            padding: 12px 12px 0 12px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.65);
-        }
-
-        /* الهيدر المدمج في الأعلى + البحث الملتصق به مباشرة */
-        .invoice-header-compact {
-            flex-shrink: 0;
-            margin-bottom: 8px;
-        }
-
-        .invoice-title-bar {
-            color: #ff6b00;
-            font-size: 1rem;
-            font-weight: 900;
-            text-align: center;
-            padding-bottom: 6px;
-            margin-bottom: 6px;
-            border-bottom: 1.5px solid rgba(255, 107, 0, 0.22);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .search-label-compact {
-            color: #94a3b8;
-            font-size: 0.72rem;
-            font-weight: 700;
-            display: block;
-            margin-bottom: 4px;
-            text-align: right;
-        }
-
-        .search-input-compact {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.9);
-            border: 1.5px solid #2563eb;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 14px;
-            font-size: 0.8rem;
-            outline: none;
-            transition: 0.2s;
-        }
-
-        .search-input-compact:focus {
-            border-color: #ff6b00;
-        }
-
-        /* الشبكة المزدوجة (نتائج البحث يمين + السلة الحالية يسار) بالحجم الأكبر */
-        .invoice-split-grid {
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 8px;
-            flex: 1;
-            min-height: 0; /* ضروري لعمل السكرول الداخلي بكفاءة */
-            margin-bottom: 118px; /* مساحة للجزء السفلي العائم */
-        }
-
-        .split-col {
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-        }
-
-        .col-header-label {
-            font-size: 0.72rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        /* صندوق نتائج البحث (يمين) */
-        #product-selector {
-            flex: 1;
-            overflow-y: auto;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid #334155;
-            border-radius: 14px;
-            padding: 5px;
-        }
-
-        /* صندوق السلة الحالية (يسار) */
-        #selected-list {
-            flex: 1;
-            overflow-y: auto;
-            background: rgba(16, 185, 129, 0.05);
-            border: 1px solid rgba(16, 185, 129, 0.28);
-            border-radius: 14px;
-            padding: 5px;
-        }
-
-        /* تنسيق شريط التمرير المصغر */
-        #product-selector::-webkit-scrollbar,
-        #selected-list::-webkit-scrollbar {
-            width: 4px;
-        }
-        #product-selector::-webkit-scrollbar-thumb {
-            background: #ff6b00;
-            border-radius: 8px;
-        }
-        #selected-list::-webkit-scrollbar-thumb {
-            background: #10b981;
-            border-radius: 8px;
-        }
-
-        /* المستطيل الصغير جداً لكل منتج داخل نتائج البحث */
-        .micro-item-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4px;
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid #263552;
-            border-radius: 9px;
-            padding: 5px 6px;
-            margin-bottom: 4px;
-            transition: 0.15s;
-        }
-
-        .micro-item-card:active {
-            transform: scale(0.98);
-            border-color: #ff6b00;
-        }
-
-        .micro-item-info {
-            flex: 1;
-            cursor: pointer;
-            min-width: 0;
-        }
-
-        .micro-item-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .micro-item-name {
-            color: #f8fafc;
-            font-size: 0.74rem;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .micro-item-price {
-            color: #ff6b00;
-            font-size: 0.72rem;
-            font-weight: 900;
-            flex-shrink: 0;
-        }
-
-        .micro-item-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 2px;
-            font-size: 0.64rem;
-            color: #94a3b8;
-        }
-
-        .micro-edit-btn {
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-            background: rgba(59, 130, 246, 0.12);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            color: #60a5fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.68rem;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        /* المستطيل الصغير داخل السلة الحالية */
-        .micro-cart-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(16, 185, 129, 0.12);
-            border: 1px solid rgba(16, 185, 129, 0.25);
-            border-radius: 8px;
-            padding: 5px 7px;
-            margin-bottom: 4px;
-            font-size: 0.72rem;
-            color: white;
-        }
-
-        .micro-cart-name {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 85px;
-            font-weight: 700;
-        }
-
-        /* الجزء السفلي المدمج والعائم (الإجمالي + إتمام البيع + إلغاء) كما في الصورة */
-        .invoice-bottom-floating {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 23, 42, 0.96);
-            backdrop-filter: blur(14px);
-            padding: 8px 12px 12px 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 22px 22px 0 0;
-            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.55);
-            z-index: 20;
-        }
-
-        .total-bar-box {
-            background: #1e293b;
-            padding: 8px 14px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .total-bar-label {
-            color: white;
-            font-weight: 700;
-            font-size: 0.82rem;
-        }
-
-        .total-bar-value {
-            color: #ff6b00;
-            font-size: 1.15rem;
-            font-weight: 900;
-        }
-
-        .bottom-action-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-complete-sale {
-            flex: 2;
-            background: linear-gradient(45deg, #10b981, #059669);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 10px;
-            font-weight: 800;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .btn-cancel-sale {
-            flex: 1;
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border-radius: 30px;
-            border: 1px solid #ef4444;
-            padding: 10px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-
-        /* ==================== بطاقات إدارة المخازن ==================== */
-        .wh-card {
-            background: #1e293b;
-            border: 1.5px solid #334155;
-            border-radius: 14px;
-            padding: 10px 12px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .wh-card.active-wh {
-            border-color: #ff6b00;
-            background: rgba(255, 107, 0, 0.1);
-        }
-
-        .details-card {
-            background: white;
-            max-width: 650px;
-            width: 100%;
-            border-radius: 28px;
-            padding: 20px;
-            max-height: 85vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .scroll-items {
-            overflow-y: auto;
-            flex: 1;
-            margin: 10px 0;
-        }
-
+    /* توسيط أفقي */
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-align: center;
+    pointer-events: none;
+    z-index: 0;
+    white-space: pre-wrap;
+    padding: 20px;
+    line-height: 1.5;
+    opacity: 0.85;
+    background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 40%, #3b82f6 70%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+        header, .container, .stats-bar, .daily-log-section { position: relative; z-index: 2; }
+        header { background: linear-gradient(135deg, #0a192f 0%, #0f2b4f 100%); color: white; padding: 1.2rem 1rem 2.4rem 1rem; text-align: center; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); border-bottom: 4px solid #ff6b00; }
+        header h1 { font-size: 1.85rem; font-weight: 900; }
+        .dhikr { font-size: 0.78rem; opacity: 0.85; font-weight: bold; color: #cbd5e1; margin-top: 4px; }
+        .active-wh-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 107, 0, 0.18); border: 1px solid rgba(255, 107, 0, 0.5); color: #ffedd5; padding: 4px 12px; border-radius: 30px; font-size: 0.78rem; font-weight: 700; margin-top: 8px; cursor: pointer; }
+        .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; display: inline-block; }
+        .stats-bar { display: flex; justify-content: space-around; align-items: center; background: white; padding: 12px 10px; margin: -26px 16px 16px 16px; border-radius: 22px; box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12); border: 1px solid rgba(255, 107, 0, 0.2); cursor: pointer; }
+        .stat-item { font-weight: 700; font-size: 0.85rem; color: #1e293b; text-align: center; }
+        .stat-item span { display: block; font-weight: 900; color: #ff6b00; font-size: 1.35rem; margin-top: 2px; }
+        .container { padding: 0 16px; max-width: 1100px; margin: auto; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 68px; background: rgba(10, 25, 47, 0.96); backdrop-filter: blur(14px); display: grid; grid-template-columns: repeat(5, 1fr); align-items: center; border-top: 2px solid rgba(255, 107, 0, 0.35); box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.25); z-index: 900; padding: 0 4px; }
+        .nav-btn { background: transparent; border: none; color: #94a3b8; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; height: 100%; cursor: pointer; transition: 0.2s; font-size: 0.68rem; font-weight: 700; }
+        .nav-btn i { font-size: 1.2rem; transition: 0.2s; }
+        .nav-btn.active, .nav-btn:hover { color: #ff6b00; }
+        .nav-btn.add-center-btn .plus-circle { width: 46px; height: 46px; border-radius: 16px; background: linear-gradient(135deg, #ff6b00, #e05e00); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 6px 16px rgba(255, 107, 0, 0.45); margin-top: -16px; border: 2px solid #0a192f; }
+        .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(2, 6, 23, 0.88); backdrop-filter: blur(12px); justify-content: center; align-items: center; z-index: 1100; padding: 12px; }
+        .modal-glass { background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 28px; padding: 20px; width: 100%; max-width: 450px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); max-height: 90vh; display: flex; flex-direction: column; }
+        .modal-glass h2 { color: white; text-align: center; margin-bottom: 14px; font-size: 1.15rem; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+        .input-group label { color: #94a3b8; font-weight: bold; font-size: 0.76rem; }
+        .input-group input { background: rgba(15, 23, 42, 0.9); border: 1.5px solid #334155; color: white; padding: 10px 12px; border-radius: 14px; outline: none; font-size: 0.88rem; }
+        .input-group input:focus { border-color: #ff6b00; }
+        .magic-button { background: linear-gradient(45deg, #1e3a8a, #3b82f6); color: white; padding: 11px; width: 100%; border: none; border-radius: 16px; font-weight: bold; font-size: 0.88rem; cursor: pointer; }
+        #invoice-modal { display: none; position: fixed; inset: 0; background: rgba(2, 6, 23, 0.92); backdrop-filter: blur(15px); justify-content: center; align-items: center; z-index: 1200; padding: 8px; }
+        .invoice-card-container { background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 30px; width: 100%; max-width: 520px; height: 95vh; display: flex; flex-direction: column; padding: 12px 12px 0 12px; position: relative; overflow: hidden; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.65); }
+        .invoice-header-compact { flex-shrink: 0; margin-bottom: 8px; }
+        .invoice-title-bar { color: #ff6b00; font-size: 1rem; font-weight: 900; text-align: center; padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1.5px solid rgba(255, 107, 0, 0.22); display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .search-label-compact { color: #94a3b8; font-size: 0.72rem; font-weight: 700; display: block; margin-bottom: 4px; text-align: right; }
+        .search-input-compact { width: 100%; background: rgba(15, 23, 42, 0.9); border: 1.5px solid #2563eb; color: white; padding: 8px 12px; border-radius: 14px; font-size: 0.8rem; outline: none; transition: 0.2s; }
+        .search-input-compact:focus { border-color: #ff6b00; }
+        .invoice-split-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 8px; flex: 1; min-height: 0; margin-bottom: 118px; }
+        .split-col { display: flex; flex-direction: column; min-height: 0; }
+        .col-header-label { font-size: 0.72rem; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+        #product-selector { flex: 1; overflow-y: auto; background: rgba(255, 255, 255, 0.04); border: 1px solid #334155; border-radius: 14px; padding: 5px; }
+        #selected-list { flex: 1; overflow-y: auto; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.28); border-radius: 14px; padding: 5px; }
+        #product-selector::-webkit-scrollbar, #selected-list::-webkit-scrollbar { width: 4px; }
+        #product-selector::-webkit-scrollbar-thumb { background: #ff6b00; border-radius: 8px; }
+        #selected-list::-webkit-scrollbar-thumb { background: #10b981; border-radius: 8px; }
+        .micro-item-card { display: flex; align-items: center; justify-content: space-between; gap: 4px; background: rgba(15, 23, 42, 0.85); border: 1px solid #263552; border-radius: 9px; padding: 5px 6px; margin-bottom: 4px; transition: 0.15s; }
+        .micro-item-card:active { transform: scale(0.98); border-color: #ff6b00; }
+        .micro-item-card.low-stock { border-color: rgba(239, 68, 68, 0.5); background: rgba(239, 68, 68, 0.06); }
+        .micro-item-info { flex: 1; cursor: pointer; min-width: 0; }
+        .micro-item-top { display: flex; justify-content: space-between; align-items: center; gap: 4px; }
+        .micro-item-name { color: #f8fafc; font-size: 0.74rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .micro-item-price { color: #ff6b00; font-size: 0.72rem; font-weight: 900; flex-shrink: 0; }
+        .micro-item-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 2px; font-size: 0.64rem; color: #94a3b8; }
+        .micro-edit-btn { width: 24px; height: 24px; border-radius: 6px; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.3); color: #60a5fa; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; cursor: pointer; flex-shrink: 0; }
+        .micro-cart-row { display: flex; justify-content: space-between; align-items: center; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 5px 7px; margin-bottom: 4px; font-size: 0.72rem; color: white; }
+        .micro-cart-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 85px; font-weight: 700; }
+        .invoice-bottom-floating { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15, 23, 42, 0.96); backdrop-filter: blur(14px); padding: 8px 12px 12px 12px; border-top: 1px solid rgba(255, 255, 255, 0.08); border-radius: 22px 22px 0 0; box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.55); z-index: 20; }
+        .total-bar-box { background: #1e293b; padding: 8px 14px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .total-bar-label { color: white; font-weight: 700; font-size: 0.82rem; }
+        .total-bar-value { color: #ff6b00; font-size: 1.15rem; font-weight: 900; }
+        .bottom-action-buttons { display: flex; gap: 8px; }
+        .btn-complete-sale { flex: 2; background: linear-gradient(45deg, #10b981, #059669); color: white; border: none; border-radius: 30px; padding: 10px; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-cancel-sale { flex: 1; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 30px; border: 1px solid #ef4444; padding: 10px; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
+        .wh-card { background: #1e293b; border: 1.5px solid #334155; border-radius: 14px; padding: 10px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .wh-card.active-wh { border-color: #ff6b00; background: rgba(255, 107, 0, 0.1); }
+        .details-card { background: white; max-width: 650px; width: 100%; border-radius: 28px; padding: 20px; max-height: 85vh; display: flex; flex-direction: column; }
+        .scroll-items { overflow-y: auto; flex: 1; margin: 10px 0; }
         @media (max-width: 400px) {
             .micro-item-name { max-width: 75px; }
             .micro-cart-name { max-width: 68px; }
@@ -628,9 +115,9 @@
 
 <meta property="og:description" content="🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗">
 
-<meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1794921720793">
+<meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795013794099">
 
-<meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1794921720793">
+<meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795013794099">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -640,16 +127,16 @@
 
 <meta property="og:url" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/">
 
-<link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/favicon.png?v=1794921720793">
+<link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/favicon.png?v=1795013794099">
 
-<link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/apple-touch-icon.png?v=1794921720793">
+<link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/apple-touch-icon.png?v=1795013794099">
 </head>
 <body>
 
 <header>
     <h1>⚡ كابيتانو ⚡</h1>
     <p class="dhikr">" سبحان الله العظيم سبحان الله وبحمده "</p>
-    <div class="active-wh-pill" onclick="openWarehousesModal()">
+    <div class="active-wh-pill" onclick="requirePassword(openWarehousesModal)">
         <span class="sync-dot" title="متصل بـ Firebase"></span>
         <i class="fas fa-warehouse"></i>
         <span id="current-warehouse-label">مخزن رقم 1</span>
@@ -657,7 +144,7 @@
     </div>
 </header>
 
-<div class="stats-bar" onclick="openWarehousesModal()">
+<div class="stats-bar" onclick="requirePassword(openWarehousesModal)">
     <div class="stat-item">📦 أصناف المخزن الحالي <span id="total-items">0</span></div>
     <div style="width: 1px; height: 32px; background: #e2e8f0;"></div>
     <div class="stat-item">🏭 إجمالي المخازن <span id="total-warehouses">1</span></div>
@@ -667,21 +154,20 @@
     <div class="daily-log-section" id="daily-archive-container"></div>
 </div>
 
-<!-- ==================== الشريط السفلي ذو الـ 5 أزرار ==================== -->
 <nav class="bottom-nav">
     <button class="nav-btn active" id="nav-home" onclick="switchTab('home')">
         <i class="fas fa-home"></i>
         <span>الرئيسية</span>
     </button>
-    <button class="nav-btn" id="nav-warehouses" onclick="openWarehousesModal()">
+    <button class="nav-btn" id="nav-warehouses" onclick="requirePassword(openWarehousesModal)">
         <i class="fas fa-warehouse"></i>
         <span>إدارة المخازن</span>
     </button>
-    <button class="nav-btn add-center-btn" onclick="toggleModal()">
+    <button class="nav-btn add-center-btn" onclick="requirePassword(toggleModal)">
         <div class="plus-circle"><i class="fas fa-plus"></i></div>
         <span style="color:#ff6b00;">إضافة منتج</span>
     </button>
-    <button class="nav-btn" id="nav-stats" onclick="promptReportPassword()">
+    <button class="nav-btn" id="nav-stats" onclick="requirePassword(generateFullReport)">
         <i class="fas fa-chart-pie"></i>
         <span>الإحصائيات</span>
     </button>
@@ -691,11 +177,8 @@
     </button>
 </nav>
 
-<!-- ==================== 1. نافذة الفاتورة السريعة المطابقة للصورة بنصوص صغيرة ==================== -->
 <div id="invoice-modal">
     <div class="invoice-card-container">
-        
-        <!-- العنوان المرفوع للأعلى + حقل البحث الملتصق تحته مباشرة -->
         <div class="invoice-header-compact">
             <div class="invoice-title-bar">
                 <i class="fas fa-file-invoice-dollar"></i>
@@ -706,9 +189,7 @@
             <input type="text" id="modalSearchInput" class="search-input-compact" oninput="updateInvoiceUI()" placeholder="اكتب اسم المنتج للبحث...">
         </div>
 
-        <!-- القائمتان المتجاورتان كما في الصورة (نتائج البحث يمين + السلة الحالية يسار) -->
         <div class="invoice-split-grid">
-            <!-- العمود الأيمن: نتائج البحث -->
             <div class="split-col">
                 <div class="col-header-label" style="color: #94a3b8;">
                     <span>📦 نتائج البحث</span>
@@ -716,8 +197,6 @@
                 </div>
                 <div id="product-selector"></div>
             </div>
-
-            <!-- العمود الأيسر: السلة الحالية -->
             <div class="split-col">
                 <div class="col-header-label" style="color: #10b981;">
                     <span>🛒 السلة الحالية</span>
@@ -727,7 +206,6 @@
             </div>
         </div>
 
-        <!-- الشريط السفلي المدمج والعائم (الإجمالي + إتمام البيع + إلغاء) -->
         <div class="invoice-bottom-floating">
             <div class="total-bar-box">
                 <span class="total-bar-label">الإجمالي:</span>
@@ -742,23 +220,18 @@
                 </button>
             </div>
         </div>
-
     </div>
 </div>
 
-<!-- ==================== 2. نافذة إدارة المخازن والتبديل بينها ==================== -->
 <div id="warehouses-modal" class="modal-backdrop">
     <div class="modal-glass" style="max-width: 480px;">
         <h2><i class="fas fa-warehouse" style="color:#ff6b00;"></i> إدارة المخازن والمخزون</h2>
-        
         <div style="display: flex; gap: 6px; margin-bottom: 12px;">
             <input type="text" id="newWarehouseName" placeholder="اسم المخزن الجديد (مثال: مخزن 2)..." style="flex:1; background:#1e293b; border:1px solid #334155; color:white; padding:9px 12px; border-radius:12px; font-size:0.82rem; outline:none;">
             <button onclick="createNewWarehouse()" style="background:#ff6b00; color:white; border:none; padding:0 14px; border-radius:12px; font-weight:bold; font-size:0.82rem; cursor:pointer;">+ مخزن</button>
         </div>
-
         <label style="color:#94a3b8; font-size:0.75rem; font-weight:bold; margin-bottom:6px; display:block;">اضغط على المخزن لتفعيله أو إدارة مخزونه:</label>
         <div id="warehouses-list" class="scroll-items" style="max-height: 200px;"></div>
-
         <div style="background: rgba(255,255,255,0.04); border: 1px solid #334155; border-radius: 14px; padding: 10px; margin-top: 6px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                 <span id="wh-stock-title" style="color:#10b981; font-weight:bold; font-size:0.8rem;">جرد المخزن النشط</span>
@@ -766,12 +239,10 @@
             </div>
             <div id="wh-stock-preview" style="max-height: 140px; overflow-y: auto; font-size: 0.78rem; color: #cbd5e1;"></div>
         </div>
-
         <button onclick="closeWarehousesModal()" style="background:#334155; color:white; margin-top:12px; width:100%; border:none; padding:10px; border-radius:14px; font-weight:bold; font-size:0.85rem; cursor:pointer;">إغلاق</button>
     </div>
 </div>
 
-<!-- ==================== 3. نافذة إضافة صنف للمخزن النشط ==================== -->
 <div id="modal" class="modal-backdrop">
     <div class="modal-glass">
         <h2><i class="fas fa-boxes" style="color:#ff6b00;"></i> إضافة صنف جديد</h2>
@@ -793,12 +264,10 @@
     </div>
 </div>
 
-<!-- ==================== 4. نافذة مراجعة الفاتورة النهائية ==================== -->
 <div id="review-invoice-modal" class="modal-backdrop" style="z-index: 1400;">
     <div class="modal-glass" style="max-width: 440px; border: 1px solid rgba(16, 185, 129, 0.4);">
         <h2 style="color: #10b981; margin-bottom: 4px;"><i class="fas fa-receipt"></i> مراجعة الفاتورة</h2>
         <p id="review-wh-subtitle" style="text-align:center; color:#94a3b8; font-size:0.76rem; margin-bottom:12px;"></p>
-
         <div style="max-height: 220px; overflow-y: auto; background: rgba(0,0,0,0.25); border-radius: 12px; padding: 8px; margin-bottom: 12px;">
             <table style="width: 100%; color: white; border-collapse: collapse; font-size: 0.8rem;">
                 <thead>
@@ -811,14 +280,12 @@
                 <tbody id="review-items-body"></tbody>
             </table>
         </div>
-
         <div style="background: rgba(255,255,255,0.05); padding: 10px 12px; border-radius: 12px; margin-bottom: 14px;">
             <div style="display: flex; justify-content: space-between; font-size: 1rem; font-weight: bold;">
                 <span style="color: #ff6b00;">المبلغ الإجمالي:</span>
                 <span id="review-total-price" style="color: #10b981;">0 ج.م</span>
             </div>
         </div>
-
         <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px;">
             <button onclick="finalizeSaleTransaction()" class="magic-button" style="background: linear-gradient(45deg, #10b981, #059669);">تأكيد البيع <i class="fas fa-check"></i></button>
             <button onclick="closeReviewModal()" class="magic-button" style="background: #334155;">تعديل</button>
@@ -826,22 +293,21 @@
     </div>
 </div>
 
-<!-- ==================== 5. نافذة باسورد الإحصائيات (00000) ==================== -->
+<!-- نافذة الباسورد العامة (4 أصفار + دخول تلقائي) -->
 <div id="password-modal" class="modal-backdrop" style="z-index: 1500;">
     <div class="modal-glass" style="max-width: 340px; text-align: center;">
         <i class="fas fa-lock" style="font-size: 2.2rem; color: #ff6b00; margin-bottom: 8px;"></i>
-        <h2>🔐 تقرير الإدارة</h2>
-        <p style="color: #94a3b8; margin-bottom: 14px; font-size: 0.78rem;">أدخل كلمة المرور (00000) للوصول للإحصائيات</p>
+        <h2>🔐 تأكيد الهوية</h2>
+        <p style="color: #94a3b8; margin-bottom: 14px; font-size: 0.78rem;">أدخل كلمة المرور (0000) للمتابعة</p>
         <div class="input-group">
-            <input type="password" id="report-password-input" placeholder="00000" inputmode="numeric" style="text-align: center; font-size: 1.2rem; letter-spacing: 6px;" onkeydown="if(event.key==='Enter') checkReportPassword()">
+            <input type="password" id="report-password-input" placeholder="0000" inputmode="numeric" maxlength="4" style="text-align: center; font-size: 1.2rem; letter-spacing: 6px;" oninput="autoCheckPassword()" onkeydown="if(event.key==='Enter') checkReportPassword()">
         </div>
         <button onclick="checkReportPassword()" class="magic-button" style="margin-bottom: 8px;"><i class="fas fa-unlock"></i> تأكيد</button>
-        <button onclick="closePasswordModal()" style="background: transparent; color: #94a3b8; border: 1px solid #334155; width: 100%; padding: 9px; border-radius: 14px; cursor: pointer; font-size: 0.8rem;">إلغاء</button>
+        <button onclick="cancelPassword()" style="background: transparent; color: #94a3b8; border: 1px solid #334155; width: 100%; padding: 9px; border-radius: 14px; cursor: pointer; font-size: 0.8rem;">إلغاء</button>
         <div id="password-error" style="color: #ef4444; font-size: 0.75rem; margin-top: 8px; min-height: 18px;"></div>
     </div>
 </div>
 
-<!-- ==================== 6. نافذة التقرير والإحصائيات ==================== -->
 <div id="report-modal" class="modal-backdrop" style="z-index: 1550;">
     <div class="details-card">
         <h2 id="report-modal-title" style="color:#0a192f; border-right: 4px solid #ff6b00; padding-right: 10px; font-size: 1.05rem;"></h2>
@@ -850,7 +316,6 @@
     </div>
 </div>
 
-<!-- ==================== 7. نافذة تعديل صنف يدوياً ==================== -->
 <div id="edit-item-modal" class="modal-backdrop" style="z-index: 1600;">
     <div class="modal-glass" style="max-width: 370px;">
         <h2 style="color: #ff6b00;"><i class="fas fa-pen-to-square"></i> تعديل بيانات المنتج</h2>
@@ -891,18 +356,12 @@
     const db = firebase.database();
     const systemRef = db.ref('capitano_pos_v2');
 
-    // ==================== هيكل البيانات لدعم تعدد المخازن ====================
+    // ==================== هيكل البيانات ====================
     let appState = JSON.parse(localStorage.getItem('capitano_pos_v2_cache')) || {
         activeWarehouseId: 'wh_1',
-        warehouses: [
-            { id: 'wh_1', name: 'مخزن رقم 1' }
-        ],
-        inventoryByWh: {
-            'wh_1': []
-        },
-        salesByWh: {
-            'wh_1': []
-        }
+        warehouses: [{ id: 'wh_1', name: 'مخزن رقم 1' }],
+        inventoryByWh: { 'wh_1': [] },
+        salesByWh: { 'wh_1': [] }
     };
 
     let currentInvoiceItems = [];
@@ -911,20 +370,18 @@
     function getActiveWarehouse() {
         return appState.warehouses.find(w => w.id === appState.activeWarehouseId) || appState.warehouses[0];
     }
-
     function getActiveInventory() {
         const whId = getActiveWarehouse().id;
         if (!appState.inventoryByWh[whId]) appState.inventoryByWh[whId] = [];
         return appState.inventoryByWh[whId];
     }
-
     function getActiveSales() {
         const whId = getActiveWarehouse().id;
         if (!appState.salesByWh[whId]) appState.salesByWh[whId] = [];
         return appState.salesByWh[whId];
     }
 
-    // ==================== المزامنة اللحظية مع Firebase ====================
+    // ==================== المزامنة مع Firebase ====================
     systemRef.on('value', (snapshot) => {
         const cloudData = snapshot.val();
         if (cloudData && cloudData.warehouses) {
@@ -940,12 +397,8 @@
             }
             localStorage.setItem('capitano_pos_v2_cache', JSON.stringify(appState));
             updateUI();
-            if (document.getElementById('invoice-modal').style.display === 'flex') {
-                updateInvoiceUI();
-            }
-            if (document.getElementById('warehouses-modal').style.display === 'flex') {
-                renderWarehousesModal();
-            }
+            if (document.getElementById('invoice-modal').style.display === 'flex') updateInvoiceUI();
+            if (document.getElementById('warehouses-modal').style.display === 'flex') renderWarehousesModal();
         } else {
             saveAndSync();
         }
@@ -961,23 +414,56 @@
         updateUI();
     }
 
-    // ==================== إدارة المخازن والتبديل بينها ====================
+    // ==================== نظام حماية الأقسام بالباسورد ====================
+    let pendingPasswordAction = null;
+
+    function requirePassword(action) {
+        pendingPasswordAction = action;
+        document.getElementById('report-password-input').value = '';
+        document.getElementById('password-error').innerHTML = '';
+        document.getElementById('password-modal').style.display = 'flex';
+        setTimeout(() => document.getElementById('report-password-input').focus(), 100);
+    }
+
+    function cancelPassword() {
+        pendingPasswordAction = null;
+        document.getElementById('password-modal').style.display = 'none';
+    }
+
+    function checkReportPassword() {
+        const pwd = document.getElementById('report-password-input').value;
+        const errorDiv = document.getElementById('password-error');
+
+        if (pwd === "0000") {
+            const action = pendingPasswordAction;
+            pendingPasswordAction = null;
+            document.getElementById('password-modal').style.display = 'none';
+            if (action) action();
+        } else {
+            errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> كلمة المرور غير صحيحة! (0000)';
+            document.getElementById('report-password-input').value = '';
+            document.getElementById('report-password-input').focus();
+        }
+    }
+
+    function autoCheckPassword() {
+        if (document.getElementById('report-password-input').value.length === 4) {
+            checkReportPassword();
+        }
+    }
+
+    // ==================== إدارة المخازن ====================
     function openWarehousesModal() {
         renderWarehousesModal();
         document.getElementById('warehouses-modal').style.display = 'flex';
     }
-
     function closeWarehousesModal() {
         document.getElementById('warehouses-modal').style.display = 'none';
     }
-
     function createNewWarehouse() {
         const input = document.getElementById('newWarehouseName');
         const name = input.value.trim();
-        if (!name) {
-            alert("⚠️ برجاء كتابة اسم المخزن الجديد");
-            return;
-        }
+        if (!name) { alert("⚠️ برجاء كتابة اسم المخزن الجديد"); return; }
         const newId = 'wh_' + Date.now();
         appState.warehouses.push({ id: newId, name: name });
         appState.inventoryByWh[newId] = [];
@@ -987,30 +473,30 @@
         saveAndSync();
         renderWarehousesModal();
     }
-
     function selectWarehouse(whId) {
         appState.activeWarehouseId = whId;
         currentInvoiceItems = [];
         saveAndSync();
         renderWarehousesModal();
     }
-
     function deleteWarehouse(event, whId) {
         event.stopPropagation();
-        if (appState.warehouses.length <= 1) {
-            alert("⚠️ لا يمكن حذف المخزن الوحيد في النظام!");
-            return;
-        }
+        if (appState.warehouses.length <= 1) { alert("⚠️ لا يمكن حذف المخزن الوحيد في النظام!"); return; }
         if (confirm("🚨 هل أنت متأكد من حذف هذا المخزن بجميع أصنافه وفواتيره؟")) {
             appState.warehouses = appState.warehouses.filter(w => w.id !== whId);
             delete appState.inventoryByWh[whId];
             delete appState.salesByWh[whId];
-            if (appState.activeWarehouseId === whId) {
-                appState.activeWarehouseId = appState.warehouses[0].id;
-            }
+            if (appState.activeWarehouseId === whId) appState.activeWarehouseId = appState.warehouses[0].id;
             saveAndSync();
             renderWarehousesModal();
         }
+    }
+
+    // 🎨 دالة مساعدة: ترجع لون ونص الكمية بناءً على التوفر (تحذير عند 5 قطع أو أقل)
+    function getStockDisplay(qty) {
+        if (qty <= 0) return { color: '#ef4444', text: `❌ نفد`, bold: true };
+        if (qty <= 5) return { color: '#ef4444', text: `⚠️ آخر ${qty} قطع`, bold: true };
+        return { color: '#94a3b8', text: `متاح: ${qty}`, bold: false };
     }
 
     function renderWarehousesModal() {
@@ -1047,20 +533,22 @@
         if (currentInv.length === 0) {
             previewEl.innerHTML = `<div style="text-align:center; color:#64748b; padding:10px;">لا توجد أصناف في هذا المخزن</div>`;
         } else {
-            previewEl.innerHTML = currentInv.map(item => `
+            previewEl.innerHTML = currentInv.map(item => {
+                const stock = getStockDisplay(item.qty);
+                return `
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:5px 4px; border-bottom:1px solid rgba(255,255,255,0.06);">
                     <span>${escapeHtml(item.name)}</span>
                     <div style="display:flex; gap:8px; align-items:center;">
-                        <span style="color:#94a3b8;">الكمية: <strong style="color:white;">${item.qty}</strong></span>
+                        <span style="color:${stock.color}; font-weight:${stock.bold ? 'bold' : 'normal'};">${stock.text}</span>
                         <span style="color:#ff6b00; font-weight:bold;">${item.price} ج.م</span>
                         <i class="fas fa-pen" onclick="openEditItemModal(${item.id})" style="color:#60a5fa; cursor:pointer;"></i>
                     </div>
-                </div>
-            `).join('');
+                </div>`;
+            }).join('');
         }
     }
 
-    // ==================== إضافة وتعديل الأصناف في المخزن النشط ====================
+    // ==================== إضافة وتعديل الأصناف ====================
     function toggleModal() {
         const modal = document.getElementById('modal');
         const isOpening = modal.style.display !== 'flex';
@@ -1078,16 +566,8 @@
         const name = document.getElementById('itemName').value.trim();
         const price = parseFloat(document.getElementById('itemPrice').value);
         const qty = parseInt(document.getElementById('itemQty').value);
-
-        if (!name || isNaN(price) || isNaN(qty)) {
-            alert("❌ برجاء ملء البيانات بشكل صحيح");
-            return;
-        }
-        if (price <= 0 || qty < 0) {
-            alert("⚠️ السعر يجب أن يكون أكبر من 0 والكمية غير سالبة");
-            return;
-        }
-
+        if (!name || isNaN(price) || isNaN(qty)) { alert("❌ برجاء ملء البيانات بشكل صحيح"); return; }
+        if (price <= 0 || qty < 0) { alert("⚠️ السعر يجب أن يكون أكبر من 0 والكمية غير سالبة"); return; }
         const inv = getActiveInventory();
         inv.push({ id: Date.now(), name, price, qty });
         saveAndSync();
@@ -1105,11 +585,7 @@
             document.getElementById('edit-item-modal').style.display = 'flex';
         }
     }
-
-    function closeEditModal() {
-        document.getElementById('edit-item-modal').style.display = 'none';
-    }
-
+    function closeEditModal() { document.getElementById('edit-item-modal').style.display = 'none'; }
     function saveEditManual() {
         const inv = getActiveInventory();
         const itemIndex = inv.findIndex(i => i.id === currentEditingId);
@@ -1117,23 +593,16 @@
             const newName = document.getElementById('edit-name').value.trim();
             const newPrice = parseFloat(document.getElementById('edit-price').value);
             const newQty = parseInt(document.getElementById('edit-qty').value);
-
-            if (!newName || isNaN(newPrice) || isNaN(newQty)) {
-                alert("⚠️ برجاء إدخال بيانات صحيحة");
-                return;
-            }
-
+            if (!newName || isNaN(newPrice) || isNaN(newQty)) { alert("⚠️ برجاء إدخال بيانات صحيحة"); return; }
             inv[itemIndex].name = newName;
             inv[itemIndex].price = newPrice;
             inv[itemIndex].qty = newQty;
-
             saveAndSync();
             updateInvoiceUI();
             if (document.getElementById('warehouses-modal').style.display === 'flex') renderWarehousesModal();
             closeEditModal();
         }
     }
-
     function deleteItemPermanently() {
         if (confirm("🚨 هل أنت متأكد من حذف هذا الصنف نهائياً من المخزن؟")) {
             const whId = getActiveWarehouse().id;
@@ -1145,7 +614,7 @@
         }
     }
 
-    // ==================== إدارة الفاتورة السريعة بالتصميم المزدوج المصغر ====================
+    // ==================== الفاتورة (بدون باسورد) ====================
     function toggleInvoiceModal() {
         const modal = document.getElementById('invoice-modal');
         const isOpening = modal.style.display !== 'flex';
@@ -1178,16 +647,18 @@
             filteredInventory.forEach(item => {
                 const inInvoiceCount = currentInvoiceItems.filter(i => i.id === item.id).length;
                 const available = item.qty - inInvoiceCount;
+                const stock = getStockDisplay(available);
+                const isLow = available <= 5;
 
                 selector.innerHTML += `
-                    <div class="micro-item-card">
+                    <div class="micro-item-card ${isLow ? 'low-stock' : ''}">
                         <div class="micro-item-info" onclick="addItemToInvoice(${item.id})">
                             <div class="micro-item-top">
                                 <span class="micro-item-name">${escapeHtml(item.name)}</span>
                                 <span class="micro-item-price">${item.price} ج</span>
                             </div>
                             <div class="micro-item-bottom">
-                                <span style="color:${available > 0 ? '#94a3b8' : '#ef4444'};">متاح: ${available}</span>
+                                <span style="color:${stock.color}; font-weight:${stock.bold ? 'bold' : 'normal'};">${stock.text}</span>
                                 <span style="color:#10b981;"><i class="fas fa-plus-circle"></i> سلة</span>
                             </div>
                         </div>
@@ -1199,10 +670,8 @@
             });
         }
 
-        // تحديث عمود السلة الحالية (اليسار) بنصوص مصغرة
         selectedList.innerHTML = '';
         let total = 0;
-
         if (currentInvoiceItems.length === 0) {
             selectedList.innerHTML = '<div style="color:#64748b; text-align:center; padding:20px 6px; font-size:0.72rem;">السلة فارغة</div>';
         } else {
@@ -1219,7 +688,6 @@
                 `;
             });
         }
-
         cartCountHint.innerText = `${currentInvoiceItems.length} قطع`;
         totalPriceEl.innerText = `${total.toLocaleString()} ج.م`;
     }
@@ -1237,18 +705,12 @@
             }
         }
     }
-
     function removeItemFromInvoice(index) {
         currentInvoiceItems.splice(index, 1);
         updateInvoiceUI();
     }
-
     function openReviewInvoiceModal() {
-        if (currentInvoiceItems.length === 0) {
-            alert("⚠️ السلة فارغة! اختر منتجاً واحداً على الأقل.");
-            return;
-        }
-
+        if (currentInvoiceItems.length === 0) { alert("⚠️ السلة فارغة! اختر منتجاً واحداً على الأقل."); return; }
         const grouped = {};
         let total = 0;
         currentInvoiceItems.forEach(item => {
@@ -1256,7 +718,6 @@
             if (!grouped[item.id]) grouped[item.id] = { name: item.name, price: item.price, qty: 0 };
             grouped[item.id].qty++;
         });
-
         const tbody = document.getElementById('review-items-body');
         tbody.innerHTML = Object.values(grouped).map(g => `
             <tr style="border-bottom: 1px solid rgba(255,255,255,0.06);">
@@ -1265,26 +726,18 @@
                 <td style="padding: 6px; text-align: left; color:#10b981; font-weight:bold;">${(g.price * g.qty).toLocaleString()} ج.م</td>
             </tr>
         `).join('');
-
         document.getElementById('review-wh-subtitle').innerText = `المخزن: ${getActiveWarehouse().name}`;
         document.getElementById('review-total-price').innerText = `${total.toLocaleString()} ج.م`;
         document.getElementById('review-invoice-modal').style.display = 'flex';
     }
-
-    function closeReviewModal() {
-        document.getElementById('review-invoice-modal').style.display = 'none';
-    }
-
+    function closeReviewModal() { document.getElementById('review-invoice-modal').style.display = 'none'; }
     function finalizeSaleTransaction() {
         const inv = getActiveInventory();
         const sales = getActiveSales();
         const today = new Date().toLocaleDateString('ar-EG');
-
         currentInvoiceItems.forEach(soldItem => {
             const target = inv.find(i => i.id === soldItem.id);
-            if (target && target.qty > 0) {
-                target.qty -= 1;
-            }
+            if (target && target.qty > 0) target.qty -= 1;
             sales.push({
                 id: Date.now() + Math.floor(Math.random() * 10000),
                 name: soldItem.name,
@@ -1292,7 +745,6 @@
                 date: today
             });
         });
-
         currentInvoiceItems = [];
         saveAndSync();
         closeReviewModal();
@@ -1300,33 +752,7 @@
         alert("✅ تم إتمام البيع وخصم الكميات بنجاح!");
     }
 
-    // ==================== الإحصائيات والتقارير (باسورد 00000) ====================
-    function promptReportPassword() {
-        const modal = document.getElementById('password-modal');
-        modal.style.display = 'flex';
-        document.getElementById('report-password-input').value = '';
-        document.getElementById('password-error').innerHTML = '';
-        setTimeout(() => document.getElementById('report-password-input').focus(), 100);
-    }
-
-    function closePasswordModal() {
-        document.getElementById('password-modal').style.display = 'none';
-    }
-
-    function checkReportPassword() {
-        const pwd = document.getElementById('report-password-input').value;
-        const errorDiv = document.getElementById('password-error');
-
-        if (pwd === "00000") {
-            closePasswordModal();
-            generateFullReport();
-        } else {
-            errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> كلمة المرور غير صحيحة! (00000)';
-            document.getElementById('report-password-input').value = '';
-            document.getElementById('report-password-input').focus();
-        }
-    }
-
+    // ==================== الإحصائيات (بباسورد) ====================
     function generateFullReport() {
         const activeWh = getActiveWarehouse();
         const inv = getActiveInventory();
@@ -1399,12 +825,9 @@
             }
         }
     }
+    function closeReportModal() { document.getElementById('report-modal').style.display = 'none'; }
 
-    function closeReportModal() {
-        document.getElementById('report-modal').style.display = 'none';
-    }
-
-    // ==================== تحديث الواجهة الرئيسية ====================
+    // ==================== تحديث الواجهة ====================
     function switchTab(tab) {
         if (tab === 'home') {
             closeWarehousesModal();
@@ -1417,7 +840,6 @@
     function updateUI() {
         const activeWh = getActiveWarehouse();
         const inv = getActiveInventory();
-
         document.getElementById('current-warehouse-label').innerText = activeWh.name;
         document.getElementById('total-items').innerText = inv.length;
         document.getElementById('total-warehouses').innerText = appState.warehouses.length;
@@ -1428,7 +850,7 @@
                 <i class="fas fa-warehouse" style="font-size: 2.2rem; color: #ff6b00; margin-bottom: 8px; display: block;"></i>
                 <h3 style="color: #0a192f; font-size: 1rem; margin-bottom: 4px;">المخزن النشط حالياً: <span style="color:#ff6b00;">${escapeHtml(activeWh.name)}</span></h3>
                 <p style="color: #475569; font-size: 0.8rem;">جميع الفواتير والإضافات والجرد تعمل الآن على هذا المخزن.</p>
-                <button onclick="openWarehousesModal()" style="margin-top: 12px; background: #0a192f; color: white; border: none; padding: 8px 16px; border-radius: 18px; font-weight: bold; font-size: 0.78rem; cursor: pointer;">
+                <button onclick="requirePassword(openWarehousesModal)" style="margin-top: 12px; background: #0a192f; color: white; border: none; padding: 8px 16px; border-radius: 18px; font-weight: bold; font-size: 0.78rem; cursor: pointer;">
                     <i class="fas fa-exchange-alt" style="color:#ff6b00; margin-left:5px;"></i> تغيير المخزن أو عرض البضاعة
                 </button>
             </div>
