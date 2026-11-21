@@ -7,25 +7,22 @@
   <title>Designer Ammar Al-Amiri &amp; Developer Omar Abdel-Tawab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-void: #050b16;
-      --bg-deep: #081224;
+      --bg-void: #030911;
+      --bg-deep: #07111f;
       --bg-navy: #0d1d36;
-      --card-glass: rgba(16, 32, 58, 0.68);
-      --card-glass-strong: rgba(18, 35, 64, 0.86);
+      --card-glass: rgba(16, 32, 58, 0.72);
       --border-subtle: rgba(135, 172, 230, 0.18);
-      --border-gold: rgba(232, 188, 99, 0.42);
+      --border-gold: rgba(232, 188, 99, 0.44);
       --gold-light: #fde7a8;
       --gold-mid: #dfa847;
       --gold-deep: #9c6b1f;
-      --gold-glow: rgba(223, 168, 71, 0.42);
+      --gold-glow: rgba(223, 168, 71, 0.45);
       --text-white: #f4f7fc;
       --text-silver: #a7b8d0;
       --text-dim: #7387a5;
-      --green: #2ecc71;
-      --red: #e74c3c;
       --radius-lg: 22px;
       --radius-md: 16px;
       --radius-pill: 999px;
@@ -43,13 +40,12 @@
     html, body {
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 50% 0%, #10203d 0%, #040912 75%);
+      background: radial-gradient(circle at center, #102b48 0%, #07111f 58%, #030911 100%);
       color: var(--text-white);
       font-family: var(--font-ar);
       overflow: hidden;
     }
 
-    /* Desktop preview wrapper vs Fullscreen Mobile */
     .stage-wrapper {
       width: 100%;
       height: 100dvh;
@@ -60,12 +56,12 @@
       position: relative;
     }
 
-    /* Desktop quick switcher (hidden on actual mobile viewports) */
+    /* Desktop quick switcher (hidden on actual mobile screens) */
     .desktop-switcher {
       display: none;
-      gap: 8px;
-      margin-bottom: 14px;
-      background: rgba(10, 22, 42, 0.85);
+      gap: 7px;
+      margin-bottom: 12px;
+      background: rgba(10, 22, 42, 0.88);
       border: 1px solid var(--border-gold);
       padding: 6px 10px;
       border-radius: var(--radius-pill);
@@ -79,8 +75,8 @@
       color: var(--text-silver);
       font-family: var(--font-ar);
       font-size: 12px;
-      font-weight: 600;
-      padding: 5px 12px;
+      font-weight: 700;
+      padding: 5px 11px;
       border-radius: var(--radius-pill);
       cursor: pointer;
       transition: all 0.25s ease;
@@ -96,7 +92,7 @@
     .phone-frame {
       width: 100%;
       height: 100%;
-      background: linear-gradient(180deg, #071122 0%, #09172d 45%, #060e1c 100%);
+      background: radial-gradient(circle at center, #102b48 0%, #07111f 58%, #030911 100%);
       position: relative;
       overflow: hidden;
       display: flex;
@@ -104,14 +100,12 @@
     }
 
     @media (min-width: 520px) {
-      .desktop-switcher {
-        display: flex;
-      }
+      .desktop-switcher { display: flex; }
       .phone-frame {
         width: 392px;
         height: min(848px, calc(100dvh - 76px));
         border-radius: 42px;
-        border: 3px solid rgba(212, 175, 95, 0.28);
+        border: 3px solid rgba(212, 175, 95, 0.3);
         box-shadow:
           0 30px 90px rgba(0, 0, 0, 0.85),
           0 0 0 8px #0b1320,
@@ -119,66 +113,20 @@
       }
     }
 
-    /* Ambient background lighting */
-    .ambient-bg {
+    /* Subtle grid texture matching your scene */
+    .phone-frame::before {
+      content: "";
       position: absolute;
       inset: 0;
       pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.35;
+      z-index: 1;
     }
 
-    .ambient-bg::before {
-      content: '';
-      position: absolute;
-      top: -120px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 360px;
-      height: 360px;
-      background: radial-gradient(circle, rgba(223, 168, 71, 0.16) 0%, rgba(26, 62, 120, 0.12) 45%, transparent 72%);
-      filter: blur(18px);
-    }
-
-    .ambient-bg::after {
-      content: '';
-      position: absolute;
-      bottom: -80px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 340px;
-      height: 260px;
-      background: radial-gradient(circle, rgba(24, 65, 130, 0.24) 0%, transparent 70%);
-      filter: blur(22px);
-    }
-
-    /* Subtle iOS status bar only on desktop mockup */
-    .status-bar {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 24px 4px;
-      font-size: 12px;
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.9);
-      z-index: 20;
-      direction: ltr;
-      flex-shrink: 0;
-    }
-
-    @media (min-width: 520px) {
-      .status-bar {
-        display: flex;
-      }
-    }
-
-    .status-icons {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Screens container */
     .screens-viewport {
       position: relative;
       flex: 1;
@@ -194,7 +142,7 @@
       flex-direction: column;
       opacity: 0;
       visibility: hidden;
-      transform: translateX(-24px) scale(0.985);
+      transform: translateX(-22px) scale(0.985);
       transition: opacity 0.36s cubic-bezier(0.22, 1, 0.36, 1),
                   transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
                   visibility 0.36s;
@@ -203,9 +151,7 @@
       scrollbar-width: none;
     }
 
-    .screen::-webkit-scrollbar {
-      display: none;
-    }
+    .screen::-webkit-scrollbar { display: none; }
 
     .screen.active {
       opacity: 1;
@@ -214,12 +160,12 @@
       z-index: 5;
     }
 
-    /* Common Header */
+    /* Common Header & Buttons */
     .app-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 18px 8px;
+      padding: 14px 18px 8px;
       position: relative;
       z-index: 10;
       flex-shrink: 0;
@@ -229,41 +175,40 @@
       font-size: 17px;
       font-weight: 700;
       color: var(--text-white);
-      letter-spacing: 0.2px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
     }
 
     .icon-btn {
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(180, 205, 240, 0.14);
+      background: rgba(7, 17, 31, 0.55);
+      border: 1px solid rgba(232, 188, 99, 0.28);
       color: var(--text-white);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s ease;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
 
     .icon-btn:active {
       transform: scale(0.92);
-      border-color: var(--border-gold);
-      background: rgba(223, 168, 71, 0.16);
+      border-color: var(--gold-light);
+      background: rgba(223, 168, 71, 0.22);
     }
 
     .icon-btn.ghost {
       background: transparent;
       border-color: transparent;
+      backdrop-filter: none;
     }
 
-    /* Gold metallic button */
     .btn-gold {
       background: linear-gradient(180deg, #f8df9b 0%, #dfa643 52%, #b97e24 100%);
       color: #15120c;
-      border: 1px solid rgba(255, 238, 186, 0.7);
+      border: 1px solid rgba(255, 238, 186, 0.72);
       border-radius: var(--radius-pill);
       font-family: var(--font-ar);
       font-weight: 800;
@@ -275,7 +220,7 @@
       box-shadow:
         0 8px 22px rgba(217, 159, 58, 0.35),
         inset 0 1px 1px rgba(255, 255, 255, 0.65);
-      transition: transform 0.18s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      transition: transform 0.18s ease, filter 0.2s ease;
     }
 
     .btn-gold:active {
@@ -284,7 +229,7 @@
     }
 
     .btn-dark-outline {
-      background: rgba(14, 29, 54, 0.72);
+      background: rgba(14, 29, 54, 0.75);
       color: var(--text-white);
       border: 1px solid rgba(135, 175, 235, 0.28);
       border-radius: var(--radius-pill);
@@ -296,7 +241,6 @@
       gap: 8px;
       cursor: pointer;
       backdrop-filter: blur(10px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
       transition: all 0.2s ease;
     }
 
@@ -306,94 +250,212 @@
     }
 
     .gold-text {
-      background: linear-gradient(180deg, #fff1c2 0%, #e5b354 55%, #b88128 100%);
+      background: linear-gradient(180deg, #fff3c7 0%, #e7b556 54%, #b57d24 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     /* ============================================================
-       SCREEN 1: HOME SCREEN
+       SCREEN 1: HOME + ANIMATED HERO SCENE STAGE
        ============================================================ */
-    .home-top-bar {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      padding: 10px 16px 2px;
-      position: relative;
-      z-index: 6;
-    }
-
-    .home-brand {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      margin-top: 2px;
-    }
-
-    .home-brand-emblem {
-      width: 58px;
-      height: 44px;
-      filter: drop-shadow(0 0 12px rgba(232, 185, 90, 0.55));
-    }
-
-    .home-brand h1 {
-      font-size: 15.5px;
-      font-weight: 800;
-      color: var(--text-white);
-      margin-top: 2px;
-      line-height: 1.3;
-    }
-
-    .home-brand span {
-      font-size: 10.5px;
-      color: #c5b694;
-      font-weight: 500;
-      letter-spacing: 0.2px;
-    }
-
-    .home-hero-scene {
-      position: relative;
-      margin: 4px 0 6px;
-      width: 100%;
-      padding: 6px 16px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .legal-stage-art {
-      width: 100%;
-      height: 126px;
-      position: relative;
+    #screen-home {
       overflow: hidden;
-      border-radius: 14px;
-      mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
-      -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
+      background: radial-gradient(circle at center, #102b48 0%, #07111f 58%, #030911 100%);
     }
+
+    /* Full-height Photo Stage (preserves exact % positioning of your 4 images) */
+    .hero-stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .photo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      max-width: none;
+      object-fit: contain;
+      transform-origin: center;
+      user-select: none;
+      pointer-events: none;
+      will-change: left, top, transform, opacity;
+      opacity: 0;
+    }
+
+    /* Bold Golden Intro Caption under the Centered Scales */
+    .intro-caption {
+      position: absolute;
+      left: 50%;
+      top: 72%;
+      transform: translate(-50%, 16px) scale(0.94);
+      width: 90%;
+      text-align: center;
+      z-index: 38;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.85s cubic-bezier(0.16, 0.84, 0.28, 1),
+                  transform 0.85s cubic-bezier(0.16, 0.84, 0.28, 1);
+    }
+
+    .intro-caption.visible {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    .intro-caption.hiding {
+      opacity: 0;
+      transform: translate(-50%, -18px) scale(0.92);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .intro-caption-title {
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      line-height: 1.3;
+      background: linear-gradient(180deg, #fff6d1 0%, #ecc066 48%, #bd8427 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 4px 18px rgba(223, 168, 71, 0.45)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.85));
+    }
+
+    .intro-caption-line {
+      width: 110px;
+      height: 2.5px;
+      margin: 8px auto 6px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, transparent, #fde7a8, #dfa847, transparent);
+      box-shadow: 0 0 12px rgba(232, 188, 99, 0.75);
+    }
+
+    .intro-caption-sub {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #c7d6ea;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    /* Seamless gradient feathering over the lower edge of the assembled 4-image scene */
+    .scene-blend-mask {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 35;
+      opacity: 0;
+      transition: opacity 1.1s ease;
+      background: linear-gradient(
+        180deg,
+        rgba(3, 9, 17, 0.48) 0%,
+        rgba(3, 9, 17, 0.04) 11%,
+        rgba(7, 17, 31, 0) 27%,
+        rgba(7, 17, 31, 0.72) 35.5%,
+        rgba(7, 17, 31, 0.97) 41%,
+        #07111f 46%
+      );
+    }
+
+    .scene-blend-mask.active {
+      opacity: 1;
+    }
+
+    /* Home UI Layer (Fades in right after the scales fly up) */
+    .home-ui-layer {
+      position: relative;
+      z-index: 40;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(24px);
+      pointer-events: none;
+      transition: opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .home-ui-layer.revealed {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Floating Top Bar over the Courthouse Scene */
+    .home-floating-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      z-index: 45;
+    }
+
+    .header-left-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .uni-pill {
+      padding: 4px 12px;
+      border-radius: 99px;
+      background: rgba(7, 17, 31, 0.58);
+      border: 1px solid rgba(232, 188, 99, 0.35);
+      backdrop-filter: blur(8px);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--gold-light);
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Scrollable content below the reserved 34% upper photo scene */
+    .home-lower-scroll {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding-top: 34.5vh;
+    }
+
+    @media (min-width: 520px) {
+      .home-lower-scroll {
+        padding-top: 292px;
+      }
+    }
+
+    .home-lower-scroll::-webkit-scrollbar { display: none; }
 
     .hero-headline-box {
-      margin-top: -18px;
+      text-align: center;
+      padding: 0 16px 4px;
       position: relative;
       z-index: 4;
-      text-align: center;
     }
 
     .hero-sub-top {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       color: #e4ebf5;
-      margin-bottom: -2px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      margin-bottom: -3px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
     }
 
     .hero-main-title {
       font-size: 25px;
-      font-weight: 800;
+      font-weight: 900;
       line-height: 1.25;
-      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.7));
+      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.75));
     }
 
     .hero-sub-bottom {
@@ -408,7 +470,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 11px;
-      padding: 10px 14px 8px;
+      padding: 12px 14px 8px;
     }
 
     .lang-card {
@@ -428,20 +490,20 @@
     }
 
     .lang-card.en-card {
-      background: linear-gradient(180deg, rgba(66, 18, 28, 0.85) 0%, rgba(35, 16, 28, 0.92) 55%, rgba(22, 16, 28, 0.96) 100%);
-      border: 1px solid rgba(220, 110, 100, 0.38);
+      background: linear-gradient(180deg, rgba(66, 18, 28, 0.86) 0%, rgba(35, 16, 28, 0.94) 55%, rgba(22, 16, 28, 0.98) 100%);
+      border: 1px solid rgba(220, 110, 100, 0.4);
       box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 195, 175, 0.22);
     }
 
     .lang-card.fr-card {
-      background: linear-gradient(180deg, rgba(16, 42, 86, 0.85) 0%, rgba(12, 29, 62, 0.94) 55%, rgba(9, 20, 44, 0.98) 100%);
-      border: 1px solid rgba(100, 165, 255, 0.38);
+      background: linear-gradient(180deg, rgba(16, 42, 86, 0.86) 0%, rgba(12, 29, 62, 0.94) 55%, rgba(9, 20, 44, 0.98) 100%);
+      border: 1px solid rgba(100, 165, 255, 0.4);
       box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(180, 215, 255, 0.22);
     }
 
     .lang-card-banner {
       width: 100%;
-      height: 82px;
+      height: 78px;
       position: relative;
       overflow: hidden;
     }
@@ -450,7 +512,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.05) 35%, rgba(12, 20, 38, 0.95) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.05) 35%, rgba(12, 20, 38, 0.96) 100%);
     }
 
     .lang-card.en-card .lang-card-banner::after {
@@ -492,12 +554,11 @@
       box-shadow: 0 6px 16px rgba(212, 127, 61, 0.35);
     }
 
-    /* Home Quick Features Row */
     .home-shortcuts {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      padding: 10px 14px 14px;
+      padding: 8px 14px 12px;
       margin-top: auto;
     }
 
@@ -505,38 +566,38 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       padding: 8px 4px;
       border-radius: 14px;
-      background: rgba(15, 31, 56, 0.45);
-      border: 1px solid rgba(130, 165, 215, 0.12);
+      background: rgba(15, 31, 56, 0.52);
+      border: 1px solid rgba(130, 165, 215, 0.14);
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
     .shortcut-item:active {
       border-color: var(--border-gold);
-      background: rgba(223, 168, 71, 0.12);
+      background: rgba(223, 168, 71, 0.14);
       transform: scale(0.96);
     }
 
     .shortcut-item span {
       font-size: 10px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-silver);
       text-align: center;
     }
 
-    /* Bottom Navigation */
+    /* Fixed Bottom Navigation */
     .bottom-nav {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      background: rgba(7, 16, 32, 0.92);
-      border-top: 1px solid rgba(212, 175, 95, 0.18);
+      background: rgba(6, 14, 28, 0.94);
+      border-top: 1px solid rgba(212, 175, 95, 0.2);
       backdrop-filter: blur(18px);
       padding: 8px 8px calc(10px + env(safe-area-inset-bottom, 0px));
       flex-shrink: 0;
-      z-index: 15;
+      z-index: 45;
     }
 
     .nav-item {
@@ -551,7 +612,7 @@
       border: none;
       font-family: var(--font-ar);
       cursor: pointer;
-      transition: color 0.2s ease, transform 0.2s ease;
+      transition: color 0.2s ease;
       position: relative;
     }
 
@@ -575,7 +636,7 @@
     }
 
     /* ============================================================
-       SCREEN 2: PREPARATION / SPLASH SCREEN
+       SCREEN 2: PREPARATION SCREEN
        ============================================================ */
     #screen-prep {
       background: radial-gradient(ellipse at 50% 28%, #1d2b44 0%, #0a1528 48%, #040914 100%);
@@ -614,18 +675,16 @@
       font-weight: 700;
       color: #eef3fa;
       margin-bottom: 6px;
-      letter-spacing: 0.3px;
       text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8);
     }
 
     .prep-sub {
       font-size: 12px;
       color: var(--gold-light);
-      opacity: 0.85;
+      opacity: 0.88;
       margin-bottom: 30px;
     }
 
-    /* Sleek Golden Loading Ring (matches bottom showcase #1) */
     .gold-loader-ring {
       position: relative;
       width: 84px;
@@ -672,10 +731,7 @@
       filter: drop-shadow(0 0 8px rgba(245, 206, 120, 0.65));
     }
 
-    @keyframes spinRing {
-      to { transform: rotate(360deg); }
-    }
-
+    @keyframes spinRing { to { transform: rotate(360deg); } }
     @keyframes floatGentle {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-5px); }
@@ -692,7 +748,6 @@
       padding: 6px 18px 14px;
     }
 
-    /* Circular Gold Timer (Top Right) */
     .timer-circle {
       width: 60px;
       height: 60px;
@@ -741,7 +796,6 @@
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.06);
       overflow: hidden;
-      position: relative;
     }
 
     .progress-fill {
@@ -752,16 +806,13 @@
       transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* Main Question & Answers Glass Container */
     .quiz-card {
       margin: 0 16px;
       padding: 18px 14px 16px;
       border-radius: 22px;
-      background: linear-gradient(180deg, rgba(16, 32, 58, 0.78) 0%, rgba(10, 22, 42, 0.88) 100%);
+      background: linear-gradient(180deg, rgba(16, 32, 58, 0.8) 0%, rgba(10, 22, 42, 0.9) 100%);
       border: 1px solid rgba(130, 172, 235, 0.22);
-      box-shadow:
-        0 18px 36px rgba(0, 0, 0, 0.45),
-        inset 0 1px 0 rgba(255, 255, 255, 0.09);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.09);
       backdrop-filter: blur(14px);
       position: relative;
     }
@@ -775,7 +826,6 @@
       color: var(--text-silver);
       cursor: pointer;
       padding: 4px;
-      transition: color 0.2s ease, transform 0.2s ease;
     }
 
     .bookmark-btn.saved {
@@ -789,7 +839,6 @@
       font-weight: 600;
       color: #d7e3f4;
       margin-bottom: 12px;
-      margin-top: 2px;
     }
 
     .term-pill {
@@ -797,21 +846,19 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      background: rgba(6, 14, 28, 0.65);
+      background: rgba(6, 14, 28, 0.68);
       border: 1px solid rgba(120, 165, 225, 0.22);
       border-radius: 14px;
       padding: 10px 18px;
       margin: 0 auto 18px;
       width: fit-content;
       min-width: 195px;
-      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.45);
     }
 
     .term-word {
       font-size: 21px;
       font-weight: 800;
       color: var(--text-white);
-      letter-spacing: 0.5px;
       direction: ltr;
     }
 
@@ -826,13 +873,10 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
-    .audio-btn:active,
     .audio-btn.speaking {
-      transform: scale(0.92);
-      background: rgba(223, 168, 71, 0.32);
+      background: rgba(223, 168, 71, 0.35);
       box-shadow: 0 0 14px var(--gold-glow);
     }
 
@@ -858,12 +902,6 @@
       font-weight: 700;
       text-align: right;
       transition: all 0.26s cubic-bezier(0.22, 1, 0.36, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .option-card:active {
-      transform: scale(0.985);
     }
 
     .option-radio {
@@ -875,7 +913,6 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: all 0.25s ease;
     }
 
     .option-radio::after {
@@ -889,16 +926,12 @@
       box-shadow: 0 0 10px rgba(246, 210, 120, 0.9);
     }
 
-    /* Selected Answer Glowing State (matches image #2 "عقد") */
     .option-card.selected {
       background: linear-gradient(90deg, rgba(44, 72, 114, 0.85) 0%, rgba(28, 49, 82, 0.92) 55%, rgba(56, 62, 74, 0.85) 100%);
       border: 1.5px solid rgba(235, 198, 118, 0.78);
       color: #ffffff;
       transform: translateX(-3px) scale(1.015);
-      box-shadow:
-        0 0 22px rgba(223, 168, 71, 0.28),
-        0 8px 20px rgba(0, 0, 0, 0.35),
-        inset 0 0 14px rgba(255, 228, 165, 0.12);
+      box-shadow: 0 0 22px rgba(223, 168, 71, 0.28), 0 8px 20px rgba(0, 0, 0, 0.35);
     }
 
     .option-card.selected .option-radio {
@@ -916,8 +949,6 @@
       gap: 12px;
       padding: 18px 16px 20px;
       margin-top: auto;
-      position: relative;
-      z-index: 4;
     }
 
     .btn-next-quiz {
@@ -938,31 +969,11 @@
       justify-content: center;
       cursor: pointer;
       flex-shrink: 0;
-      transition: all 0.2s ease;
-    }
-
-    .btn-prev-circle:active {
-      transform: scale(0.93);
-      border-color: var(--border-gold);
-    }
-
-    .quiz-watermark {
-      position: absolute;
-      bottom: 8px;
-      left: 16px;
-      width: 90px;
-      height: 90px;
-      opacity: 0.08;
-      pointer-events: none;
     }
 
     /* ============================================================
        SCREEN 4: RESULT SCREEN
        ============================================================ */
-    #screen-result {
-      position: absolute;
-    }
-
     #confetti-canvas {
       position: absolute;
       inset: 0;
@@ -984,8 +995,8 @@
 
     .score-ring-wrap {
       position: relative;
-      width: 192px;
-      height: 192px;
+      width: 190px;
+      height: 190px;
       margin: 4px auto 16px;
       display: flex;
       align-items: center;
@@ -1023,15 +1034,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.7);
     }
 
     .score-percent {
       font-size: 40px;
       font-weight: 800;
-      line-height: 1.1;
       color: #fff8e2;
-      text-shadow: 0 0 18px rgba(240, 195, 95, 0.5);
       direction: ltr;
     }
 
@@ -1039,10 +1047,8 @@
       font-size: 15px;
       font-weight: 700;
       color: var(--gold-light);
-      margin-top: 2px;
     }
 
-    /* 3 Stat Cards */
     .result-stats-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1061,7 +1067,6 @@
       align-items: center;
       text-align: center;
       backdrop-filter: blur(10px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
     .stat-icon-circle {
@@ -1074,36 +1079,13 @@
       margin-bottom: 6px;
     }
 
-    .stat-icon-circle.total {
-      background: rgba(223, 168, 71, 0.18);
-      color: var(--gold-light);
-    }
+    .stat-icon-circle.total { background: rgba(223, 168, 71, 0.18); color: var(--gold-light); }
+    .stat-icon-circle.wrong { background: rgba(231, 76, 60, 0.2); color: #ff6b5d; }
+    .stat-icon-circle.correct { background: rgba(46, 204, 113, 0.2); color: #46e388; }
 
-    .stat-icon-circle.wrong {
-      background: rgba(231, 76, 60, 0.2);
-      color: #ff6b5d;
-    }
+    .stat-num { font-size: 20px; font-weight: 800; }
+    .stat-label { font-size: 10.5px; font-weight: 600; color: var(--text-silver); margin-top: 2px; }
 
-    .stat-icon-circle.correct {
-      background: rgba(46, 204, 113, 0.2);
-      color: #46e388;
-    }
-
-    .stat-num {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text-white);
-      line-height: 1.2;
-    }
-
-    .stat-label {
-      font-size: 10.5px;
-      font-weight: 600;
-      color: var(--text-silver);
-      margin-top: 2px;
-    }
-
-    /* Performance Banner */
     .result-banner {
       width: 100%;
       background: linear-gradient(135deg, rgba(20, 38, 68, 0.78) 0%, rgba(12, 24, 46, 0.88) 100%);
@@ -1112,8 +1094,6 @@
       padding: 14px 16px;
       text-align: center;
       margin-bottom: 16px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
     }
 
     .result-banner-head {
@@ -1124,16 +1104,8 @@
       margin-bottom: 4px;
     }
 
-    .result-banner-head h2 {
-      font-size: 19px;
-      font-weight: 800;
-    }
-
-    .result-banner p {
-      font-size: 12px;
-      color: var(--text-silver);
-      font-weight: 500;
-    }
+    .result-banner-head h2 { font-size: 19px; font-weight: 800; }
+    .result-banner p { font-size: 12px; color: var(--text-silver); }
 
     .result-actions {
       width: 100%;
@@ -1143,11 +1115,7 @@
       margin-top: auto;
     }
 
-    .result-actions button {
-      width: 100%;
-      height: 46px;
-      font-size: 14.5px;
-    }
+    .result-actions button { width: 100%; height: 46px; font-size: 14.5px; }
 
     /* ============================================================
        SCREEN 5: ACHIEVEMENTS SCREEN
@@ -1186,28 +1154,11 @@
       text-align: center;
       margin-bottom: 18px;
       backdrop-filter: blur(12px);
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.38);
     }
 
-    .level-sub {
-      font-size: 12px;
-      color: var(--text-silver);
-      font-weight: 600;
-    }
-
-    .level-title {
-      font-size: 19px;
-      font-weight: 800;
-      margin: 2px 0 12px;
-    }
-
-    .level-points {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--gold-light);
-      margin-top: 8px;
-      direction: ltr;
-    }
+    .level-sub { font-size: 12px; color: var(--text-silver); font-weight: 600; }
+    .level-title { font-size: 19px; font-weight: 800; margin: 2px 0 12px; }
+    .level-points { font-size: 12.5px; font-weight: 700; color: var(--gold-light); margin-top: 8px; direction: ltr; }
 
     .achievements-section-title {
       width: 100%;
@@ -1231,36 +1182,12 @@
       align-items: center;
       gap: 8px;
       cursor: pointer;
-      transition: transform 0.22s ease;
     }
 
-    .hex-badge-item:active {
-      transform: scale(0.94);
-    }
-
-    .hex-badge-svg {
-      width: 86px;
-      height: 94px;
-    }
-
-    .hex-badge-item.unlocked .hex-badge-svg {
-      filter: drop-shadow(0 0 14px rgba(232, 180, 75, 0.45));
-    }
-
-    .hex-badge-item.locked {
-      opacity: 0.72;
-    }
-
-    .hex-badge-name {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--text-white);
-      text-align: center;
-    }
-
-    .hex-badge-item.locked .hex-badge-name {
-      color: var(--text-silver);
-    }
+    .hex-badge-svg { width: 86px; height: 94px; }
+    .hex-badge-item.unlocked .hex-badge-svg { filter: drop-shadow(0 0 14px rgba(232, 180, 75, 0.45)); }
+    .hex-badge-item.locked { opacity: 0.72; }
+    .hex-badge-name { font-size: 12.5px; font-weight: 700; text-align: center; }
 
     /* ============================================================
        SCREEN 6: LEADERBOARD SCREEN
@@ -1273,7 +1200,6 @@
       align-items: flex-end;
       justify-content: center;
       padding: 0 20px 6px;
-      overflow: hidden;
       flex-shrink: 0;
     }
 
@@ -1294,9 +1220,8 @@
       background: linear-gradient(180deg, rgba(16, 33, 60, 0.84) 0%, rgba(9, 20, 38, 0.94) 100%);
       border: 1px solid rgba(145, 182, 235, 0.22);
       border-radius: 24px;
-      padding: 12px 12px;
+      padding: 12px;
       backdrop-filter: blur(14px);
-      box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       gap: 9px;
@@ -1310,7 +1235,6 @@
       border-radius: 15px;
       background: rgba(11, 24, 46, 0.62);
       border: 1px solid rgba(130, 170, 225, 0.14);
-      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
     .leader-row.top-1 {
@@ -1319,76 +1243,29 @@
       box-shadow: 0 0 18px rgba(223, 168, 71, 0.16);
     }
 
-    .leader-rank-side {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .rank-badge-slot {
-      width: 32px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text-silver);
-      flex-shrink: 0;
-    }
-
-    .leader-avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid rgba(232, 188, 99, 0.55);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
-      flex-shrink: 0;
-      background: #142642;
-    }
-
-    .leader-row:not(.top-1) .leader-avatar {
-      border-color: rgba(165, 195, 235, 0.35);
-    }
-
-    .leader-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      text-align: left;
-    }
-
-    .leader-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-white);
-    }
-
-    .leader-pts {
-      font-size: 11.5px;
-      font-weight: 600;
-      color: var(--gold-light);
-    }
+    .leader-rank-side { display: flex; align-items: center; gap: 10px; }
+    .rank-badge-slot { width: 32px; height: 36px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--text-silver); }
+    .leader-avatar { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(232, 188, 99, 0.55); background: #142642; }
+    .leader-row:not(.top-1) .leader-avatar { border-color: rgba(165, 195, 235, 0.35); }
+    .leader-info { display: flex; flex-direction: column; align-items: flex-end; text-align: left; }
+    .leader-name { font-size: 14px; font-weight: 700; }
+    .leader-pts { font-size: 11.5px; font-weight: 600; color: var(--gold-light); }
 
     /* ============================================================
-       SIDE DRAWER & MODALS (Navigation + Review Answers + Toast)
+       DRAWER, MODAL & TOAST
        ============================================================ */
     .drawer-backdrop {
       position: absolute;
       inset: 0;
       background: rgba(3, 8, 18, 0.72);
       backdrop-filter: blur(5px);
-      z-index: 30;
+      z-index: 50;
       opacity: 0;
       visibility: hidden;
       transition: all 0.28s ease;
     }
 
-    .drawer-backdrop.open {
-      opacity: 1;
-      visibility: visible;
-    }
+    .drawer-backdrop.open { opacity: 1; visibility: visible; }
 
     .side-drawer {
       position: absolute;
@@ -1400,7 +1277,7 @@
       background: linear-gradient(180deg, #0b182e 0%, #060e1c 100%);
       border-left: 1px solid var(--border-gold);
       padding: 22px 16px;
-      z-index: 35;
+      z-index: 55;
       transform: translateX(100%);
       transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
       display: flex;
@@ -1408,9 +1285,7 @@
       gap: 10px;
     }
 
-    .side-drawer.open {
-      transform: translateX(0);
-    }
+    .side-drawer.open { transform: translateX(0); }
 
     .drawer-header {
       display: flex;
@@ -1418,13 +1293,13 @@
       justify-content: space-between;
       padding-bottom: 14px;
       border-bottom: 1px solid var(--border-subtle);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .drawer-link {
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
       padding: 12px 14px;
       border-radius: 14px;
       background: rgba(255, 255, 255, 0.03);
@@ -1434,22 +1309,18 @@
       font-size: 13.5px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: right;
     }
 
-    .drawer-link:hover,
     .drawer-link:active {
       border-color: var(--border-gold);
-      background: rgba(223, 168, 71, 0.12);
+      background: rgba(223, 168, 71, 0.14);
     }
 
-    /* Review Answers Modal */
     .modal-sheet {
       position: absolute;
       inset: 0;
-      z-index: 40;
-      background: rgba(4, 10, 20, 0.88);
+      z-index: 60;
+      background: rgba(4, 10, 20, 0.9);
       backdrop-filter: blur(12px);
       display: flex;
       flex-direction: column;
@@ -1460,11 +1331,7 @@
       transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .modal-sheet.open {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
+    .modal-sheet.open { opacity: 1; visibility: visible; transform: translateY(0); }
 
     .review-list {
       flex: 1;
@@ -1483,57 +1350,21 @@
       padding: 12px 14px;
     }
 
-    .review-item.ok {
-      border-color: rgba(46, 204, 113, 0.35);
-    }
+    .review-item.ok { border-color: rgba(46, 204, 113, 0.35); }
+    .review-item.bad { border-color: rgba(231, 76, 60, 0.4); }
+    .review-term { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .review-term strong { font-size: 15px; color: var(--gold-light); direction: ltr; }
+    .review-pill { font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 99px; }
+    .review-pill.ok { background: rgba(46, 204, 113, 0.18); color: #52e890; }
+    .review-pill.bad { background: rgba(231, 76, 60, 0.18); color: #ff796c; }
+    .review-detail { font-size: 12.5px; color: var(--text-silver); line-height: 1.6; }
 
-    .review-item.bad {
-      border-color: rgba(231, 76, 60, 0.4);
-    }
-
-    .review-term {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-
-    .review-term strong {
-      font-size: 15px;
-      color: var(--gold-light);
-      direction: ltr;
-    }
-
-    .review-pill {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 10px;
-      border-radius: 99px;
-    }
-
-    .review-pill.ok {
-      background: rgba(46, 204, 113, 0.18);
-      color: #52e890;
-    }
-
-    .review-pill.bad {
-      background: rgba(231, 76, 60, 0.18);
-      color: #ff796c;
-    }
-
-    .review-detail {
-      font-size: 12.5px;
-      color: var(--text-silver);
-      line-height: 1.6;
-    }
-
-    /* Toast notification */
     .toast {
       position: absolute;
       bottom: 84px;
       left: 50%;
       transform: translateX(-50%) translateY(16px);
-      background: rgba(12, 26, 48, 0.95);
+      background: rgba(12, 26, 48, 0.96);
       border: 1px solid var(--border-gold);
       color: var(--gold-light);
       padding: 9px 18px;
@@ -1541,209 +1372,14 @@
       font-size: 12.5px;
       font-weight: 700;
       white-space: nowrap;
-      z-index: 60;
+      z-index: 70;
       opacity: 0;
       pointer-events: none;
       box-shadow: 0 10px 26px rgba(0, 0, 0, 0.6);
       transition: all 0.28s ease;
     }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* ============================================================
-       PIXEL-REFERENCE HOME + CINEMATIC ZOOM INTRO
-       The provided screenshot is the visual source of truth.
-       HTML remains only for interaction hotspots.
-       ============================================================ */
-    .home-reference-screen {
-      overflow: hidden !important;
-      background: #061323;
-      padding: 0 !important;
-    }
-
-    .home-reference-canvas {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #061323;
-    }
-
-    .home-reference-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .home-hotspot {
-      position: absolute;
-      display: block;
-      padding: 0;
-      margin: 0;
-      border: 0;
-      background: transparent;
-      cursor: pointer;
-      z-index: 8;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .home-hotspot:active {
-      background: rgba(255, 220, 140, 0.06);
-      outline: 1px solid rgba(255, 220, 140, 0.16);
-      border-radius: 16px;
-    }
-
-    /* Coordinates are percentages so the reference remains responsive. */
-    .hotspot-menu { left: 5%; top: 6.2%; width: 14%; height: 7%; }
-    .hotspot-notify { right: 5%; top: 6.2%; width: 14%; height: 7%; }
-    .hotspot-fr { left: 6%; top: 56.5%; width: 43%; height: 23%; }
-    .hotspot-en { right: 6%; top: 56.5%; width: 43%; height: 23%; }
-
-    .hotspot-shortcuts-tests { right: 4%; top: 82.7%; width: 29%; height: 7.5%; }
-    .hotspot-shortcuts-achievements { left: 35.5%; top: 82.7%; width: 29%; height: 7.5%; }
-    .hotspot-shortcuts-progress { left: 4%; top: 82.7%; width: 29%; height: 7.5%; }
-
-    .home-hotspot-nav {
-      position: absolute;
-      left: 2%; right: 2%; bottom: 0.7%; height: 9.8%;
-      z-index: 9;
-      pointer-events: none;
-    }
-    .home-hotspot-nav .home-hotspot { pointer-events: auto; bottom: 0; height: 100%; width: 25%; }
-    .nav-home { right: 0; }
-    .nav-tests { right: 25%; }
-    .nav-achievements { right: 50%; }
-    .nav-more { right: 75%; }
-
-    /* Intro */
-    .cinematic-intro {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      overflow: hidden;
-      background: #020712;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 1;
-      visibility: visible;
-      transition: opacity .65s ease, visibility .65s ease;
-    }
-
-    .cinematic-intro.done {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .intro-camera {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      background: #061323;
-    }
-
-    .intro-home-image {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      inset: 0;
-      object-fit: cover;
-      object-position: center center;
-      transform: scale(3.35);
-      transform-origin: 50% 34%;
-      filter: saturate(1.06) contrast(1.04) brightness(.9);
-      animation: cinematicZoomOut 3.7s cubic-bezier(.16,.84,.18,1) forwards;
-      will-change: transform, filter;
-    }
-
-    .intro-glow {
-      position: absolute;
-      width: 42vmin; height: 42vmin;
-      left: 50%; top: 35%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(239,193,91,.25), rgba(239,193,91,.06) 42%, transparent 72%);
-      filter: blur(18px);
-      pointer-events: none;
-      animation: introGlow 3.7s ease forwards;
-    }
-
-    .intro-vignette {
-      position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse at center, transparent 34%, rgba(0,0,0,.18) 58%, rgba(0,0,0,.78) 100%);
-      animation: vignetteOut 3.7s ease forwards;
-    }
-
-    .intro-brand {
-      position: absolute;
-      bottom: 8.5%;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex; align-items: center; gap: 10px;
-      color: #f8e6b1;
-      font-size: clamp(11px, 2.8vw, 15px);
-      font-weight: 800;
-      letter-spacing: .2px;
-      text-shadow: 0 2px 16px #000;
-      opacity: 0;
-      animation: introBrand 3.7s ease forwards;
-      white-space: nowrap;
-      pointer-events: none;
-    }
-    .intro-brand-line { width: 30px; height: 1px; background: linear-gradient(90deg, transparent, #e4b75c); }
-    .intro-brand-line:last-child { background: linear-gradient(90deg, #e4b75c, transparent); }
-
-    .intro-skip {
-      position: absolute;
-      left: 16px; bottom: 16px;
-      border: 1px solid rgba(245,216,150,.35);
-      background: rgba(5,12,24,.52);
-      color: #e8d29a;
-      border-radius: 999px;
-      padding: 7px 14px;
-      font: 700 11px var(--font-ar);
-      backdrop-filter: blur(10px);
-      z-index: 3;
-      cursor: pointer;
-    }
-
-    @keyframes cinematicZoomOut {
-      0% { transform: scale(3.35); filter: saturate(1.12) contrast(1.08) brightness(.82); }
-      24% { transform: scale(2.65); }
-      58% { transform: scale(1.55); filter: saturate(1.08) contrast(1.05) brightness(.94); }
-      82% { transform: scale(1.12); }
-      100% { transform: scale(1); filter: saturate(1) contrast(1) brightness(1); }
-    }
-    @keyframes introGlow {
-      0% { opacity: 1; transform: translate(-50%,-50%) scale(1.25); }
-      55% { opacity: .55; }
-      100% { opacity: 0; transform: translate(-50%,-50%) scale(.75); }
-    }
-    @keyframes vignetteOut {
-      0% { opacity: 1; }
-      70% { opacity: .55; }
-      100% { opacity: .18; }
-    }
-    @keyframes introBrand {
-      0%, 25% { opacity: 0; transform: translate(-50%, 10px); }
-      52% { opacity: .8; transform: translate(-50%, 0); }
-      82%, 100% { opacity: 0; transform: translate(-50%, -4px); }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .intro-home-image { animation: none; transform: scale(1); filter: none; }
-      .intro-glow, .intro-vignette, .intro-brand { animation: none; opacity: 0; }
-    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 
 <meta name="description" content="📂🥰🥰🥰🥰🥰📂">
@@ -1754,9 +1390,9 @@
 
 <meta property="og:description" content="📂🥰🥰🥰🥰🥰📂">
 
-<meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/share.jpg?v=1795183298906">
+<meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/share.jpg?v=1795281834565">
 
-<meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/share.jpg?v=1795183298906">
+<meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/share.jpg?v=1795281834565">
 
 <meta name="twitter:card" content="summary_large_image">
 
@@ -1766,87 +1402,207 @@
 
 <meta property="og:url" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/">
 
-<link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/favicon.png?v=1795183298906">
+<link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/favicon.png?v=1795281834565">
 
-<link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/apple-touch-icon.png?v=1795183298906">
+<link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/omus/apple-touch-icon.png?v=1795281834565">
 </head>
 <body>
-  <!-- CINEMATIC INTRO: close-up of the scale -> zoom out -> full home screen -->
-  <div class="cinematic-intro" id="cinematicIntro" aria-label="مقدمة المنصة">
-    <div class="intro-camera" id="introCamera">
-      <img class="intro-home-image" src="/home-screen.jpg" alt="منصة الاختبارات القانونية" draggable="false" />
-      <div class="intro-glow"></div>
-      <div class="intro-vignette"></div>
-    </div>
-    <div class="intro-brand">
-      <div class="intro-brand-line"></div>
-      <span>منصة الاختبارات القانونية</span>
-      <div class="intro-brand-line"></div>
-    </div>
-    <button class="intro-skip" id="introSkip" type="button">تخطي</button>
-  </div>
   <div class="stage-wrapper">
-    <!-- Quick Screen Switcher on Desktop Only (Zero clutter on Mobile) -->
-    <div class="desktop-switcher" aria-label="التنقل السريع بين الشاشات">
+    <!-- Desktop Screen Switcher -->
+    <div class="desktop-switcher" aria-label="التنقل السريع">
       <button class="active" data-nav="home">1. الرئيسية</button>
       <button data-nav="prep">2. التحضير</button>
       <button data-nav="quiz">3. الاختبار</button>
       <button data-nav="result">4. النتيجة</button>
       <button data-nav="achievements">5. الإنجازات</button>
       <button data-nav="leaderboard">6. المتصدرين</button>
+      <button id="desktopReplayBtn" title="إعادة العرض الافتتاحي">↺ المقدمة</button>
     </div>
 
-    <div class="phone-frame" id="appFrame">
-      <div class="ambient-bg"></div>
+    <div class="phone-frame">
+      <!-- Shared SVG Defs -->
+      <svg width="0" height="0" style="position:absolute">
+        <defs>
+          <linearGradient id="gGold1" x1="0" y1="0" x2="120" y2="84" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fff0bc"/>
+            <stop offset="50%" stop-color="#dfa746"/>
+            <stop offset="100%" stop-color="#9e6d20"/>
+          </linearGradient>
+        </defs>
+      </svg>
 
-      <!-- Simulated Status Bar (visible only in desktop phone frame) -->
-      <div class="status-bar">
-        <span>9:41</span>
-        <div class="status-icons">
-          <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor"><rect x="0" y="7" width="2.5" height="4" rx="0.8"/><rect x="4" y="5" width="2.5" height="6" rx="0.8"/><rect x="8" y="2.5" width="2.5" height="8.5" rx="0.8"/><rect x="12" y="0" width="2.5" height="11" rx="0.8"/></svg>
-          <svg width="14" height="11" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1.5 4.2a9.5 9.5 0 0 1 13 0"/><path d="M4.2 7a5.8 5.8 0 0 1 7.6 0"/><circle cx="8" cy="10" r="1.2" fill="currentColor" stroke="none"/></svg>
-          <svg width="22" height="11" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="19" height="10" rx="2.5" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="14" height="6" rx="1" fill="currentColor"/><path d="M22 4v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-      </div>
-
-      <!-- ====================================================
-           VIEWPORT OF ALL 6 SCREENS
-           ==================================================== -->
       <div class="screens-viewport">
 
         <!-- ==================================================
-             SCREEN 1: HOME
+             SCREEN 1: HOME + LIVE ANIMATED HERO SCENE
              ================================================== -->
-        <section class="screen active home-reference-screen" id="screen-home">
-          <div class="home-reference-canvas" id="homeReferenceCanvas">
-            <img class="home-reference-image" src="home-screen.jpg" alt="الصفحة الرئيسية لمنصة الاختبارات القانونية" draggable="false" />
+        <section class="screen active" id="screen-home">
+          <!-- Your exact 4-image Hero Stage -->
+          <div class="hero-stage" id="heroStage"></div>
 
-            <!-- Transparent interaction hotspots. The screenshot remains the visual source of truth. -->
-            <button class="home-hotspot hotspot-menu" id="btnOpenDrawer" type="button" aria-label="القائمة"></button>
-            <button class="home-hotspot hotspot-notify" id="btnNotify" type="button" aria-label="الإشعارات"></button>
+          <!-- Bold Golden Intro Text directly below the Centered Scales -->
+          <div class="intro-caption" id="introCaption">
+            <div class="intro-caption-title">اختبارات جامعة العاصمة</div>
+            <div class="intro-caption-line"></div>
+            <div class="intro-caption-sub">منصة الاختبارات القانونية</div>
+          </div>
 
-            <button class="home-hotspot hotspot-fr" id="cardStartFr" type="button" aria-label="ابدأ اختبار المصطلحات الفرنسية"></button>
-            <button class="home-hotspot hotspot-en" id="cardStartEn" type="button" aria-label="ابدأ اختبار المصطلحات الإنجليزية"></button>
+          <!-- Seamless Navy Gradient Blend (Activates as the 4 images assemble at the top) -->
+          <div class="scene-blend-mask" id="sceneBlendMask"></div>
 
-            <button class="home-hotspot hotspot-shortcuts-tests" data-go="quiz" type="button" aria-label="اختبارات متنوعة"></button>
-            <button class="home-hotspot hotspot-shortcuts-achievements" data-go="achievements" type="button" aria-label="شهادات وإنجازات"></button>
-            <button class="home-hotspot hotspot-shortcuts-progress" data-go="leaderboard" type="button" aria-label="متابعة التقدم"></button>
+          <!-- Home UI Layer (Reveals smoothly below the top photo scene) -->
+          <div class="home-ui-layer" id="homeUiLayer">
+            <!-- Floating Top Controls -->
+            <div class="home-floating-header">
+              <button class="icon-btn" id="btnOpenDrawer" aria-label="القائمة">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h12"/></svg>
+              </button>
 
-            <nav class="home-hotspot-nav" aria-label="التنقل الرئيسي">
-              <button class="home-hotspot nav-home" data-go="home" type="button" aria-label="الرئيسية"></button>
-              <button class="home-hotspot nav-tests" data-go="prep-fr" type="button" aria-label="الاختبارات"></button>
-              <button class="home-hotspot nav-achievements" data-go="achievements" type="button" aria-label="الإنجازات"></button>
-              <button class="home-hotspot nav-more" data-go="leaderboard" type="button" aria-label="المزيد"></button>
+              <span class="uni-pill">اختبارات جامعة العاصمة</span>
+
+              <div class="header-left-group">
+                <button class="icon-btn" id="btnReplayIntro" aria-label="إعادة عرض المقدمة" title="إعادة عرض المقدمة">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                </button>
+                <button class="icon-btn" id="btnNotify" aria-label="الإشعارات">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Lower Content Positioned Cleanly Under Your Courthouse/Scales/Books/Gavel Scene -->
+            <div class="home-lower-scroll">
+              <div class="hero-headline-box">
+                <div class="hero-sub-top">اختبر نفسك في</div>
+                <div class="hero-main-title gold-text">المصطلحات القانونية</div>
+                <div class="hero-sub-bottom">باللغة الفرنسية واللغة الإنجليزية</div>
+              </div>
+
+              <!-- Two Language Cards -->
+              <div class="lang-cards-grid">
+                <!-- English Card -->
+                <div class="lang-card en-card" id="cardStartEn" role="button" tabindex="0">
+                  <div class="lang-card-banner">
+                    <svg viewBox="0 0 180 95" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+                      <defs>
+                        <linearGradient id="ukSky" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#172c54"/>
+                          <stop offset="55%" stop-color="#5c2832"/>
+                          <stop offset="100%" stop-color="#9e5a36"/>
+                        </linearGradient>
+                      </defs>
+                      <rect width="180" height="95" fill="url(#ukSky)"/>
+                      <g opacity="0.88">
+                        <path d="M90 0 H180 V62 Q132 54 90 66 Z" fill="#0d2666"/>
+                        <path d="M90 0 L180 60 M180 0 L90 62" stroke="#ffffff" stroke-width="9"/>
+                        <path d="M90 0 L180 60 M180 0 L90 62" stroke="#cc182c" stroke-width="4.5"/>
+                        <path d="M135 0 V64 M90 31 H180" stroke="#ffffff" stroke-width="14"/>
+                        <path d="M135 0 V64 M90 31 H180" stroke="#cc182c" stroke-width="8"/>
+                      </g>
+                      <g transform="translate(34, 8)">
+                        <polygon points="24,2 14,24 34,24" fill="#c6954c"/>
+                        <rect x="13" y="24" width="22" height="24" fill="#a87938" stroke="#f5d286" stroke-width="1"/>
+                        <circle cx="24" cy="36" r="7.5" fill="#fff3ce" stroke="#473014" stroke-width="1.5"/>
+                        <line x1="24" y1="36" x2="24" y2="31" stroke="#2c1d0d" stroke-width="1.4"/>
+                        <line x1="24" y1="36" x2="28" y2="36" stroke="#2c1d0d" stroke-width="1.4"/>
+                        <rect x="15" y="48" width="18" height="44" fill="#7c5525" stroke="#d4a04e" stroke-width="0.8"/>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="lang-card-body">
+                    <div class="lang-card-title">
+                      مصطلحات قانونية
+                      <span>باللغة الإنجليزية</span>
+                    </div>
+                    <button class="btn-gold lang-start-btn" type="button">
+                      <span>ابدأ الاختبار</span>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- French Card -->
+                <div class="lang-card fr-card" id="cardStartFr" role="button" tabindex="0">
+                  <div class="lang-card-banner">
+                    <svg viewBox="0 0 180 95" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+                      <defs>
+                        <linearGradient id="frSky" x1="0" y1="0" x2="1" y2="1">
+                          <stop offset="0%" stop-color="#0b2048"/>
+                          <stop offset="55%" stop-color="#224c8c"/>
+                          <stop offset="100%" stop-color="#5c79a6"/>
+                        </linearGradient>
+                      </defs>
+                      <rect width="180" height="95" fill="url(#frSky)"/>
+                      <g opacity="0.9">
+                        <path d="M98 0 H126 V64 Q112 60 98 66 Z" fill="#10348c"/>
+                        <path d="M126 0 H154 V62 Q140 58 126 64 Z" fill="#f1f4fa"/>
+                        <path d="M154 0 H180 V60 Q167 57 154 62 Z" fill="#cf2034"/>
+                      </g>
+                      <g transform="translate(26, 6)">
+                        <path d="M32 2 L28 32 L18 64 L6 88 H20 C22 76 42 76 44 88 H58 L46 64 L36 32 Z" fill="#182742" stroke="#9bbbe8" stroke-width="1"/>
+                        <rect x="20" y="54" width="24" height="4" rx="1" fill="#d8a852"/>
+                        <rect x="24" y="34" width="16" height="3" rx="1" fill="#d8a852"/>
+                        <circle cx="32" cy="4" r="2.2" fill="#ffe9a8"/>
+                      </g>
+                    </svg>
+                  </div>
+                  <div class="lang-card-body">
+                    <div class="lang-card-title">
+                      مصطلحات قانونية
+                      <span>باللغة الفرنسية</span>
+                    </div>
+                    <button class="btn-gold lang-start-btn" type="button">
+                      <span>ابدأ الاختبار</span>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Shortcuts Row -->
+              <div class="home-shortcuts">
+                <div class="shortcut-item" data-go="quiz">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b354" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  <span>اختبارات متنوعة</span>
+                </div>
+                <div class="shortcut-item" data-go="achievements">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b354" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                  <span>شهادات وإنجازات</span>
+                </div>
+                <div class="shortcut-item" data-go="leaderboard">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e5b354" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                  <span>متابعة التقدم</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fixed Bottom Navigation -->
+            <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+              <button class="nav-item active" data-go="home">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9.5 20v-6h5v6"/></svg>
+                <span>الرئيسية</span>
+              </button>
+              <button class="nav-item" data-go="prep-fr">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+                <span>الاختبارات</span>
+              </button>
+              <button class="nav-item" data-go="achievements">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                <span>الإنجازات</span>
+              </button>
+              <button class="nav-item" data-go="leaderboard">
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+                <span>المزيد</span>
+              </button>
             </nav>
           </div>
         </section>
 
         <!-- ==================================================
-             SCREEN 2: PREPARATION / SPLASH SCREEN
+             SCREEN 2: PREPARATION SCREEN
              ================================================== -->
         <section class="screen" id="screen-prep">
           <div class="prep-bg-scene">
-            <!-- Cinematic Lady Justice + Gold Rim Lighting SVG -->
             <svg viewBox="0 0 390 800" width="100%" height="100%" preserveAspectRatio="xMidYMin slice">
               <defs>
                 <radialGradient id="justiceAura" cx="56%" cy="22%" r="48%">
@@ -1867,42 +1623,26 @@
                   <stop offset="100%" stop-color="#050b16" stop-opacity="1"/>
                 </linearGradient>
               </defs>
-
               <rect width="390" height="800" fill="#060f1e"/>
-              <!-- Architectural Pillars in dark mist -->
               <rect x="26" y="0" width="44" height="420" fill="#0e1b30" opacity="0.6"/>
               <rect x="86" y="0" width="32" height="390" fill="#122139" opacity="0.45"/>
               <rect width="390" height="520" fill="url(#justiceAura)"/>
-
-              <!-- Stylized Cinematic Lady Justice Silhouette with Golden Highlights -->
               <g transform="translate(155, 65)">
-                <!-- Draped Torso & Robe -->
                 <path d="M18 145 C-18 185 -35 280 -48 395 H118 C105 280 96 195 72 145 Z" fill="url(#statueBronze)" opacity="0.9"/>
-                <path d="M5 170 Q36 225 18 355 M48 162 Q68 228 62 365" stroke="#d8a34d" stroke-width="1.4" fill="none" opacity="0.42"/>
-                <!-- Head & Blindfold -->
                 <ellipse cx="44" cy="96" rx="28" ry="34" fill="url(#statueBronze)"/>
                 <path d="M14 90 Q44 82 74 90 L72 104 Q44 97 16 104 Z" fill="#1f1a19" stroke="#f0c774" stroke-width="1.3"/>
-                <path d="M22 64 Q44 48 68 66" stroke="#f7d68d" stroke-width="2.5" fill="none" opacity="0.7"/>
-                <!-- Raised Arm Holding Scales -->
                 <path d="M68 156 L132 102 L144 114 L82 178 Z" fill="url(#statueBronze)"/>
-                <!-- Hanging Golden Scales on Left/Right -->
                 <g transform="translate(136, 98)">
                   <line x1="-42" y1="20" x2="46" y2="20" stroke="#f8d88a" stroke-width="3.2" stroke-linecap="round"/>
                   <line x1="2" y1="0" x2="2" y2="20" stroke="#f8d88a" stroke-width="3"/>
-                  <!-- Left Pan -->
                   <line x1="-38" y1="20" x2="-54" y2="96" stroke="#e4b358" stroke-width="1.4"/>
                   <line x1="-38" y1="20" x2="-22" y2="96" stroke="#e4b358" stroke-width="1.4"/>
                   <path d="M-58 96 Q-38 112 -18 96 Z" fill="#e5b152"/>
-                  <!-- Right Pan -->
                   <line x1="42" y1="20" x2="26" y2="96" stroke="#e4b358" stroke-width="1.4"/>
                   <line x1="42" y1="20" x2="58" y2="96" stroke="#e4b358" stroke-width="1.4"/>
                   <path d="M22 96 Q42 112 62 96 Z" fill="#e5b152"/>
                 </g>
               </g>
-
-              <!-- Diagonal Cinematic Gold Light Beams -->
-              <path d="M-20 520 L410 350" stroke="#e2ad4e" stroke-width="1.2" opacity="0.22"/>
-              <path d="M-20 670 L410 490" stroke="#e2ad4e" stroke-width="1" opacity="0.16"/>
               <rect width="390" height="800" fill="url(#fadeBottom)"/>
             </svg>
           </div>
@@ -1910,29 +1650,18 @@
           <div class="prep-content">
             <svg class="prep-emblem" viewBox="0 0 120 84" fill="none">
               <path d="M26 16 C12 30 14 58 34 72 C24 58 24 34 32 22" stroke="url(#gGold1)" stroke-width="3.2" stroke-linecap="round"/>
-              <path d="M18 30 l7 2 M16 42 l8 1 M19 54 l8 -1 M25 65 l8 -3" stroke="url(#gGold1)" stroke-width="2.5" stroke-linecap="round"/>
               <path d="M94 16 C108 30 106 58 86 72 C96 58 96 34 88 22" stroke="url(#gGold1)" stroke-width="3.2" stroke-linecap="round"/>
-              <path d="M102 30 l-7 2 M104 42 l-8 1 M101 54 l-8 -1 M95 65 l-8 -3" stroke="url(#gGold1)" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M60 14 V68 M44 68 H76 M48 64 H72" stroke="url(#gGold1)" stroke-width="3.2" stroke-linecap="round"/>
-              <circle cx="60" cy="14" r="3.5" fill="url(#gGold1)"/>
-              <path d="M36 26 Q60 20 84 26" stroke="url(#gGold1)" stroke-width="2.8" stroke-linecap="round"/>
-              <path d="M38 26 L30 48 M38 26 L46 48" stroke="url(#gGold1)" stroke-width="1.6"/>
-              <path d="M27 48 Q38 56 49 48 Z" fill="url(#gGold1)"/>
-              <path d="M82 26 L74 48 M82 26 L90 48" stroke="url(#gGold1)" stroke-width="1.6"/>
-              <path d="M71 48 Q82 56 93 48 Z" fill="url(#gGold1)"/>
+              <path d="M60 14 V68 M44 68 H76 M36 26 Q60 20 84 26" stroke="url(#gGold1)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M38 26 L30 48 M38 26 L46 48 M82 26 L74 48 M82 26 L90 48" stroke="url(#gGold1)" stroke-width="1.6"/>
+              <path d="M27 48 Q38 56 49 48 Z M71 48 Q82 56 93 48 Z" fill="url(#gGold1)"/>
             </svg>
-
             <div class="prep-text">جاري التحضير للاختبار...</div>
             <div class="prep-sub" id="prepSubtitle">اختبار المصطلحات القانونية الفرنسية</div>
-
-            <div class="gold-loader-ring" role="progressbar" aria-label="جاري التحميل">
+            <div class="gold-loader-ring" role="progressbar">
               <svg class="gold-loader-icon" viewBox="0 0 64 64" fill="none">
-                <path d="M32 10 V52 M20 52 H44" stroke="#f7dc94" stroke-width="2.6" stroke-linecap="round"/>
-                <path d="M14 20 Q32 15 50 20" stroke="#f7dc94" stroke-width="2.4" stroke-linecap="round"/>
-                <path d="M16 20 L10 36 M16 20 L22 36" stroke="#dfa746" stroke-width="1.4"/>
-                <path d="M8 36 Q16 42 24 36 Z" fill="#f2ca74"/>
-                <path d="M48 20 L42 36 M48 20 L54 36" stroke="#dfa746" stroke-width="1.4"/>
-                <path d="M40 36 Q48 42 56 36 Z" fill="#f2ca74"/>
+                <path d="M32 10 V52 M20 52 H44 M14 20 Q32 15 50 20" stroke="#f7dc94" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M16 20 L10 36 M16 20 L22 36 M48 20 L42 36 M48 20 L54 36" stroke="#dfa746" stroke-width="1.4"/>
+                <path d="M8 36 Q16 42 24 36 Z M40 36 Q48 42 56 36 Z" fill="#f2ca74"/>
               </svg>
             </div>
           </div>
@@ -1943,7 +1672,7 @@
              ================================================== -->
         <section class="screen" id="screen-quiz">
           <header class="app-header">
-            <button class="icon-btn ghost" id="btnQuizOptions" aria-label="إنهاء سريع وعرض النتيجة" title="عرض النتيجة">
+            <button class="icon-btn ghost" id="btnQuizOptions" aria-label="عرض النتيجة">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M8 12h12M12 18h8"/></svg>
             </button>
             <div class="header-title" id="quizHeaderTitle">اختبار المصطلحات الفرنسية</div>
@@ -1952,9 +1681,8 @@
             </button>
           </header>
 
-          <!-- Top Timer (Right) + Progress Bar (Left) -->
           <div class="quiz-top-meta">
-            <div class="timer-circle" aria-label="المؤقت">
+            <div class="timer-circle">
               <svg width="60" height="60" viewBox="0 0 60 60">
                 <circle cx="30" cy="30" r="25" stroke="rgba(255,255,255,0.1)" stroke-width="3.5" fill="rgba(7,16,32,0.7)"/>
                 <circle id="timerRing" cx="30" cy="30" r="25" stroke="url(#gGold1)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-dasharray="157" stroke-dashoffset="26"/>
@@ -1968,38 +1696,25 @@
                 <span id="quizLangTag" style="color: var(--gold-light); font-size: 11px;">FR</span>
               </div>
               <div class="progress-track">
-                <div class="progress-fill" id="quizProgressFill" style="width: 50%;"></div>
+                <div class="progress-fill" id="quizProgressFill" style="width: 12%;"></div>
               </div>
             </div>
           </div>
 
-          <!-- Question Card + 4 Answer Cards -->
           <div class="quiz-card">
             <button class="bookmark-btn" id="btnBookmark" aria-label="حفظ السؤال">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3a2 2 0 0 0-2 2v16l8-4 8 4V5a2 2 0 0 0-2-2H6z"/></svg>
             </button>
-
             <div class="quiz-prompt">ما هو المقصود بالمصطلح التالي؟</div>
-
             <div class="term-pill">
               <button class="audio-btn" id="btnSpeakTerm" aria-label="استماع للنطق">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
               </button>
               <span class="term-word" id="quizTermWord">Contrat</span>
             </div>
-
-            <div class="options-list" id="quizOptionsList">
-              <!-- Populated dynamically -->
-            </div>
+            <div class="options-list" id="quizOptionsList"></div>
           </div>
 
-          <!-- Watermark -->
-          <svg class="quiz-watermark" viewBox="0 0 64 64" fill="none">
-            <path d="M32 10 V54 M18 54 H46 M12 20 Q32 14 52 20" stroke="#e5b354" stroke-width="2.5"/>
-            <path d="M14 20 L8 36 H20 Z M50 20 L44 36 H56 Z" stroke="#e5b354" stroke-width="1.6"/>
-          </svg>
-
-          <!-- Bottom Navigation Buttons -->
           <div class="quiz-footer-actions">
             <button class="btn-gold btn-next-quiz" id="btnNextQuestion">
               <span id="btnNextLabel">السؤال التالي</span>
@@ -2016,7 +1731,6 @@
              ================================================== -->
         <section class="screen" id="screen-result">
           <canvas id="confetti-canvas"></canvas>
-
           <header class="app-header">
             <div style="width: 38px;"></div>
             <div class="header-title">نتيجة الاختبار</div>
@@ -2026,7 +1740,6 @@
           </header>
 
           <div class="result-body">
-            <!-- Luminous Golden Score Ring -->
             <div class="score-ring-wrap">
               <div class="score-ring-halo"></div>
               <svg class="score-ring-svg" viewBox="0 0 180 180">
@@ -2046,7 +1759,6 @@
               </div>
             </div>
 
-            <!-- Three Stat Cards (Exact order: Total right, Wrong center, Correct left) -->
             <div class="result-stats-grid">
               <div class="stat-card">
                 <div class="stat-icon-circle total">
@@ -2055,7 +1767,6 @@
                 <div class="stat-num" id="statTotal">20</div>
                 <div class="stat-label">إجمالي الأسئلة</div>
               </div>
-
               <div class="stat-card">
                 <div class="stat-icon-circle wrong">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
@@ -2063,7 +1774,6 @@
                 <div class="stat-num" id="statWrong">3</div>
                 <div class="stat-label">إجابة خاطئة</div>
               </div>
-
               <div class="stat-card">
                 <div class="stat-icon-circle correct">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -2073,7 +1783,6 @@
               </div>
             </div>
 
-            <!-- Encouraging Banner -->
             <div class="result-banner">
               <div class="result-banner-head">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
@@ -2086,7 +1795,6 @@
               <p id="resultBannerDesc">لقد أظهرت فهماً جيداً للمصطلحات القانونية</p>
             </div>
 
-            <!-- Action Buttons -->
             <div class="result-actions">
               <button class="btn-gold" id="btnReviewAnswers">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -2113,7 +1821,6 @@
           </header>
 
           <div class="achievements-body">
-            <!-- Ornate Heraldic Shield + Laurel + Ribbon ("الباحث القانوني") -->
             <div class="rank-crest-wrap">
               <div class="rank-crest-glow"></div>
               <svg viewBox="0 0 260 210" width="100%" height="100%">
@@ -2130,28 +1837,14 @@
                     <stop offset="100%" stop-color="#9e6d20"/>
                   </linearGradient>
                 </defs>
-
-                <!-- Left & Right Golden Laurel Wreaths -->
                 <path d="M62 56 C38 82 42 128 74 150" stroke="url(#gGold1)" stroke-width="4" stroke-linecap="round" fill="none"/>
-                <path d="M50 74 l12 4 M45 94 l14 2 M48 114 l14 -2 M58 134 l12 -4" stroke="url(#gGold1)" stroke-width="3.2" stroke-linecap="round"/>
                 <path d="M198 56 C222 82 218 128 186 150" stroke="url(#gGold1)" stroke-width="4" stroke-linecap="round" fill="none"/>
-                <path d="M210 74 l-12 4 M215 94 l-14 2 M212 114 l-14 -2 M202 134 l-12 -4" stroke="url(#gGold1)" stroke-width="3.2" stroke-linecap="round"/>
-
-                <!-- Main Heraldic Shield -->
                 <path d="M130 14 L186 34 V96 C186 134 160 160 130 174 C100 160 74 134 74 96 V34 Z" fill="url(#shieldBg)" stroke="url(#gGold1)" stroke-width="5"/>
-                <path d="M130 24 L177 41 V95 C177 128 155 150 130 162 C105 150 83 128 83 95 V41 Z" fill="none" stroke="rgba(248, 220, 145, 0.35)" stroke-width="1.5"/>
-
-                <!-- Scales inside Shield -->
                 <g transform="translate(130, 52)">
-                  <path d="M0 0 V68 M-20 68 H20" stroke="url(#gGold1)" stroke-width="3.5" stroke-linecap="round"/>
-                  <path d="M-34 14 Q0 6 34 14" stroke="url(#gGold1)" stroke-width="3" stroke-linecap="round" fill="none"/>
-                  <path d="M-30 14 L-38 42 M-30 14 L-22 42" stroke="#f0c874" stroke-width="1.5"/>
-                  <path d="M-42 42 Q-30 52 -18 42 Z" fill="url(#gGold1)"/>
-                  <path d="M30 14 L22 42 M30 14 L38 42" stroke="#f0c874" stroke-width="1.5"/>
-                  <path d="M18 42 Q30 52 42 42 Z" fill="url(#gGold1)"/>
+                  <path d="M0 0 V68 M-20 68 H20 M-34 14 Q0 6 34 14" stroke="url(#gGold1)" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+                  <path d="M-30 14 L-38 42 M-30 14 L-22 42 M30 14 L22 42 M30 14 L38 42" stroke="#f0c874" stroke-width="1.5"/>
+                  <path d="M-42 42 Q-30 52 -18 42 Z M18 42 Q30 52 42 42 Z" fill="url(#gGold1)"/>
                 </g>
-
-                <!-- Metallic Gold Banner Ribbon -->
                 <path d="M34 152 L56 144 V178 L34 186 L44 169 Z" fill="#8b5e1a"/>
                 <path d="M226 152 L204 144 V178 L226 186 L216 169 Z" fill="#8b5e1a"/>
                 <path d="M52 142 Q130 134 208 142 V176 Q130 168 52 176 Z" fill="url(#ribbonGold)" stroke="#fff0c0" stroke-width="1.2"/>
@@ -2159,7 +1852,6 @@
               </svg>
             </div>
 
-            <!-- Current Level Progress Card -->
             <div class="level-card">
               <div class="level-sub">مستواك الحالي</div>
               <div class="level-title gold-text">المستوى الثالث</div>
@@ -2171,50 +1863,34 @@
 
             <div class="achievements-section-title">الإنجازات التي حصلت عليها...</div>
 
-            <!-- 3 Hexagonal Achievement Badges (Exact visual match) -->
             <div class="hex-badges-grid">
-              <!-- Badge 1: بداية النجاح (Unlocked) -->
               <div class="hex-badge-item unlocked" data-badge="بداية النجاح: أكملت أول اختبار قانوني بنجاح!">
                 <svg class="hex-badge-svg" viewBox="0 0 100 110">
                   <polygon points="50,6 92,30 92,80 50,104 8,80 8,30" fill="#13223b" stroke="url(#gGold1)" stroke-width="4.5"/>
-                  <polygon points="50,14 84,34 84,76 50,96 16,76 16,34" fill="rgba(223,168,71,0.12)" stroke="rgba(248,220,145,0.4)" stroke-width="1.2"/>
-                  <!-- Trophy inside -->
                   <path d="M38 38h24v12a12 12 0 0 1-24 0V38Z" fill="url(#gGold1)"/>
                   <path d="M38 42h-5a5 5 0 0 0 5 8M62 42h5a5 5 0 0 1-5 8M50 62v9M41 72h18" stroke="#fce29a" stroke-width="2.5" stroke-linecap="round"/>
-                  <!-- Corner Star -->
                   <circle cx="80" cy="84" r="10" fill="url(#gGold1)" stroke="#091529" stroke-width="2"/>
-                  <path d="M80 78 l1.8 3.8 4.2.6-3 3 .7 4.2-3.7-2-3.7 2 .7-4.2-3-3 4.2-.6z" fill="#181209"/>
                 </svg>
                 <span class="hex-badge-name">بداية النجاح</span>
               </div>
 
-              <!-- Badge 2: المثابر (Unlocked) -->
-              <div class="hex-badge-item unlocked" data-badge="المثابر: حافظت على سلسلة تدريبات متواصلة لمدة 5 أيام!">
+              <div class="hex-badge-item unlocked" data-badge="المثابر: حافظت على سلسلة تدريبات متواصلة!">
                 <svg class="hex-badge-svg" viewBox="0 0 100 110">
                   <polygon points="50,6 92,30 92,80 50,104 8,80 8,30" fill="#13223b" stroke="url(#gGold1)" stroke-width="4.5"/>
-                  <polygon points="50,14 84,34 84,76 50,96 16,76 16,34" fill="rgba(223,168,71,0.12)" stroke="rgba(248,220,145,0.4)" stroke-width="1.2"/>
-                  <!-- Medal Ribbon inside -->
                   <circle cx="50" cy="47" r="14" fill="url(#gGold1)"/>
                   <circle cx="50" cy="47" r="9" fill="#162642"/>
-                  <path d="M50 41 l1.6 3.5 3.8.5-2.7 2.6.6 3.8-3.3-1.8-3.3 1.8.6-3.8-2.7-2.6 3.8-.5z" fill="#fce29a"/>
                   <path d="M43 60 L39 76 L50 70 L61 76 L57 60" fill="url(#gGold1)"/>
-                  <!-- Corner Star -->
                   <circle cx="80" cy="84" r="10" fill="url(#gGold1)" stroke="#091529" stroke-width="2"/>
-                  <path d="M80 78 l1.8 3.8 4.2.6-3 3 .7 4.2-3.7-2-3.7 2 .7-4.2-3-3 4.2-.6z" fill="#181209"/>
                 </svg>
                 <span class="hex-badge-name">المثابر</span>
               </div>
 
-              <!-- Badge 3: المتفوق (Locked) -->
-              <div class="hex-badge-item locked" data-badge="المتفوق (مقفل): احصل على 95% أو أكثر في كلا اللغتين لفتحه.">
+              <div class="hex-badge-item locked" data-badge="المتفوق (مقفل): احصل على 95% فأكثر لفتحه.">
                 <svg class="hex-badge-svg" viewBox="0 0 100 110">
                   <polygon points="50,6 92,30 92,80 50,104 8,80 8,30" fill="#0d1729" stroke="#364a6b" stroke-width="4"/>
-                  <polygon points="50,14 84,34 84,76 50,96 16,76 16,34" fill="rgba(255,255,255,0.02)" stroke="rgba(120,150,195,0.22)" stroke-width="1.2"/>
-                  <!-- Lock Icon -->
                   <rect x="35" y="51" width="30" height="24" rx="5" fill="#2a3c58" stroke="#6d82a3" stroke-width="2"/>
                   <path d="M41 51 V43 A9 9 0 0 1 59 43 V51" fill="none" stroke="#899fc0" stroke-width="3" stroke-linecap="round"/>
                   <circle cx="50" cy="61" r="2.6" fill="#9fb2cf"/>
-                  <line x1="50" y1="63" x2="50" y2="68" stroke="#9fb2cf" stroke-width="2" stroke-linecap="round"/>
                 </svg>
                 <span class="hex-badge-name">المتفوق</span>
               </div>
@@ -2234,49 +1910,28 @@
             </button>
           </header>
 
-          <!-- Top 3 Trophies Podium -->
           <div class="podium-stage">
             <div class="podium-spotlight"></div>
             <svg viewBox="0 0 360 150" width="100%" height="100%">
               <defs>
-                <linearGradient id="cupGold" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#fff5c8"/>
-                  <stop offset="45%" stop-color="#e3a944"/>
-                  <stop offset="100%" stop-color="#875814"/>
-                </linearGradient>
-                <linearGradient id="cupSilver" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#ffffff"/>
-                  <stop offset="50%" stop-color="#b4c4d8"/>
-                  <stop offset="100%" stop-color="#5d6e85"/>
-                </linearGradient>
-                <linearGradient id="cupBronze" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#f3c195"/>
-                  <stop offset="50%" stop-color="#b87342"/>
-                  <stop offset="100%" stop-color="#5e3214"/>
-                </linearGradient>
+                <linearGradient id="cupGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff5c8"/><stop offset="45%" stop-color="#e3a944"/><stop offset="100%" stop-color="#875814"/></linearGradient>
+                <linearGradient id="cupSilver" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffffff"/><stop offset="50%" stop-color="#b4c4d8"/><stop offset="100%" stop-color="#5d6e85"/></linearGradient>
+                <linearGradient id="cupBronze" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f3c195"/><stop offset="50%" stop-color="#b87342"/><stop offset="100%" stop-color="#5e3214"/></linearGradient>
               </defs>
-
-              <!-- Glowing Pedestal Base -->
-              <rect x="24" y="132" width="312" height="14" rx="6" fill="#102240" stroke="rgba(232,188,99,0.28)" stroke-width="1"/>
-              <rect x="115" y="114" width="130" height="20" rx="5" fill="#172d52" stroke="rgba(232,188,99,0.45)" stroke-width="1.2"/>
-
-              <!-- 2nd Place Silver Cup (Left) -->
+              <rect x="24" y="132" width="312" height="14" rx="6" fill="#102240" stroke="rgba(232,188,99,0.28)"/>
+              <rect x="115" y="114" width="130" height="20" rx="5" fill="#172d52" stroke="rgba(232,188,99,0.45)"/>
               <g transform="translate(76, 44)">
                 <path d="M-20 8 H-28 C-32 22 -24 34 -14 34 M20 8 H28 C32 22 24 34 14 34" stroke="url(#cupSilver)" stroke-width="3.5" fill="none"/>
                 <path d="M-20 2 H20 V26 C20 42 10 52 0 54 C-10 52 -20 42 -20 26 Z" fill="url(#cupSilver)"/>
                 <rect x="-5" y="54" width="10" height="18" fill="url(#cupSilver)"/>
                 <rect x="-18" y="72" width="36" height="10" rx="2" fill="#2c3a50" stroke="url(#cupSilver)" stroke-width="1.4"/>
               </g>
-
-              <!-- 3rd Place Bronze Cup (Right) -->
               <g transform="translate(284, 52)">
                 <path d="M-18 8 H-25 C-28 20 -21 30 -12 30 M18 8 H25 C28 20 21 30 12 30" stroke="url(#cupBronze)" stroke-width="3.2" fill="none"/>
                 <path d="M-18 2 H18 V24 C18 38 9 47 0 49 C-9 47 -18 38 -18 24 Z" fill="url(#cupBronze)"/>
                 <rect x="-4.5" y="49" width="9" height="16" fill="url(#cupBronze)"/>
                 <rect x="-16" y="65" width="32" height="9" rx="2" fill="#2e1d14" stroke="url(#cupBronze)" stroke-width="1.4"/>
               </g>
-
-              <!-- 1st Place Large Gold Cup (Center) -->
               <g transform="translate(180, 14)">
                 <path d="M-28 12 H-40 C-45 32 -34 48 -18 48 M28 12 H40 C45 32 34 48 18 48" stroke="url(#cupGold)" stroke-width="4.5" fill="none"/>
                 <path d="M-28 4 H28 V36 C28 56 14 68 0 71 C-14 68 -28 56 -28 36 Z" fill="url(#cupGold)"/>
@@ -2284,44 +1939,35 @@
                 <rect x="-7" y="70" width="14" height="20" fill="url(#cupGold)"/>
                 <rect x="-24" y="88" width="48" height="12" rx="3" fill="#2a1d0d" stroke="url(#cupGold)" stroke-width="1.8"/>
               </g>
-
-              <!-- Sparkles -->
-              <circle cx="136" cy="26" r="2.2" fill="#fff2c2"/>
-              <circle cx="226" cy="22" r="2.5" fill="#fff2c2"/>
-              <circle cx="180" cy="6" r="2" fill="#ffe08c"/>
             </svg>
           </div>
 
-          <!-- Ranked Students List -->
-          <div class="leaderboard-sheet" id="leaderboardList">
-            <!-- Populated cleanly via JS -->
-          </div>
+          <div class="leaderboard-sheet" id="leaderboardList"></div>
         </section>
 
-      </div><!-- /screens-viewport -->
+      </div>
 
-      <!-- ====================================================
-           SIDE NAVIGATION DRAWER
-           ==================================================== -->
+      <!-- SIDE DRAWER -->
       <div class="drawer-backdrop" id="drawerBackdrop"></div>
-      <aside class="side-drawer" id="sideDrawer" aria-label="القائمة الجانبية">
+      <aside class="side-drawer" id="sideDrawer">
         <div class="drawer-header">
-          <span class="gold-text" style="font-size: 16px; font-weight: 800;">منصة الاختبارات القانونية</span>
+          <span class="gold-text" style="font-size: 16px; font-weight: 800;">اختبارات جامعة العاصمة</span>
           <button class="icon-btn" id="btnCloseDrawer" aria-label="إغلاق">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
           </button>
         </div>
-        <button class="drawer-link" data-go="home">الصفحة الرئيسية</button>
-        <button class="drawer-link" data-go="prep-fr">اختبار المصطلحات الفرنسية</button>
-        <button class="drawer-link" data-go="prep-en">اختبار المصطلحات الإنجليزية</button>
-        <button class="drawer-link" data-go="result">شاشة نتيجة الاختبار</button>
-        <button class="drawer-link" data-go="achievements">الإنجازات والمستوى</button>
-        <button class="drawer-link" data-go="leaderboard">قائمة المتصدرين</button>
+        <button class="drawer-link" data-go="home"><span>الصفحة الرئيسية</span></button>
+        <button class="drawer-link" data-go="prep-fr"><span>اختبار المصطلحات الفرنسية</span></button>
+        <button class="drawer-link" data-go="prep-en"><span>اختبار المصطلحات الإنجليزية</span></button>
+        <button class="drawer-link" data-go="result"><span>شاشة نتيجة الاختبار</span></button>
+        <button class="drawer-link" data-go="achievements"><span>الإنجازات والمستوى</span></button>
+        <button class="drawer-link" data-go="leaderboard"><span>قائمة المتصدرين</span></button>
+        <button class="drawer-link" id="drawerReplayBtn" style="border-color: rgba(232,188,99,0.4); color: var(--gold-light);">
+          <span>↺ إعادة عرض المقدمة</span>
+        </button>
       </aside>
 
-      <!-- ====================================================
-           REVIEW ANSWERS MODAL
-           ==================================================== -->
+      <!-- REVIEW ANSWERS MODAL -->
       <div class="modal-sheet" id="reviewModal" aria-hidden="true">
         <div class="app-header" style="padding: 4px 2px 12px;">
           <div style="width: 38px;"></div>
@@ -2334,7 +1980,6 @@
         <button class="btn-gold" style="width: 100%; height: 46px; margin-top: 10px;" id="btnDoneReview">العودة للنتيجة</button>
       </div>
 
-      <!-- Toast Feedback -->
       <div class="toast" id="toastBox"></div>
     </div>
   </div>
@@ -2343,9 +1988,274 @@
     (() => {
       'use strict';
 
-      /* ============================================================
-         REAL LEGAL TERMINOLOGY DATASETS (20 French + 20 English)
-         ============================================================ */
+      /* =========================================================
+         1) إعدادات الصور — نفس أماكنها وتدريجها ومساراتها بالضبط
+      ========================================================= */
+     const imagesConfig = [
+    {
+        "order": 1,
+        "file": "/Picsart_26-11-21_15-36-29-300.png",
+        "delay": 0,
+        "duration": 1500,
+        "exitDelay": 0,
+        "exitDuration": 1000,
+        "enter": "center",
+        "exit": "none",
+        "x": 50,
+        "y": 20,
+        "scale": 0.73,
+        "width": 300,
+        "rotate": 0,
+        "opacity": 1,
+        "z": 10
+    },
+    {
+        "order": 2,
+        "file": "/Picsart_26-11-21_15-38-49-445.png",
+        "delay": 0,
+        "duration": 1500,
+        "exitDelay": 5000,
+        "exitDuration": 1000,
+        "enter": "right",
+        "exit": "none",
+        "x": 79.08,
+        "y": 24.25,
+        "scale": 0.66,
+        "width": 300,
+        "rotate": 0,
+        "opacity": 1,
+        "z": 20
+    },
+    {
+        "order": 3,
+        "file": "/Picsart_26-11-21_15-39-31-078.png",
+        "delay": 0,
+        "duration": 1500,
+        "exitDelay": 5000,
+        "exitDuration": 1000,
+        "enter": "left",
+        "exit": "none",
+        "x": 14.01,
+        "y": 23.89,
+        "scale": 0.63,
+        "width": 300,
+        "rotate": 0,
+        "opacity": 1,
+        "z": 30
+    },
+    {
+        "order": 4,
+        "file": "/1795264217670.jpg",
+        "delay": 0,
+        "duration": 1800,
+        "exitDelay": 5000,
+        "exitDuration": 1000,
+        "enter": "fade",
+        "exit": "none",
+        "x": 50.11,
+        "y": 19.07,
+        "scale": 1.4,
+        "width": 300,
+        "rotate": 0,
+        "opacity": 1,
+        "z": 5
+    }
+];
+
+
+      /* =========================================================
+         2) إعدادات الميزان (Hero Intro) — كما هي (ثانيتان بالمنتصف)
+      ========================================================= */
+      const HERO = {
+        imageIndex: 0,
+        appearDuration: 1500,
+        holdCenter: 2000,
+        returnDuration: 1500,
+        othersStartAfter: 0
+      };
+
+      const heroStage = document.getElementById("heroStage");
+      const introCaption = document.getElementById("introCaption");
+      const sceneBlendMask = document.getElementById("sceneBlendMask");
+      const homeUiLayer = document.getElementById("homeUiLayer");
+
+      let sceneElements = [];
+      let sceneTimers = [];
+
+      function clearSceneTimers() {
+        sceneTimers.forEach(t => clearTimeout(t));
+        sceneTimers = [];
+      }
+
+      function later(fn, ms) {
+        const id = setTimeout(fn, ms);
+        sceneTimers.push(id);
+        return id;
+      }
+
+      function applyRaw(img, state, duration, easing = "ease", c = null) {
+        img.style.transition = duration > 0
+          ? `left ${duration}ms ${easing},
+             top ${duration}ms ${easing},
+             transform ${duration}ms ${easing},
+             opacity ${duration}ms ease`
+          : "none";
+
+        img.style.left = state.left + "%";
+        img.style.top = state.top + "%";
+        img.style.opacity = state.opacity;
+
+        const rotate = state.rotate !== undefined ? state.rotate : (c ? c.rotate : 0);
+        img.style.transform = `translate(-50%,-50%) scale(${state.scale}) rotate(${rotate}deg)`;
+      }
+
+     function createSceneImages() {
+  heroStage.querySelectorAll(".photo").forEach(e => e.remove());
+  sceneElements = [];
+
+  imagesConfig.forEach((c, idx) => {
+    const img = document.createElement("img");
+    img.className = "photo";
+    img.src = c.file;
+    img.alt = `صورة ${c.order}`;
+    img.style.width = c.width + "px";
+    img.style.zIndex = c.z;
+    heroStage.appendChild(img);
+    sceneElements.push(img);
+
+    // تثبيت كل صورة في نقطة بدايتها الحقيقية فوراً (يمين / شمال / مكان المبنى)
+    if (idx !== HERO.imageIndex) {
+      applyRaw(img, getStartState(c), 0, "ease", c);
+    }
+  });
+}
+
+function playNormalImage(index) {
+  const c = imagesConfig[index];
+  const img = sceneElements[index];
+  if (!img) return;
+
+  // 1) ضمان وجودها عند نقطة البداية بدون Transition
+  applyRaw(img, getStartState(c), 0, "ease", c);
+
+  // 2) إجبار محرك المتصفح على قراءة وتثبيت الإحداثيات الابتدائية (Forced Reflow)
+  void img.offsetWidth;
+
+  // 3) بدء الانتقال في إطار رسم فعلي جديد
+  const startMotion = () => {
+    requestAnimationFrame(() => {
+      applyRaw(img, getEndState(c), c.duration, "cubic-bezier(.2,.8,.2,1)", c);
+    });
+  };
+
+  if (c.delay > 0) {
+    later(startMotion, c.delay);
+  } else {
+    startMotion();
+  }
+}
+
+      function getStartState(c) {
+        switch (c.enter) {
+          case "right":  return { left: 120, top: c.y, scale: c.scale, opacity: 0, rotate: c.rotate };
+          case "left":   return { left: -20, top: c.y, scale: c.scale, opacity: 0, rotate: c.rotate };
+          case "top":    return { left: c.x, top: -25, scale: c.scale, opacity: 0, rotate: c.rotate };
+          case "bottom": return { left: c.x, top: 125, scale: c.scale, opacity: 0, rotate: c.rotate };
+          case "zoom":   return { left: 50,  top: 50,  scale: 0.05,    opacity: 0, rotate: c.rotate };
+          case "fade":   return { left: c.x, top: c.y, scale: c.scale, opacity: 0, rotate: c.rotate };
+          case "center": return { left: 50,  top: 50,  scale: c.scale * 0.3, opacity: 0, rotate: c.rotate };
+          default:       return { left: c.x, top: c.y, scale: c.scale, opacity: c.opacity, rotate: c.rotate };
+        }
+      }
+
+      function getEndState(c) {
+        return { left: c.x, top: c.y, scale: c.scale, opacity: c.opacity, rotate: c.rotate };
+      }
+
+      function playNormalImage(index) {
+        const c = imagesConfig[index];
+        const img = sceneElements[index];
+        if (!img) return;
+
+        applyRaw(img, getStartState(c), 0, "ease", c);
+        later(() => {
+          applyRaw(img, getEndState(c), c.duration, "cubic-bezier(.2,.8,.2,1)", c);
+        }, c.delay);
+      }
+
+      function playHeroIntro(onReturnStart, onComplete) {
+        const idx = HERO.imageIndex;
+        const c = imagesConfig[idx];
+        const img = sceneElements[idx];
+        if (!img) return;
+
+        const heroScale = 1.6;
+        const heroStart = { left: 50, top: 50, scale: heroScale * 0.4, opacity: 0, rotate: c.rotate };
+        const heroEnd = { left: 50, top: 50, scale: heroScale, opacity: 1, rotate: c.rotate };
+
+        // Reset UI & Caption states
+        homeUiLayer.classList.remove("revealed");
+        sceneBlendMask.classList.remove("active");
+        introCaption.classList.remove("visible", "hiding");
+
+        applyRaw(img, heroStart, 0, "ease", c);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            applyRaw(img, heroEnd, HERO.appearDuration, "cubic-bezier(.16,.84,.28,1)", c);
+            // Reveal "اختبارات جامعة العاصمة" cleanly beneath the scales
+            later(() => {
+              introCaption.classList.add("visible");
+            }, 350);
+          });
+        });
+
+        const returnStartTime = HERO.appearDuration + HERO.holdCenter;
+
+        later(() => {
+          // Hide intro caption as the scales glide upward
+          introCaption.classList.remove("visible");
+          introCaption.classList.add("hiding");
+
+          // Scales move to top position
+          applyRaw(img, getEndState(c), HERO.returnDuration, "cubic-bezier(.16,.84,.28,1)", c);
+
+          // Activate seamless gradient blend at the bottom of the top photo scene
+          sceneBlendMask.classList.add("active");
+
+          if (onReturnStart) onReturnStart();
+
+          // Reveal the Home screen UI seamlessly as the top scene finishes assembling
+          later(() => {
+            homeUiLayer.classList.add("revealed");
+          }, 420);
+
+          later(() => {
+            if (onComplete) onComplete();
+          }, HERO.returnDuration);
+        }, returnStartTime);
+      }
+
+      function playScene() {
+        clearSceneTimers();
+        createSceneImages();
+
+        requestAnimationFrame(() => {
+          playHeroIntro(
+            () => {
+              imagesConfig.forEach((c, i) => {
+                if (i === HERO.imageIndex) return;
+                playNormalImage(i);
+              });
+            },
+            () => {}
+          );
+        });
+      }
+
+      /* =========================================================
+         3) بيانات الاختبارات والمتصدرين (6 شاشات تفاعلية كاملة)
+      ========================================================= */
       const QUIZZES = {
         fr: {
           title: 'اختبار المصطلحات الفرنسية',
@@ -2411,55 +2321,18 @@
         { rank: 5, name: 'سارة هشام', points: 2110, skin: '#e5baa0', hair: '#382218', shirt: '#2f3e66', gender: 'f' }
       ];
 
-      /* ============================================================
-         CINEMATIC INTRO
-         ============================================================ */
-      const cinematicIntro = document.getElementById('cinematicIntro');
-      const introSkip = document.getElementById('introSkip');
-      let introTimer = null;
-
-      function finishIntro() {
-        if (!cinematicIntro) return;
-        clearTimeout(introTimer);
-        cinematicIntro.classList.add('done');
-        try { sessionStorage.setItem('legalIntroSeen', '1'); } catch (_) {}
-      }
-
-      function startIntro() {
-        if (!cinematicIntro) return;
-        let seen = false;
-        try { seen = sessionStorage.getItem('legalIntroSeen') === '1'; } catch (_) {}
-        if (seen) {
-          cinematicIntro.classList.add('done');
-          return;
-        }
-        introTimer = setTimeout(finishIntro, 3900);
-      }
-
-      if (introSkip) introSkip.addEventListener('click', finishIntro);
-      startIntro();
-
-      /* ============================================================
-         APP STATE
-         ============================================================ */
       const state = {
         currentScreen: 'home',
         lang: 'fr',
         qIndex: 0,
-        answers: {}, // { index: optionIndex }
+        answers: { 0: 1 },
         bookmarks: new Set(),
-        secondsLeft: 272, // 04:32 exact match
+        secondsLeft: 272,
         timerId: null,
         prepTimeoutId: null,
         hasCompletedQuiz: false
       };
 
-      // Pre-select option #1 ("عقد") on question 0 so initial Quiz view mirrors the screenshot immediately
-      state.answers[0] = 1;
-
-      /* ============================================================
-         DOM REFERENCES
-         ============================================================ */
       const screens = {
         home: document.getElementById('screen-home'),
         prep: document.getElementById('screen-prep'),
@@ -2469,15 +2342,12 @@
         leaderboard: document.getElementById('screen-leaderboard')
       };
 
-      const desktopBtns = document.querySelectorAll('.desktop-switcher button');
+      const desktopBtns = document.querySelectorAll('.desktop-switcher button[data-nav]');
       const drawerBackdrop = document.getElementById('drawerBackdrop');
       const sideDrawer = document.getElementById('sideDrawer');
       const reviewModal = document.getElementById('reviewModal');
       const toastBox = document.getElementById('toastBox');
 
-      /* ============================================================
-         HELPERS
-         ============================================================ */
       let toastTimer = null;
       function showToast(msg) {
         toastBox.textContent = msg;
@@ -2502,9 +2372,6 @@
         return `${m}:${s}`;
       }
 
-      /* ============================================================
-         NAVIGATION ENGINE
-         ============================================================ */
       function goToScreen(name) {
         clearTimeout(state.prepTimeoutId);
         if (name !== 'quiz') stopTimer();
@@ -2532,7 +2399,7 @@
         state.lang = lang;
         state.qIndex = 0;
         state.answers = { 0: 1 };
-        state.secondsLeft = 272; // 04:32
+        state.secondsLeft = 272;
         state.hasCompletedQuiz = false;
 
         document.getElementById('prepSubtitle').textContent = QUIZZES[lang].title;
@@ -2540,12 +2407,9 @@
 
         state.prepTimeoutId = setTimeout(() => {
           goToScreen('quiz');
-        }, 2100);
+        }, 2000);
       }
 
-      /* ============================================================
-         QUIZ RENDERING & TIMER
-         ============================================================ */
       function startTimer() {
         stopTimer();
         updateTimerUI();
@@ -2571,8 +2435,7 @@
       function updateTimerUI() {
         document.getElementById('quizTimerText').textContent = formatTime(state.secondsLeft);
         const ratio = state.secondsLeft / 300;
-        const circumference = 157;
-        const offset = circumference * (1 - Math.min(1, Math.max(0, ratio)));
+        const offset = 157 * (1 - Math.min(1, Math.max(0, ratio)));
         document.getElementById('timerRing').style.strokeDashoffset = offset.toFixed(1);
       }
 
@@ -2584,14 +2447,11 @@
         document.getElementById('quizHeaderTitle').textContent = quiz.title;
         document.getElementById('quizLangTag').textContent = quiz.tag;
         document.getElementById('quizCounterText').textContent = `السؤال ${state.qIndex + 1} من ${total}`;
-        const pct = ((state.qIndex + 1) / total) * 100;
-        document.getElementById('quizProgressFill').style.width = `${Math.max(12, pct)}%`;
+        document.getElementById('quizProgressFill').style.width = `${Math.max(12, ((state.qIndex + 1) / total) * 100)}%`;
 
         document.getElementById('quizTermWord').textContent = q.term;
         document.getElementById('btnBookmark').classList.toggle('saved', state.bookmarks.has(`${state.lang}-${state.qIndex}`));
-
-        const isLast = state.qIndex === total - 1;
-        document.getElementById('btnNextLabel').textContent = isLast ? 'إنهاء الاختبار' : 'السؤال التالي';
+        document.getElementById('btnNextLabel').textContent = state.qIndex === total - 1 ? 'إنهاء الاختبار' : 'السؤال التالي';
 
         const list = document.getElementById('quizOptionsList');
         list.innerHTML = '';
@@ -2603,18 +2463,15 @@
 
           const radio = document.createElement('span');
           radio.className = 'option-radio';
-
           const label = document.createElement('span');
           label.textContent = optText;
 
           btn.appendChild(radio);
           btn.appendChild(label);
-
           btn.addEventListener('click', () => {
             state.answers[state.qIndex] = idx;
             renderQuizQuestion();
           });
-
           list.appendChild(btn);
         });
       }
@@ -2635,82 +2492,56 @@
           window.speechSynthesis.speak(utter);
         } else {
           setTimeout(() => btn.classList.remove('speaking'), 600);
-          showToast(`النطق الصوتي: ${term}`);
+          showToast(`النطق: ${term}`);
         }
       }
 
-      /* ============================================================
-         RESULTS ANIMATED COUNTER + CONFETTI
-         ============================================================ */
       function computeScoreStats() {
         const questions = QUIZZES[state.lang].questions;
         const total = questions.length;
-        const answeredKeys = Object.keys(state.answers);
-
-        // If previewed directly without taking the full quiz, show exact screenshot reference (85%, 17, 3, 20)
-        if (!state.hasCompletedQuiz && answeredKeys.length <= 1) {
+        if (!state.hasCompletedQuiz && Object.keys(state.answers).length <= 1) {
           return { percent: 85, correct: 17, wrong: 3, total: 20 };
         }
-
         let correct = 0;
         questions.forEach((q, idx) => {
           if (state.answers[idx] === q.correct) correct++;
         });
-        const wrong = total - correct;
-        const percent = Math.round((correct / total) * 100);
-        return { percent, correct, wrong, total };
+        return { percent: Math.round((correct / total) * 100), correct, wrong: total - correct, total };
       }
 
       function renderResults() {
         const { percent, correct, wrong, total } = computeScoreStats();
-
         document.getElementById('statTotal').textContent = total;
         document.getElementById('statCorrect').textContent = correct;
         document.getElementById('statWrong').textContent = wrong;
 
-        let grade = 'ممتاز';
-        let title = 'أداء متميز!';
-        let desc = 'لقد أظهرت فهماً جيداً للمصطلحات القانونية';
-        if (percent < 50) {
-          grade = 'يحتاج مراجعة';
-          title = 'واصل التدريب!';
-          desc = 'راجع المصطلحات وحاول مجدداً لرفع مستواك';
-        } else if (percent < 75) {
-          grade = 'جيد جداً';
-          title = 'تقدم ملحوظ!';
-          desc = 'أنت قريب جداً من إتقان المصطلحات القانونية';
-        }
+        let grade = 'ممتاز', title = 'أداء متميز!', desc = 'لقد أظهرت فهماً جيداً للمصطلحات القانونية';
+        if (percent < 50) { grade = 'يحتاج مراجعة'; title = 'واصل التدريب!'; desc = 'راجع المصطلحات وحاول مجدداً لرفع مستواك'; }
+        else if (percent < 75) { grade = 'جيد جداً'; title = 'تقدم ملحوظ!'; desc = 'أنت قريب جداً من إتقان المصطلحات القانونية'; }
 
         document.getElementById('resultGradeText').textContent = grade;
         document.getElementById('resultBannerTitle').textContent = title;
         document.getElementById('resultBannerDesc').textContent = desc;
 
-        // Animated counter 0 -> percent + ring fill
         const percentEl = document.getElementById('resultPercentText');
         const arcEl = document.getElementById('resultProgressArc');
         const circumference = 477.5;
-        const targetOffset = circumference * (1 - percent / 100);
-
         arcEl.style.transition = 'none';
         arcEl.style.strokeDashoffset = circumference;
         void arcEl.getBoundingClientRect();
-        arcEl.style.transition = 'stroke-dashoffset 1.25s cubic-bezier(0.22, 1, 0.36, 1)';
-        arcEl.style.strokeDashoffset = targetOffset;
+        arcEl.style.transition = 'stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1)';
+        arcEl.style.strokeDashoffset = circumference * (1 - percent / 100);
 
-        const duration = 1150;
         const start = performance.now();
         function step(now) {
-          const progress = Math.min(1, (now - start) / duration);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          percentEl.textContent = `${Math.round(percent * eased)}%`;
-          if (progress < 1) requestAnimationFrame(step);
+          const p = Math.min(1, (now - start) / 1100);
+          percentEl.textContent = `${Math.round(percent * (1 - Math.pow(1 - p, 3)))}%`;
+          if (p < 1) requestAnimationFrame(step);
         }
         requestAnimationFrame(step);
-
         launchGoldConfetti();
       }
 
-      /* Golden Success Particles (Canvas) */
       function launchGoldConfetti() {
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
@@ -2720,7 +2551,7 @@
         ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 
         const colors = ['#fff2bf', '#e6b14c', '#c88b2a', '#ffd778', '#8ab4f8'];
-        const particles = Array.from({ length: 46 }, () => ({
+        const particles = Array.from({ length: 44 }, () => ({
           x: rect.width * (0.15 + Math.random() * 0.7),
           y: rect.height * (0.08 + Math.random() * 0.25),
           vx: (Math.random() - 0.5) * 3.2,
@@ -2737,12 +2568,8 @@
           ctx.clearRect(0, 0, rect.width, rect.height);
           frames++;
           particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-            p.vy += 0.04;
-            p.rot += p.vrot;
+            p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.rot += p.vrot;
             if (frames > 75) p.alpha = Math.max(0, p.alpha - 0.025);
-
             ctx.save();
             ctx.globalAlpha = p.alpha;
             ctx.translate(p.x, p.y);
@@ -2751,59 +2578,34 @@
             ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.65);
             ctx.restore();
           });
-          if (frames < 120 && state.currentScreen === 'result') {
-            requestAnimationFrame(draw);
-          } else {
-            ctx.clearRect(0, 0, rect.width, rect.height);
-          }
+          if (frames < 120 && state.currentScreen === 'result') requestAnimationFrame(draw);
+          else ctx.clearRect(0, 0, rect.width, rect.height);
         }
         requestAnimationFrame(draw);
       }
 
-      /* ============================================================
-         REVIEW ANSWERS MODAL
-         ============================================================ */
       function openReviewModal() {
         const list = document.getElementById('reviewList');
         list.innerHTML = '';
-        const questions = QUIZZES[state.lang].questions;
-
-        questions.forEach((q, idx) => {
-          // If user didn't answer all questions (demo mode), simulate 17/20 matching screenshot
+        QUIZZES[state.lang].questions.forEach((q, idx) => {
           let chosen = state.answers[idx];
           if (!state.hasCompletedQuiz && chosen === undefined) {
             chosen = (idx === 4 || idx === 11 || idx === 16) ? ((q.correct + 1) % 4) : q.correct;
           }
           const isOk = chosen === q.correct;
-
           const item = document.createElement('div');
           item.className = `review-item ${isOk ? 'ok' : 'bad'}`;
-
-          const top = document.createElement('div');
-          top.className = 'review-term';
-
-          const termEl = document.createElement('strong');
-          termEl.textContent = `${idx + 1}. ${q.term}`;
-
-          const badge = document.createElement('span');
-          badge.className = `review-pill ${isOk ? 'ok' : 'bad'}`;
-          badge.textContent = isOk ? 'إجابة صحيحة' : 'إجابة خاطئة';
-
-          top.appendChild(badge);
-          top.appendChild(termEl);
-
-          const detail = document.createElement('div');
-          detail.className = 'review-detail';
-          const userAnsText = chosen !== undefined ? q.options[chosen] : 'لم تتم الإجابة';
-          detail.textContent = isOk
-            ? `إجابتك: ${userAnsText}`
-            : `إجابتك: ${userAnsText} — الإجابة الصحيحة: ${q.options[q.correct]}`;
-
-          item.appendChild(top);
-          item.appendChild(detail);
+          item.innerHTML = `
+            <div class="review-term">
+              <span class="review-pill ${isOk ? 'ok' : 'bad'}">${isOk ? 'إجابة صحيحة' : 'إجابة خاطئة'}</span>
+              <strong>${idx + 1}. ${q.term}</strong>
+            </div>
+            <div class="review-detail">
+              ${isOk ? `إجابتك: ${q.options[chosen]}` : `إجابتك: ${chosen !== undefined ? q.options[chosen] : 'لم تجب'} — الصحيحة: ${q.options[q.correct]}`}
+            </div>
+          `;
           list.appendChild(item);
         });
-
         reviewModal.classList.add('open');
         reviewModal.setAttribute('aria-hidden', 'false');
       }
@@ -2813,54 +2615,27 @@
         reviewModal.setAttribute('aria-hidden', 'true');
       }
 
-      /* ============================================================
-         RENDER LEADERBOARD ROWS (With Bespoke Vector Avatars & Medals)
-         ============================================================ */
       function createMedalSVG(rank) {
         if (rank > 3) return `<span>${rank}</span>`;
-        const palettes = {
+        const p = {
           1: { c1: '#fff3be', c2: '#e2a840', c3: '#9a6818', rib: '#d99a30' },
           2: { c1: '#ffffff', c2: '#b6c6da', c3: '#64758c', rib: '#7e91ab' },
           3: { c1: '#f4c69c', c2: '#be7641', c3: '#693714', rib: '#9e5929' }
-        };
-        const p = palettes[rank];
-        return `
-          <svg width="30" height="36" viewBox="0 0 32 38">
-            <path d="M9 22 L6 36 L14 31 L16 34 L18 31 L26 36 L23 22 Z" fill="${p.rib}"/>
-            <circle cx="16" cy="14" r="11.5" fill="${p.c2}" stroke="${p.c1}" stroke-width="1.8"/>
-            <circle cx="16" cy="14" r="8.5" fill="${p.c3}" opacity="0.35"/>
-            <text x="16" y="18.5" text-anchor="middle" fill="#111" font-family="Cairo, sans-serif" font-size="11.5" font-weight="800">${rank}</text>
-          </svg>
-        `;
+        }[rank];
+        return `<svg width="30" height="36" viewBox="0 0 32 38"><path d="M9 22 L6 36 L14 31 L16 34 L18 31 L26 36 L23 22 Z" fill="${p.rib}"/><circle cx="16" cy="14" r="11.5" fill="${p.c2}" stroke="${p.c1}" stroke-width="1.8"/><text x="16" y="18.5" text-anchor="middle" fill="#111" font-family="Cairo, sans-serif" font-size="11.5" font-weight="800">${rank}</text></svg>`;
       }
 
       function createAvatarSVG(user) {
-        const hijabOrHair = user.gender === 'f'
+        const hair = user.gender === 'f'
           ? `<path d="M8 22 C8 8 36 8 36 22 V36 H8 Z" fill="${user.hair}"/>`
           : `<path d="M12 18 C12 9 32 9 32 18 C28 14 16 14 12 18 Z" fill="${user.hair}"/>`;
-        return `
-          <svg viewBox="0 0 44 44" width="100%" height="100%">
-            <rect width="44" height="44" fill="#182b47"/>
-            <circle cx="22" cy="12" r="18" fill="rgba(223,168,71,0.12)"/>
-            ${hijabOrHair}
-            <path d="M6 44 C8 32 36 32 38 44 Z" fill="${user.shirt}"/>
-            <circle cx="22" cy="21" r="8.5" fill="${user.skin}"/>
-            <circle cx="19" cy="20" r="1.1" fill="#1c1816"/>
-            <circle cx="25" cy="20" r="1.1" fill="#1c1816"/>
-            <path d="M19 24.5 Q22 26.8 25 24.5" stroke="#7d4a35" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-          </svg>
-        `;
+        return `<svg viewBox="0 0 44 44" width="100%" height="100%"><rect width="44" height="44" fill="#182b47"/>${hair}<path d="M6 44 C8 32 36 32 38 44 Z" fill="${user.shirt}"/><circle cx="22" cy="21" r="8.5" fill="${user.skin}"/><circle cx="19" cy="20" r="1.1" fill="#1c1816"/><circle cx="25" cy="20" r="1.1" fill="#1c1816"/><path d="M19 24.5 Q22 26.8 25 24.5" stroke="#7d4a35" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>`;
       }
 
       function renderLeaderboard() {
         const container = document.getElementById('leaderboardList');
-        container.innerHTML = '';
-
-        LEADERBOARD_DATA.forEach(item => {
-          const row = document.createElement('div');
-          row.className = `leader-row ${item.rank === 1 ? 'top-1' : ''}`;
-
-          row.innerHTML = `
+        container.innerHTML = LEADERBOARD_DATA.map(item => `
+          <div class="leader-row ${item.rank === 1 ? 'top-1' : ''}">
             <div class="leader-rank-side">
               <div class="rank-badge-slot">${createMedalSVG(item.rank)}</div>
               <div class="leader-avatar">${createAvatarSVG(item)}</div>
@@ -2869,75 +2644,53 @@
               <span class="leader-name">${item.name}</span>
               <span class="leader-pts">${item.points} نقطة</span>
             </div>
-          `;
-          container.appendChild(row);
-        });
+          </div>
+        `).join('');
       }
 
-      /* ============================================================
-         EVENT BINDINGS
-         ============================================================ */
+      /* =========================================================
+         4) ربط الأحداث والتشغيل
+      ========================================================= */
+      function triggerReplayIntro() {
+        goToScreen('home');
+        playScene();
+      }
+
+      document.getElementById('btnReplayIntro').addEventListener('click', triggerReplayIntro);
+      document.getElementById('drawerReplayBtn').addEventListener('click', triggerReplayIntro);
+      document.getElementById('desktopReplayBtn').addEventListener('click', triggerReplayIntro);
+
       document.getElementById('cardStartFr').addEventListener('click', () => launchQuizFlow('fr'));
       document.getElementById('cardStartEn').addEventListener('click', () => launchQuizFlow('en'));
-      [document.getElementById('cardStartFr'), document.getElementById('cardStartEn')].forEach(btn => {
-        btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
-      });
-
       document.getElementById('btnOpenDrawer').addEventListener('click', openDrawer);
       document.getElementById('btnCloseDrawer').addEventListener('click', closeDrawer);
       drawerBackdrop.addEventListener('click', closeDrawer);
-
-      document.getElementById('btnNotify').addEventListener('click', () => {
-        showToast('لا توجد إشعارات جديدة — مستواك الحالي: المستوى الثالث');
-      });
-
+      document.getElementById('btnNotify').addEventListener('click', () => showToast('مرحباً بك في اختبارات جامعة العاصمة — المستوى الثالث'));
       document.getElementById('btnSpeakTerm').addEventListener('click', speakCurrentTerm);
 
       document.getElementById('btnBookmark').addEventListener('click', () => {
         const key = `${state.lang}-${state.qIndex}`;
-        if (state.bookmarks.has(key)) {
-          state.bookmarks.delete(key);
-          showToast('تم إزالة المصطلح من المحفوظات');
-        } else {
-          state.bookmarks.add(key);
-          showToast('تم حفظ المصطلح للمراجعة');
-        }
+        state.bookmarks.has(key) ? (state.bookmarks.delete(key), showToast('تم إزالة الحفظ')) : (state.bookmarks.add(key), showToast('تم حفظ المصطلح للمراجعة'));
         renderQuizQuestion();
       });
 
       document.getElementById('btnNextQuestion').addEventListener('click', () => {
         const total = QUIZZES[state.lang].questions.length;
-        if (state.qIndex < total - 1) {
-          state.qIndex++;
-          renderQuizQuestion();
-        } else {
-          state.hasCompletedQuiz = true;
-          goToScreen('result');
-        }
+        if (state.qIndex < total - 1) { state.qIndex++; renderQuizQuestion(); }
+        else { state.hasCompletedQuiz = true; goToScreen('result'); }
       });
 
       document.getElementById('btnPrevQuestion').addEventListener('click', () => {
-        if (state.qIndex > 0) {
-          state.qIndex--;
-          renderQuizQuestion();
-        } else {
-          goToScreen('home');
-        }
+        if (state.qIndex > 0) { state.qIndex--; renderQuizQuestion(); }
+        else goToScreen('home');
       });
 
-      document.getElementById('btnQuizOptions').addEventListener('click', () => {
-        goToScreen('result');
-      });
-
+      document.getElementById('btnQuizOptions').addEventListener('click', () => goToScreen('result'));
       document.getElementById('btnReviewAnswers').addEventListener('click', openReviewModal);
       document.getElementById('btnCloseReview').addEventListener('click', closeReviewModal);
       document.getElementById('btnDoneReview').addEventListener('click', closeReviewModal);
+      document.getElementById('btnRetryQuiz').addEventListener('click', () => launchQuizFlow(state.lang));
 
-      document.getElementById('btnRetryQuiz').addEventListener('click', () => {
-        launchQuizFlow(state.lang);
-      });
-
-      // General navigation triggers
       document.querySelectorAll('[data-go]').forEach(el => {
         el.addEventListener('click', () => {
           const target = el.dataset.go;
@@ -2947,27 +2700,21 @@
         });
       });
 
-      // Desktop screen switcher
       desktopBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          const target = btn.dataset.nav;
-          if (target === 'prep') {
-            document.getElementById('prepSubtitle').textContent = QUIZZES[state.lang].title;
-            goToScreen('prep');
-          } else {
-            goToScreen(target);
-          }
+          if (btn.dataset.nav === 'prep') document.getElementById('prepSubtitle').textContent = QUIZZES[state.lang].title;
+          goToScreen(btn.dataset.nav);
         });
       });
 
-      // Achievement badge click feedback
       document.querySelectorAll('.hex-badge-item').forEach(badge => {
         badge.addEventListener('click', () => showToast(badge.dataset.badge));
       });
 
-      // Initialize
+      // Boot
       renderLeaderboard();
       renderQuizQuestion();
+      playScene();
     })();
   </script>
 </body>
