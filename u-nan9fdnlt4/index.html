@@ -10,7 +10,7 @@
     <title>كابيتانوا _ لإدارة المبيعات</title>
     <meta name="theme-color" content="#0a192f">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/favicon.png?v=1795641420912">
+    <link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/favicon.png?v=1795646028079">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -19,7 +19,7 @@
     <meta name="description" content="🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗">
     <meta property="og:type" content="website">
     <meta property="og:title" content="كابيتانوا _ لإدارة المبيعات">
-    <meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795641420912">
+    <meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795646028079">
     <meta name="twitter:card" content="summary_large_image">
 
     <style>
@@ -194,11 +194,11 @@
     </style>
 
     <meta property="og:description" content="🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗">
-    <meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795641420912">
+    <meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795646028079">
     <meta name="twitter:title" content="كابيتانوا _ لإدارة المبيعات">
     <meta name="twitter:description" content="🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗">
     <meta property="og:url" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/">
-    <link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/apple-touch-icon.png?v=1795641420912">
+    <link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/apple-touch-icon.png?v=1795646028079">
 </head>
 <body>
 
@@ -356,12 +356,12 @@
 
         <div class="calc-row">
             <div class="calc-box">
-                <label>خصم (ج.م)</label>
-                <input type="number" id="review-discount" inputmode="decimal" min="0" placeholder="0" oninput="updateReviewCalc()">
+                <label>السعر النهائي (تعديل)</label>
+                <input type="number" id="review-final-total" inputmode="decimal" min="0" oninput="updateReviewCalc()">
             </div>
             <div class="calc-box">
                 <label>المدفوع من العميل</label>
-                <input type="number" id="review-paid" inputmode="decimal" min="0" placeholder="اكتب المبلغ..." oninput="updateReviewCalc()">
+                <input type="number" id="review-paid" inputmode="decimal" min="0" placeholder="لحساب الباقي..." oninput="updateReviewCalc()">
             </div>
         </div>
 
@@ -1103,7 +1103,7 @@
     function openCartSheet() { if (!currentInvoiceItems.length) return alert("السلة فارغة — اختر منتجاً أولاً"); pushBackState('cart-sheet'); document.getElementById('cart-sheet').classList.add('open'); }
     function closeCartSheet() { document.getElementById('cart-sheet').classList.remove('open'); }
 
-    // المراجعة والخصم والباقي
+    // المراجعة والسعر النهائي وحاسبة الباقي
     function openReviewInvoiceModal() {
         if (!currentInvoiceItems.length) return alert("⚠️ السلة فارغة!");
         const grouped = {};
@@ -1121,7 +1121,7 @@
                 <td style="padding: 6px; text-align: left; color:#10b981; font-weight:bold;">${(g.price * g.qty).toLocaleString()} ج</td>
             </tr>`).join('');
         document.getElementById('review-wh-subtitle').innerText = `المخزن: ${getActiveWarehouse().name}`;
-        document.getElementById('review-discount').value = '';
+        document.getElementById('review-final-total').value = reviewSubtotal;
         document.getElementById('review-paid').value = '';
         updateReviewCalc();
         setModal('review-invoice-modal', true);
@@ -1129,9 +1129,10 @@
     }
 
     function updateReviewCalc() {
-        const disc = Math.max(0, parseFloat(document.getElementById('review-discount').value) || 0);
-        const net = Math.max(0, reviewSubtotal - disc);
+        const finalRaw = document.getElementById('review-final-total').value;
+        const net = finalRaw === '' ? reviewSubtotal : Math.max(0, parseFloat(finalRaw) || 0);
         document.getElementById('review-total-price').innerText = `${net.toLocaleString()} ج.م`;
+
         const paidRaw = document.getElementById('review-paid').value;
         const changeRow = document.getElementById('review-change-row');
         if (paidRaw !== '') {
@@ -1152,9 +1153,12 @@
         const date = now.toLocaleDateString('ar-EG');
         const time = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
         const invoiceId = 'INV_' + Date.now();
-        const disc = Math.max(0, parseFloat(document.getElementById('review-discount').value) || 0);
-        const discountFactor = (disc > 0 && reviewSubtotal > 0) ? Math.max(0, (reviewSubtotal - disc) / reviewSubtotal) : 1;
 
+        const finalRaw = document.getElementById('review-final-total').value;
+        const finalTotal = finalRaw === '' ? reviewSubtotal : Math.max(0, parseFloat(finalRaw) || 0);
+        const factor = reviewSubtotal > 0 ? (finalTotal / reviewSubtotal) : 1;
+
+        let distributedSum = 0;
         currentInvoiceItems.forEach((sold, idx) => {
             const target = inv.find(i => i.id === sold.id);
             if (!target) return;
@@ -1164,11 +1168,15 @@
                 target.qty = target.colors.reduce((s, c) => s + c.qty, 0);
             } else if (target.qty > 0) target.qty--;
 
+            const isLast = idx === currentInvoiceItems.length - 1;
+            const itemFinalPrice = isLast ? Math.max(0, Math.round(finalTotal - distributedSum)) : Math.round(sold.price * factor);
+            distributedSum += itemFinalPrice;
+
             sales.push({
                 id: Date.now() + idx + Math.floor(Math.random() * 10000),
                 invoiceId,
                 name: sold.colorName ? `${sold.name} (${sold.colorName})` : sold.name,
-                price: Math.round(sold.price * discountFactor),
+                price: itemFinalPrice,
                 date, time
             });
         });
@@ -1214,7 +1222,7 @@
                 const reversedOrder = [...dayData.order].reverse();
                 reversedOrder.forEach((invKey, revIndex) => {
                     const invObj = dayData.invoices[invKey];
-                    const invNum = dayData.order.length - revIndex; // يحافظ على رقم الفاتورة الحقيقي والأحدث فوق
+                    const invNum = dayData.order.length - revIndex;
                     const isLast = revIndex === reversedOrder.length - 1;
                     html += `
                     <div style="background:#ffffff; border-radius:12px; padding:8px 10px; border:1px solid #e2e8f0; ${!isLast ? 'margin-bottom:10px;' : ''}">
