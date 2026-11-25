@@ -10,7 +10,7 @@
     <title>كابيتانوا _ لإدارة المبيعات</title>
     <meta name="theme-color" content="#0a192f">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/favicon.png?v=1795448598600">
+    <link rel="icon" type="image/png" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/favicon.png?v=1795641420912">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -19,7 +19,7 @@
     <meta name="description" content="🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗">
     <meta property="og:type" content="website">
     <meta property="og:title" content="كابيتانوا _ لإدارة المبيعات">
-    <meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795448598600">
+    <meta property="og:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795641420912">
     <meta name="twitter:card" content="summary_large_image">
 
     <style>
@@ -194,11 +194,11 @@
     </style>
 
     <meta property="og:description" content="🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗">
-    <meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795448598600">
+    <meta name="twitter:image" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/share.jpg?v=1795641420912">
     <meta name="twitter:title" content="كابيتانوا _ لإدارة المبيعات">
     <meta name="twitter:description" content="🤗🤗🤗🤗🤗🤗🤗🤗🤗🤗">
     <meta property="og:url" content="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/">
-    <link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/apple-touch-icon.png?v=1795448598600">
+    <link rel="apple-touch-icon" href="https://kasvsmabsnsn-cloud.github.io/Hdiebdbd/u-nan9fdnlt4/apple-touch-icon.png?v=1795641420912">
 </head>
 <body>
 
@@ -300,7 +300,10 @@
             </div>
             <div id="wh-stock-preview" style="max-height: 140px; overflow-y: auto; font-size: 0.78rem; color: #cbd5e1;"></div>
         </div>
-        <button onclick="closeWarehousesModal()" style="background:#334155; color:white; margin-top:12px; width:100%; border:none; padding:10px; border-radius:14px; font-weight:bold; font-size:0.85rem; cursor:pointer;">إغلاق</button>
+        <button onclick="openChangePasswordModal()" style="background:#1e3a8a; color:white; margin-top:10px; width:100%; border:none; padding:10px; border-radius:14px; font-weight:bold; font-size:0.85rem; cursor:pointer;">
+            <i class="fas fa-key" style="color:#ff6b00; margin-left:6px;"></i> إعادة تعيين كلمة السر
+        </button>
+        <button onclick="closeWarehousesModal()" style="background:#334155; color:white; margin-top:8px; width:100%; border:none; padding:10px; border-radius:14px; font-weight:bold; font-size:0.85rem; cursor:pointer;">إغلاق</button>
     </div>
 </div>
 
@@ -358,7 +361,7 @@
             </div>
             <div class="calc-box">
                 <label>المدفوع من العميل</label>
-                <input type="number" id="review-paid" inputmode="decimal" min="0" placeholder="تلقائي" oninput="updateReviewCalc()">
+                <input type="number" id="review-paid" inputmode="decimal" min="0" placeholder="اكتب المبلغ..." oninput="updateReviewCalc()">
             </div>
         </div>
 
@@ -387,11 +390,35 @@
         <h2>🔐 تأكيد الهوية</h2>
         <p style="color: #94a3b8; margin-bottom: 14px; font-size: 0.78rem;">أدخل كلمة المرور</p>
         <div class="input-group">
-            <input type="tel" id="report-password-input" placeholder="" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" maxlength="4" style="text-align: center; font-size: 1.2rem; letter-spacing: 6px;" oninput="if(this.value.length===4) checkReportPassword()" onkeydown="if(event.key==='Enter') checkReportPassword()">
+            <input type="password" id="report-password-input" placeholder="••••" inputmode="numeric" autocomplete="one-time-code" style="text-align: center; font-size: 1.2rem; letter-spacing: 6px;" oninput="if(this.value.length===getStoredPasscode().length) checkReportPassword()" onkeydown="if(event.key==='Enter') checkReportPassword()">
         </div>
         <button onclick="checkReportPassword()" class="magic-button" style="margin-bottom: 8px;"><i class="fas fa-unlock"></i> تأكيد</button>
         <button onclick="cancelPassword()" style="background: transparent; color: #94a3b8; border: 1px solid #334155; width: 100%; padding: 9px; border-radius: 14px; cursor: pointer; font-size: 0.8rem;">إلغاء</button>
         <div id="password-error" style="color: #ef4444; font-size: 0.75rem; margin-top: 8px; min-height: 18px;"></div>
+    </div>
+</div>
+
+<!-- ============ إعادة تعيين كلمة السر ============ -->
+<div id="change-password-modal" class="modal-backdrop" style="z-index: 1520;">
+    <div class="modal-glass" style="max-width: 360px;">
+        <h2><i class="fas fa-key" style="color:#ff6b00;"></i> إعادة تعيين كلمة السر</h2>
+        <div class="input-group">
+            <label>كلمة السر الحالية</label>
+            <input type="password" id="current-pass-input" inputmode="numeric" autocomplete="current-password" placeholder="أدخل كلمة السر الحالية">
+        </div>
+        <div class="input-group">
+            <label>كلمة السر الجديدة</label>
+            <input type="password" id="new-pass-input" inputmode="numeric" autocomplete="new-password" placeholder="أدخل كلمة السر الجديدة">
+        </div>
+        <div class="input-group">
+            <label>تأكيد كلمة السر الجديدة</label>
+            <input type="password" id="confirm-pass-input" inputmode="numeric" autocomplete="new-password" placeholder="أعد كتابة كلمة السر الجديدة">
+        </div>
+        <div id="change-pass-error" style="color:#ef4444; font-size:0.76rem; font-weight:700; min-height:18px; margin-bottom:8px; text-align:center;"></div>
+        <button onclick="saveNewPassword()" class="magic-button" style="background:linear-gradient(45deg, #10b981, #059669); margin-bottom:8px;">
+            <i class="fas fa-save"></i> حفظ وتحديث كلمة السر
+        </button>
+        <button onclick="closeChangePasswordModal()" style="background:transparent; color:#94a3b8; border:1px solid #334155; width:100%; padding:9px; border-radius:14px; cursor:pointer; font-size:0.8rem;">إلغاء</button>
     </div>
 </div>
 
@@ -486,10 +513,12 @@
             warehouses: [{ id: 'wh_1', name: 'مخزن رقم 1' }],
             inventoryByWh: { 'wh_1': [] },
             salesByWh: { 'wh_1': [] },
-            customColors: []
+            customColors: [],
+            passcode: '0000'
         };
     }
     if (!appState.customColors) appState.customColors = [];
+    if (!appState.passcode) appState.passcode = '0000';
 
     let currentInvoiceItems = [];
     let currentEditingId = null;
@@ -498,6 +527,7 @@
     let pendingPasswordAction = null;
     let reviewSubtotal = 0;
 
+    const getStoredPasscode = () => String(appState.passcode || '0000');
     const getActiveWarehouse = () => {
         if (!appState.warehouses?.length) appState.warehouses = [{ id: 'wh_1', name: 'مخزن رقم 1' }];
         return appState.warehouses.find(w => w.id === appState.activeWarehouseId) || appState.warehouses[0];
@@ -516,7 +546,7 @@
     }
 
     // إدارة النوافذ والرجوع
-    const MODALS = ['invoice-modal', 'warehouses-modal', 'modal', 'review-invoice-modal', 'password-modal', 'report-modal', 'edit-item-modal'];
+    const MODALS = ['invoice-modal', 'warehouses-modal', 'modal', 'review-invoice-modal', 'password-modal', 'change-password-modal', 'report-modal', 'edit-item-modal'];
     const setModal = (id, open) => { const el = document.getElementById(id); if (el) el.style.display = open ? 'flex' : 'none'; };
     const pushBackState = (page) => history.pushState({ page }, '', location.pathname);
 
@@ -535,12 +565,14 @@
         const d = snap.val();
         if (d && d.warehouses) {
             const localWh = appState.activeWarehouseId;
+            const localPass = appState.passcode;
             appState = {
                 activeWarehouseId: localWh || d.activeWarehouseId || 'wh_1',
                 warehouses: d.warehouses,
                 inventoryByWh: d.inventoryByWh || {},
                 salesByWh: d.salesByWh || {},
-                customColors: d.customColors || []
+                customColors: d.customColors || [],
+                passcode: d.passcode || localPass || '0000'
             };
             if (!appState.warehouses.some(w => w.id === appState.activeWarehouseId)) appState.activeWarehouseId = appState.warehouses[0].id;
             localStorage.setItem('capitano_pos_v2_cache', JSON.stringify(appState));
@@ -556,12 +588,13 @@
             warehouses: appState.warehouses,
             inventoryByWh: appState.inventoryByWh,
             salesByWh: appState.salesByWh,
-            customColors: appState.customColors
+            customColors: appState.customColors,
+            passcode: getStoredPasscode()
         }).catch(err => console.error("Sync Error:", err));
         updateUI();
     }
 
-    // الباسورد
+    // الباسورد وإعادة تعيينه
     function requirePassword(action) {
         pushBackState('password');
         pendingPasswordAction = action;
@@ -574,7 +607,7 @@
     function cancelPassword() { pendingPasswordAction = null; setModal('password-modal', false); }
     function checkReportPassword() {
         const inp = document.getElementById('report-password-input');
-        if (inp.value === "5555") {
+        if (inp.value === getStoredPasscode()) {
             const act = pendingPasswordAction;
             pendingPasswordAction = null;
             setModal('password-modal', false);
@@ -584,6 +617,41 @@
             inp.value = '';
             inp.focus();
         }
+    }
+
+    function openChangePasswordModal() {
+        pushBackState('change-password');
+        ['current-pass-input', 'new-pass-input', 'confirm-pass-input'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('change-pass-error').innerHTML = '';
+        setModal('change-password-modal', true);
+        setTimeout(() => document.getElementById('current-pass-input').focus(), 120);
+    }
+    function closeChangePasswordModal() { setModal('change-password-modal', false); }
+
+    function saveNewPassword() {
+        const curr = document.getElementById('current-pass-input').value;
+        const next = document.getElementById('new-pass-input').value.trim();
+        const conf = document.getElementById('confirm-pass-input').value.trim();
+        const errEl = document.getElementById('change-pass-error');
+
+        if (curr !== getStoredPasscode()) {
+            errEl.innerHTML = '<i class="fas fa-exclamation-triangle"></i> كلمة السر الحالية غير صحيحة';
+            return;
+        }
+        if (!next) {
+            errEl.innerHTML = '⚠️ أدخل كلمة السر الجديدة';
+            return;
+        }
+        if (next !== conf) {
+            errEl.innerHTML = '⚠️ كلمة السر الجديدة وتأكيدها غير متطابقين';
+            return;
+        }
+
+        appState.passcode = next;
+        localStorage.setItem('capitano_pos_v2_cache', JSON.stringify(appState));
+        systemRef.child('passcode').set(next).catch(err => console.error("Passcode Sync Error:", err));
+        closeChangePasswordModal();
+        showToast("✅ تم تحديث كلمة السر بنجاح!");
     }
 
     // المخازن
@@ -1113,7 +1181,7 @@
         showToast("✅ تم إتمام البيع بنجاح!");
     }
 
-    // التقارير والمرتجع (فصل الفواتير وترقيمها بدون الكروت العلوية)
+    // التقارير والمرتجع (الأحدث فوق مع الحفاظ على الترقيم التسلسلي الحقيقي)
     function generateFullReport() {
         const { activeWh, sales } = getActiveWarehouseTotals();
         const groupedByDay = {};
@@ -1135,21 +1203,24 @@
         if (!sales.length) {
             html += `<p style="color:#64748b; text-align:center; padding:16px; font-size:0.8rem;">لا توجد مبيعات مسجلة.</p>`;
         } else {
-            for (const [date, dayData] of Object.entries(groupedByDay)) {
+            const daysEntries = Object.entries(groupedByDay).reverse();
+            for (const [date, dayData] of daysEntries) {
                 html += `<div style="background:#f1f5f9; border-radius:16px; padding:10px; margin-top:10px; border:1px solid #cbd5e1;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:6px; border-bottom:2px solid #cbd5e1; font-size:0.82rem;">
                         <strong>📅 ${date} <span style="color:#64748b; font-size:0.72rem;">(${dayData.order.length} فاتورة)</span></strong>
                         <span style="background:#fff1e5; padding:3px 10px; border-radius:20px; color:#ff6b00; font-weight:900;">${dayData.total.toLocaleString()} ج</span>
                     </div>`;
 
-                dayData.order.forEach((invKey, index) => {
+                const reversedOrder = [...dayData.order].reverse();
+                reversedOrder.forEach((invKey, revIndex) => {
                     const invObj = dayData.invoices[invKey];
-                    const isLast = index === dayData.order.length - 1;
+                    const invNum = dayData.order.length - revIndex; // يحافظ على رقم الفاتورة الحقيقي والأحدث فوق
+                    const isLast = revIndex === reversedOrder.length - 1;
                     html += `
                     <div style="background:#ffffff; border-radius:12px; padding:8px 10px; border:1px solid #e2e8f0; ${!isLast ? 'margin-bottom:10px;' : ''}">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; padding-bottom:4px; border-bottom:1px dashed #cbd5e1;">
                             <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="background:#0a192f; color:#fff; padding:2px 8px; border-radius:8px; font-size:0.72rem; font-weight:900;">فاتورة #${index + 1}</span>
+                                <span style="background:#0a192f; color:#fff; padding:2px 8px; border-radius:8px; font-size:0.72rem; font-weight:900;">فاتورة #${invNum}</span>
                                 <span style="font-size:0.68rem; color:#64748b;"><i class="far fa-clock"></i> ${invObj.time}</span>
                             </div>
                             <span style="color:#10b981; font-weight:900; font-size:0.78rem;">الإجمالي: ${invObj.total.toLocaleString()} ج</span>
